@@ -8,47 +8,68 @@
 
 #import "MSViewController.h"
 
+@interface MSViewController()
+
+@property (nonatomic) BOOL listening;
+
+@end
+
 @implementation MSViewController
+@synthesize logViewer = _logViewer;
 
-- (void)didReceiveMemoryWarning
+@synthesize pubnub = _pubnub;
+@synthesize listening = _listening;
+
+-(void)awakeFromNib
 {
-    [super didReceiveMemoryWarning];
-    // Release any cached data, images, etc that aren't in use.
+    self.pubnub = [[CEPubnub alloc]
+                   publishKey:   @"pub-fc91edb4-5379-47f0-a882-c2de5db4fbcb" 
+                   subscribeKey: @"sub-1e9854a8-4b3c-11e1-be34-4103cb3c6424" 
+                   secretKey:    @""//@"sec-649a5039-cb8d-40eb-beec-21b9c07aec64" 
+                   sslOn:        YES
+                   origin:       @"pubsub.pubnub.com"
+                   ];    
 }
 
-#pragma mark - View lifecycle
-
-- (void)viewDidLoad
+- (void)pubnub:(CEPubnub *)pubnub subscriptionDidReceiveDictionary:(NSDictionary *)response onChannel:(NSString *)channel
 {
-    [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
+    //NSLog(@"%@ %@",  [response objectForKey:@"DateTime"], [response objectForKey:@"Message"]);
+    
+    NSString* message = [NSString stringWithFormat:@"%@ %@\n", [response objectForKey:@"DateTime"], [response objectForKey:@"Message"]];
+    
+    self.logViewer.text = [self.logViewer.text stringByAppendingString:message];
+    
+    //[message release];
+    
+    [self.logViewer scrollRangeToVisible:NSMakeRange([self.logViewer.text length], 0)];
+    
 }
-
-- (void)viewDidUnload
+- (void)pubnub:(CEPubnub *)pubnub subscriptionDidReceiveArray:(NSArray *)response onChannel:(NSString *)channel
 {
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
+    
 }
-
-- (void)viewWillAppear:(BOOL)animated
+- (void)pubnub:(CEPubnub *)pubnub subscriptionDidReceiveString:(NSString *)response onChannel:(NSString *)channel
 {
-    [super viewWillAppear:animated];
 }
-
-- (void)viewDidAppear:(BOOL)animated
+- (void)pubnub:(CEPubnub *)pubnub subscriptionDidFailWithResponse:(NSString *)response onChannel:(NSString *)channel
 {
-    [super viewDidAppear:animated];
+    
 }
-
-- (void)viewWillDisappear:(BOOL)animated
+- (void)pubnub:(CEPubnub *)pubnub subscriptionDidReceiveHistoryArray:(NSArray *)response onChannel:(NSString *)channel
 {
-	[super viewWillDisappear:animated];
+    
 }
-
-- (void)viewDidDisappear:(BOOL)animated
+- (void)pubnub:(CEPubnub *)pubnub publishDidSucceedWithResponse:(NSString *)response onChannel:(NSString *)channel
 {
-	[super viewDidDisappear:animated];
+    
+}
+- (void)pubnub:(CEPubnub *)pubnub publishDidFailWithResponse:(NSString *)response onChannel:(NSString *)channel
+{
+    
+}
+- (void)pubnub:(CEPubnub *)pubnub didReceiveTime:(NSString *)timestamp
+{
+    
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -57,4 +78,31 @@
     return YES;
 }
 
+
+- (void)dealloc {
+    [_logViewer release];
+    [super dealloc];
+}
+- (void)viewDidUnload {
+    [self setLogViewer:nil];
+    [super viewDidUnload];
+}
+
+
+- (IBAction)stateChange:(id)sender {
+    UIButton* btn = sender;
+    if(self.listening)
+    {
+        [self.pubnub unsubscribe:@"OPENSPAN_LOGS"];
+        [btn setTitle:@"Start" forState:UIControlStateNormal];
+    }else{
+        [self.pubnub subscribe: @"OPENSPAN_LOGS" delegate:self];
+        self.listening = YES;
+        [btn setTitle:@"Stop" forState:UIControlStateNormal];
+    }
+}
+
+- (IBAction)clear {
+    self.logViewer.text = @"";
+}
 @end
