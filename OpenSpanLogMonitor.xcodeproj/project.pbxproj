@@ -29,6 +29,7 @@
 		83F79AC314D6DED900C9A985 /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 83F79AB714D6DED900C9A985 /* SBJsonWriter.m */; };
 		83F79ACA14D6DEF800C9A985 /* CEPubnub.m in Sources */ = {isa = PBXBuildFile; fileRef = 83F79AC614D6DEF800C9A985 /* CEPubnub.m */; };
 		83F79ACB14D6DEF800C9A985 /* CEPubnubRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 83F79AC914D6DEF800C9A985 /* CEPubnubRequest.m */; };
+		83F79AD114D72DD900C9A985 /* MSLogLevelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83F79AD014D72DD900C9A985 /* MSLogLevelViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -76,6 +77,8 @@
 		83F79AC714D6DEF800C9A985 /* CEPubnubDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CEPubnubDelegate.h; sourceTree = "<group>"; };
 		83F79AC814D6DEF800C9A985 /* CEPubnubRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CEPubnubRequest.h; sourceTree = "<group>"; };
 		83F79AC914D6DEF800C9A985 /* CEPubnubRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CEPubnubRequest.m; sourceTree = "<group>"; };
+		83F79ACF14D72DD900C9A985 /* MSLogLevelViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSLogLevelViewController.h; sourceTree = "<group>"; };
+		83F79AD014D72DD900C9A985 /* MSLogLevelViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSLogLevelViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,6 +133,8 @@
 				83F79A9514D6DE9A00C9A985 /* MSViewController.h */,
 				83F79A9614D6DE9A00C9A985 /* MSViewController.m */,
 				83F79A8714D6DE9A00C9A985 /* Supporting Files */,
+				83F79ACF14D72DD900C9A985 /* MSLogLevelViewController.h */,
+				83F79AD014D72DD900C9A985 /* MSLogLevelViewController.m */,
 			);
 			path = OpenSpanLogMonitor;
 			sourceTree = "<group>";
@@ -270,6 +275,7 @@
 				83F79AC314D6DED900C9A985 /* SBJsonWriter.m in Sources */,
 				83F79ACA14D6DEF800C9A985 /* CEPubnub.m in Sources */,
 				83F79ACB14D6DEF800C9A985 /* CEPubnubRequest.m in Sources */,
+				83F79AD114D72DD900C9A985 /* MSLogLevelViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
