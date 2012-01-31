@@ -7,6 +7,7 @@
 //
 
 #import "MSViewController.h"
+#import "MSLogLevelViewController.h"
 
 @interface MSViewController()
 
@@ -15,10 +16,30 @@
 @end
 
 @implementation MSViewController
-@synthesize logViewer = _logViewer;
 
+@synthesize logViewer = _logViewer;
 @synthesize pubnub = _pubnub;
 @synthesize listening = _listening;
+@synthesize customLogLevels = _customLogLevels;
+
+-(NSMutableDictionary*)customLogLevels
+{
+    if(!_customLogLevels) 
+    {
+        [self setCustomLogLevels:[NSMutableDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:1], @"Keys", [NSNumber numberWithInt:2], @"Default", nil]];
+    }
+    return _customLogLevels;
+}
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if([segue.identifier isEqualToString:@"displayLogLevels"])
+    {        
+        //MSLogLevelViewController *view = segue.destinationViewController;
+        NSLog(@"Logs %@", [self customLogLevels]);
+        [segue.destinationViewController setCustomLevels:self.customLogLevels];
+    }
+}
 
 -(void)awakeFromNib
 {
@@ -31,15 +52,17 @@
                    ];    
 }
 
+-(void)viewDidAppear:(BOOL)animated
+{
+    NSLog(@"Logs %@", self.customLogLevels);
+}
+
 - (void)pubnub:(CEPubnub *)pubnub subscriptionDidReceiveDictionary:(NSDictionary *)response onChannel:(NSString *)channel
 {
-    //NSLog(@"%@ %@",  [response objectForKey:@"DateTime"], [response objectForKey:@"Message"]);
     
     NSString* message = [NSString stringWithFormat:@"%@ %@\n", [response objectForKey:@"DateTime"], [response objectForKey:@"Message"]];
     
     self.logViewer.text = [self.logViewer.text stringByAppendingString:message];
-    
-    //[message release];
     
     [self.logViewer scrollRangeToVisible:NSMakeRange([self.logViewer.text length], 0)];
     

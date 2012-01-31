@@ -11,5 +11,9 @@
 @interface MSLogLevelViewController : UITableViewController
 
 @property (nonatomic, retain) NSArray *logLevelsArray; 
+@property (nonatomic, retain) NSArray *traceLevels;
+@property (nonatomic) NSMutableDictionary *customLevels;
+
+@property (retain, nonatomic) IBOutlet UITableView *logLevelTableView;
 
 @end

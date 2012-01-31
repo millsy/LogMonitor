@@ -55,7 +55,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="shb-dk-072" kind="push" id="QZS-Ih-Npg"/>
+                                    <segue destination="shb-dk-072" kind="push" identifier="displayLogLevels" id="QZS-Ih-Npg"/>
                                 </connections>
                             </button>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" id="gQm-Me-PCg">
@@ -81,13 +81,13 @@
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3VD-rh-44w" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tableViewController id="shb-dk-072" customClass="MSLogLevelViewController" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="TvP-J3-nPJ">
+                    <tableView key="view" clipsSubviews="YES" contentMode="redraw" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="TvP-J3-nPJ">
                         <rect key="frame" x="0.0" y="64" width="1024" height="704"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="ZQS-s0-TtK">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="XAj-sv-H3r">
                                 <rect key="frame" x="0.0" y="22" width="1024" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -95,14 +95,19 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </tableViewCell>
                         </prototypes>
+                        <sections/>
                         <connections>
                             <outlet property="dataSource" destination="shb-dk-072" id="K5j-zV-wAv"/>
                             <outlet property="delegate" destination="shb-dk-072" id="0Sa-4A-r51"/>
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="OpenSpan Log Levels" id="Xtt-SX-d3U"/>
+                    <connections>
+                        <outlet property="logLevelTableView" destination="TvP-J3-nPJ" id="3yx-oe-h6t"/>
+                    </connections>
                 </tableViewController>
             </objects>
             <point key="canvasLocation" x="2531" y="-610"/>
@@ -128,6 +133,9 @@
     <classes>
         <class className="MSLogLevelViewController" superclassName="UITableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/MSLogLevelViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="logLevelTableView" candidateClass="UITableView"/>
+            </relationships>
         </class>
         <class className="MSViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/MSViewController.h"/>

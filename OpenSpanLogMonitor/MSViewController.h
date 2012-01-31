@@ -11,6 +11,7 @@
 
 @interface MSViewController : UIViewController <CEPubnubDelegate>
 
+@property (nonatomic, strong) NSMutableDictionary* customLogLevels;
 @property (nonatomic, strong) CEPubnub *pubnub;
 
 - (void)pubnub:(CEPubnub *)pubnub subscriptionDidReceiveDictionary:(NSDictionary *)response onChannel:(NSString *)channel;
