@@ -8,6 +8,7 @@
 
 #import "MSViewController.h"
 #import "MSLogLevelViewController.h"
+#import "MSLogLevelViewController.h"
 
 @interface MSViewController()
 
@@ -26,7 +27,7 @@
 {
     if(!_customLogLevels) 
     {
-        [self setCustomLogLevels:[NSMutableDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:1], @"Keys", [NSNumber numberWithInt:2], @"Default", nil]];
+        [self setCustomLogLevels:[MSLogLevelViewController defaultLogLevels]];
     }
     return _customLogLevels;
 }

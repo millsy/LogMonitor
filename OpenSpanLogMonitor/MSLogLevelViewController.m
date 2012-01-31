@@ -10,25 +10,45 @@
 
 @implementation MSLogLevelViewController
 
-@synthesize logLevelsArray = _logLevelsArray;
 @synthesize traceLevels = _traceLevels;
 @synthesize logLevelTableView = _logLevelTableView;
 @synthesize customLevels = _customLevels;
 
--(void)setCustomLevels:(NSMutableDictionary *)customLevels
-{
-    _customLevels = customLevels;
+static NSDictionary* defaultLogLevels = nil;
+static NSArray* logTypes = nil;
+
++ (NSArray*)defaultLogTypes {
+    if(logTypes == nil)
+    {
+        logTypes = [NSArray arrayWithObjects:@"Default", @"Keys", @"Matching", @"Adapters", @"Java Adapter", @"Text Adapter", nil];
+    }
+    return logTypes;
+}
+
++ (NSDictionary*)defaultLogLevels {
+    
+    if (defaultLogLevels == nil)
+    {
+        NSArray* keys = [MSLogLevelViewController defaultLogTypes];
+        NSMutableArray* valueLevels = [[[NSMutableArray alloc]init]autorelease];
+        for(int i = 0; i < [keys count]; i++)
+        {
+            [valueLevels addObject:[NSNumber numberWithInt:1]];
+        }
+        
+        defaultLogLevels = [[NSDictionary alloc] initWithObjects:valueLevels forKeys:[MSLogLevelViewController defaultLogTypes]];
+    }
+    return [defaultLogLevels mutableCopy];
 }
 
 -(void)viewDidLoad{
     [super viewDidLoad];
-    self.logLevelsArray = [NSArray arrayWithObjects:@"Default", @"Keys", nil];
     self.traceLevels = [NSArray arrayWithObjects:@"Off", @"Error", @"Warning", @"Info", @"Verbose", nil];
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.logLevelsArray.count;
+    return [[self customLevels] count];
 }
 
 
@@ -47,10 +67,12 @@
     [stepper setStepValue:1];
     [stepper addTarget:self action:@selector(stepperPressed:) forControlEvents:UIControlEventValueChanged];
 
-    CGFloat width = 100;
+    CGFloat width = 200;
     
     UILabel* nameLabel = [[[UILabel alloc]initWithFrame:CGRectMake(stepper.bounds.size.width + 40, 0, width, cell.bounds.size.height)]autorelease];
-    nameLabel.text = [self.logLevelsArray objectAtIndex:indexPath.row]; 
+    
+    NSString* key = [[self.customLevels allKeys] objectAtIndex:indexPath.row];    
+    nameLabel.text = key;
     
     UILabel* valueLabel = [[[UILabel alloc]initWithFrame:CGRectMake(stepper.bounds.size.width + 40+ nameLabel.bounds.size.width + 40, 0, width, cell.bounds.size.height)]autorelease];
     NSNumber* level = [self.customLevels objectForKey:nameLabel.text];
@@ -79,7 +101,7 @@
     UITableViewCell *cell = (UITableViewCell *) [[sender superview]superview];    
     NSIndexPath *indexPath = [self.logLevelTableView indexPathForCell:cell];
     UIStepper* stepper = sender;
-    NSString* text = [self.logLevelsArray objectAtIndex:indexPath.row];
+    NSString* text = [[self.customLevels allKeys] objectAtIndex:indexPath.row];
     NSNumber* value = [NSNumber numberWithDouble:[stepper value]];
     [self.customLevels setValue:value forKey:text];
     UILabel* valueLabel = (UILabel *)[cell.contentView viewWithTag:1];
