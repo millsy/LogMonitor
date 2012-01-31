@@ -21,15 +21,15 @@
 @synthesize logViewer = _logViewer;
 @synthesize pubnub = _pubnub;
 @synthesize listening = _listening;
-@synthesize customLogLevels = _customLogLevels;
+@synthesize settings = _settings;
 
--(NSMutableDictionary*)customLogLevels
+-(MSLogViewer*)settings
 {
-    if(!_customLogLevels) 
+    if(!_settings)
     {
-        [self setCustomLogLevels:[MSLogLevelViewController defaultLogLevels]];
+        _settings = [[MSLogViewer alloc]init];
     }
-    return _customLogLevels;
+    return _settings;
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -37,8 +37,8 @@
     if([segue.identifier isEqualToString:@"displayLogLevels"])
     {        
         //MSLogLevelViewController *view = segue.destinationViewController;
-        NSLog(@"Logs %@", [self customLogLevels]);
-        [segue.destinationViewController setCustomLevels:self.customLogLevels];
+        NSLog(@"Logs %@", self.settings.logLevels);
+        [segue.destinationViewController setCustomLevels:self.settings.logLevels];
     }
 }
 
@@ -51,11 +51,6 @@
                    sslOn:        YES
                    origin:       @"pubsub.pubnub.com"
                    ];    
-}
-
--(void)viewDidAppear:(BOOL)animated
-{
-    NSLog(@"Logs %@", self.customLogLevels);
 }
 
 - (void)pubnub:(CEPubnub *)pubnub subscriptionDidReceiveDictionary:(NSDictionary *)response onChannel:(NSString *)channel
@@ -119,6 +114,7 @@
     {
         [self.pubnub unsubscribe:@"OPENSPAN_LOGS"];
         [btn setTitle:@"Start" forState:UIControlStateNormal];
+        self.listening = NO;
     }else{
         [self.pubnub subscribe: @"OPENSPAN_LOGS" delegate:self];
         self.listening = YES;

@@ -14,33 +14,6 @@
 @synthesize logLevelTableView = _logLevelTableView;
 @synthesize customLevels = _customLevels;
 
-static NSDictionary* defaultLogLevels = nil;
-static NSArray* logTypes = nil;
-
-+ (NSArray*)defaultLogTypes {
-    if(logTypes == nil)
-    {
-        logTypes = [NSArray arrayWithObjects:@"Default", @"Keys", @"Matching", @"Adapters", @"Java Adapter", @"Text Adapter", nil];
-    }
-    return logTypes;
-}
-
-+ (NSDictionary*)defaultLogLevels {
-    
-    if (defaultLogLevels == nil)
-    {
-        NSArray* keys = [MSLogLevelViewController defaultLogTypes];
-        NSMutableArray* valueLevels = [[[NSMutableArray alloc]init]autorelease];
-        for(int i = 0; i < [keys count]; i++)
-        {
-            [valueLevels addObject:[NSNumber numberWithInt:1]];
-        }
-        
-        defaultLogLevels = [[NSDictionary alloc] initWithObjects:valueLevels forKeys:[MSLogLevelViewController defaultLogTypes]];
-    }
-    return [defaultLogLevels mutableCopy];
-}
-
 -(void)viewDidLoad{
     [super viewDidLoad];
     self.traceLevels = [NSArray arrayWithObjects:@"Off", @"Error", @"Warning", @"Info", @"Verbose", nil];

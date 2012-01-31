@@ -12,11 +12,7 @@
 
 //@property (nonatomic, retain) NSArray *logLevelsArray; 
 @property (nonatomic, retain) NSArray *traceLevels;
-@property (nonatomic, assign) NSMutableDictionary *customLevels;
-
+@property (nonatomic, retain) NSMutableDictionary *customLevels;
 @property (retain, nonatomic) IBOutlet UITableView *logLevelTableView;
-
-+(NSMutableDictionary*)defaultLogLevels;
-+(NSArray*)defaultLogTypes ;
 
 @end

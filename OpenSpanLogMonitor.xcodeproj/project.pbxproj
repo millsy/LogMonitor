@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		83E61CFA14D827A400B68046 /* MSLogViewer.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E61CF914D827A400B68046 /* MSLogViewer.m */; };
 		83F79A8114D6DE9A00C9A985 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83F79A8014D6DE9A00C9A985 /* UIKit.framework */; };
 		83F79A8314D6DE9A00C9A985 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83F79A8214D6DE9A00C9A985 /* Foundation.framework */; };
 		83F79A8514D6DE9A00C9A985 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83F79A8414D6DE9A00C9A985 /* CoreGraphics.framework */; };
@@ -33,6 +34,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		83E61CF814D827A400B68046 /* MSLogViewer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSLogViewer.h; sourceTree = "<group>"; };
+		83E61CF914D827A400B68046 /* MSLogViewer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSLogViewer.m; sourceTree = "<group>"; };
 		83F79A7C14D6DE9A00C9A985 /* OpenSpanLogMonitor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OpenSpanLogMonitor.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		83F79A8014D6DE9A00C9A985 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		83F79A8214D6DE9A00C9A985 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -95,12 +98,41 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		83E61CF414D8274000B68046 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				83F79A9514D6DE9A00C9A985 /* MSViewController.h */,
+				83F79A9614D6DE9A00C9A985 /* MSViewController.m */,
+				83F79ACF14D72DD900C9A985 /* MSLogLevelViewController.h */,
+				83F79AD014D72DD900C9A985 /* MSLogLevelViewController.m */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		83E61CF614D8276300B68046 /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				83F79A9214D6DE9A00C9A985 /* MainStoryboard.storyboard */,
+			);
+			name = Storyboards;
+			path = ..;
+			sourceTree = "<group>";
+		};
+		83E61CF714D8278100B68046 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				83E61CF814D827A400B68046 /* MSLogViewer.h */,
+				83E61CF914D827A400B68046 /* MSLogViewer.m */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
 		83F79A7114D6DE9900C9A985 = {
 			isa = PBXGroup;
 			children = (
+				83F79A8614D6DE9A00C9A985 /* OpenSpanLogMonitor */,
 				83F79AC414D6DEE200C9A985 /* PubNub */,
 				83F79A9D14D6DECC00C9A985 /* JSON */,
-				83F79A8614D6DE9A00C9A985 /* OpenSpanLogMonitor */,
 				83F79A7F14D6DE9A00C9A985 /* Frameworks */,
 				83F79A7D14D6DE9A00C9A985 /* Products */,
 			);
@@ -127,14 +159,12 @@
 		83F79A8614D6DE9A00C9A985 /* OpenSpanLogMonitor */ = {
 			isa = PBXGroup;
 			children = (
+				83E61CF714D8278100B68046 /* Models */,
+				83E61CF614D8276300B68046 /* Storyboards */,
+				83E61CF414D8274000B68046 /* Controllers */,
 				83F79A8F14D6DE9A00C9A985 /* MSAppDelegate.h */,
 				83F79A9014D6DE9A00C9A985 /* MSAppDelegate.m */,
-				83F79A9214D6DE9A00C9A985 /* MainStoryboard.storyboard */,
-				83F79A9514D6DE9A00C9A985 /* MSViewController.h */,
-				83F79A9614D6DE9A00C9A985 /* MSViewController.m */,
 				83F79A8714D6DE9A00C9A985 /* Supporting Files */,
-				83F79ACF14D72DD900C9A985 /* MSLogLevelViewController.h */,
-				83F79AD014D72DD900C9A985 /* MSLogLevelViewController.m */,
 			);
 			path = OpenSpanLogMonitor;
 			sourceTree = "<group>";
@@ -276,6 +306,7 @@
 				83F79ACA14D6DEF800C9A985 /* CEPubnub.m in Sources */,
 				83F79ACB14D6DEF800C9A985 /* CEPubnubRequest.m in Sources */,
 				83F79AD114D72DD900C9A985 /* MSLogLevelViewController.m in Sources */,
+				83E61CFA14D827A400B68046 /* MSLogViewer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -296,6 +327,7 @@
 				83F79A9314D6DE9A00C9A985 /* en */,
 			);
 			name = MainStoryboard.storyboard;
+			path = OpenSpanLogMonitor;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -387,6 +419,7 @@
 				83F79A9C14D6DE9A00C9A985 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -8,10 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "CEPubnub.h"
+#import "MSLogViewer.h"
 
 @interface MSViewController : UIViewController <CEPubnubDelegate>
 
-@property (nonatomic, strong) NSMutableDictionary* customLogLevels;
+@property (nonatomic, strong) MSLogViewer* settings;
+
 @property (nonatomic, strong) CEPubnub *pubnub;
 
 - (void)pubnub:(CEPubnub *)pubnub subscriptionDidReceiveDictionary:(NSDictionary *)response onChannel:(NSString *)channel;
