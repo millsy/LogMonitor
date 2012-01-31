@@ -14,6 +14,8 @@
 
 @property (nonatomic) BOOL listening;
 
+-(void)appendMessage:(NSString*)message andScroll:(BOOL)scroll;
+
 @end
 
 @implementation MSViewController
@@ -27,7 +29,7 @@
 {
     if(!_settings)
     {
-        _settings = [[MSLogViewer alloc]init];
+        //_settings = [[MSLogViewer alloc]initWithMachineName:nil];
     }
     return _settings;
 }
@@ -36,15 +38,14 @@
 {
     if([segue.identifier isEqualToString:@"displayLogLevels"])
     {        
-        //MSLogLevelViewController *view = segue.destinationViewController;
-        NSLog(@"Logs %@", self.settings.logLevels);
-        [segue.destinationViewController setCustomLevels:self.settings.logLevels];
+        //NSLog(@"Logs %@", self.settings.logLevels);
+        [segue.destinationViewController setSettings:self.settings];
     }
 }
 
 -(void)awakeFromNib
 {
-    self.pubnub = [[CEPubnub alloc]
+    self.pubnub = [[[CEPubnub alloc] autorelease]
                    publishKey:   @"pub-fc91edb4-5379-47f0-a882-c2de5db4fbcb" 
                    subscribeKey: @"sub-1e9854a8-4b3c-11e1-be34-4103cb3c6424" 
                    secretKey:    @""//@"sec-649a5039-cb8d-40eb-beec-21b9c07aec64" 
@@ -56,12 +57,26 @@
 - (void)pubnub:(CEPubnub *)pubnub subscriptionDidReceiveDictionary:(NSDictionary *)response onChannel:(NSString *)channel
 {
     
+    if(self.settings.machineName)
+    {
+        if(![[response allKeys]containsObject:@"MachineName"])
+        {
+            //message doesn't contain a MachineName - so ignore it
+            NSLog(@"Message recevied without a required MachineName");
+            return;
+        }
+        
+        if(![self.settings.machineName isEqualToString:[response objectForKey:@"MachineName"]])
+        {
+            //message not from the monitored machine
+            NSLog(@"Message recevied from a different machine");
+            return;
+        }
+    }
+    
     NSString* message = [NSString stringWithFormat:@"%@ %@\n", [response objectForKey:@"DateTime"], [response objectForKey:@"Message"]];
     
-    self.logViewer.text = [self.logViewer.text stringByAppendingString:message];
-    
-    [self.logViewer scrollRangeToVisible:NSMakeRange([self.logViewer.text length], 0)];
-    
+    [self appendMessage:message andScroll:YES];
 }
 - (void)pubnub:(CEPubnub *)pubnub subscriptionDidReceiveArray:(NSArray *)response onChannel:(NSString *)channel
 {
@@ -99,7 +114,7 @@
 
 
 - (void)dealloc {
-    [_logViewer release];
+
     [super dealloc];
 }
 - (void)viewDidUnload {
@@ -125,4 +140,16 @@
 - (IBAction)clear {
     self.logViewer.text = @"";
 }
+
+-(void)appendMessage:(NSString*)message andScroll:(BOOL)scroll
+{
+    self.logViewer.text = [self.logViewer.text stringByAppendingString:message];
+    
+    if(scroll)
+    {
+        [self.logViewer scrollRangeToVisible:NSMakeRange([self.logViewer.text length], 0)];
+    }
+
+}
+
 @end

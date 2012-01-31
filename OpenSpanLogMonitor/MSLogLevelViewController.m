@@ -10,18 +10,16 @@
 
 @implementation MSLogLevelViewController
 
-@synthesize traceLevels = _traceLevels;
 @synthesize logLevelTableView = _logLevelTableView;
-@synthesize customLevels = _customLevels;
+@synthesize settings = _settings;
 
 -(void)viewDidLoad{
     [super viewDidLoad];
-    self.traceLevels = [NSArray arrayWithObjects:@"Off", @"Error", @"Warning", @"Info", @"Verbose", nil];
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [[self customLevels] count];
+    return [self.settings.logLevels count];
 }
 
 
@@ -44,15 +42,15 @@
     
     UILabel* nameLabel = [[[UILabel alloc]initWithFrame:CGRectMake(stepper.bounds.size.width + 40, 0, width, cell.bounds.size.height)]autorelease];
     
-    NSString* key = [[self.customLevels allKeys] objectAtIndex:indexPath.row];    
+    NSString* key = [[self.settings.logLevels allKeys] objectAtIndex:indexPath.row];    
     nameLabel.text = key;
     
     UILabel* valueLabel = [[[UILabel alloc]initWithFrame:CGRectMake(stepper.bounds.size.width + 40+ nameLabel.bounds.size.width + 40, 0, width, cell.bounds.size.height)]autorelease];
-    NSNumber* level = [self.customLevels objectForKey:nameLabel.text];
+    NSNumber* level = [self.settings.logLevels objectForKey:nameLabel.text];
     
     [stepper setValue:[level intValue]];
     
-    valueLabel.text = [self.traceLevels objectAtIndex:[level integerValue]];
+    valueLabel.text = [self.settings.traceLevels objectAtIndex:[level integerValue]];
     valueLabel.contentMode = UIViewContentModeRedraw;
     valueLabel.tag = 1;
     // Configure the cell. 
@@ -74,11 +72,11 @@
     UITableViewCell *cell = (UITableViewCell *) [[sender superview]superview];    
     NSIndexPath *indexPath = [self.logLevelTableView indexPathForCell:cell];
     UIStepper* stepper = sender;
-    NSString* text = [[self.customLevels allKeys] objectAtIndex:indexPath.row];
+    NSString* text = [[self.settings.logLevels allKeys] objectAtIndex:indexPath.row];
     NSNumber* value = [NSNumber numberWithDouble:[stepper value]];
-    [self.customLevels setValue:value forKey:text];
+    [self.settings.logLevels setValue:value forKey:text];
     UILabel* valueLabel = (UILabel *)[cell.contentView viewWithTag:1];
-    valueLabel.text = [self.traceLevels objectAtIndex:[value integerValue]];
+    valueLabel.text = [self.settings.traceLevels objectAtIndex:[value integerValue]];
 }
 
 - (void)dealloc {
@@ -87,7 +85,6 @@
 }
 
 - (void)viewDidUnload {
-    [[self customLevels]release];
     [self setLogLevelTableView:nil];
     [super viewDidUnload];
 }

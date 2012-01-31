@@ -21,6 +21,13 @@
 
 static NSMutableDictionary* defaultLogLevels = nil;
 static NSArray* logTypes = nil;
+//static NSArray* defaultTraceLevels = nil;
+
+-(void)dealloc
+{
+    if(defaultLogLevels) [defaultLogLevels dealloc];
+    if(logTypes) [logTypes dealloc];
+}
 
 - (NSArray*)defaultLogTypes {
     if(logTypes == nil)
@@ -43,16 +50,17 @@ static NSArray* logTypes = nil;
         
         defaultLogLevels = [[NSMutableDictionary alloc] initWithObjects:valueLevels forKeys:[self defaultLogTypes]];
     }
-    return [defaultLogLevels mutableCopy];
+    return [[defaultLogLevels mutableCopy]autorelease];
 }
 
 @synthesize machineName = _machineName;
 @synthesize logLevels = _logLevels;
 @synthesize defaultTraceLevel = _defaultTraceLevel;
+@synthesize traceLevels = _traceLevels;
 
 -(id)init
 {
-    return [self initWithMachineName:@"" logLevels:[self defaultLogLevels]];
+    return [self initWithMachineName:nil logLevels:[self defaultLogLevels]];
 }
 
 -(id)initWithMachineName:(NSString*)machineName
@@ -78,6 +86,18 @@ static NSArray* logTypes = nil;
         _defaultTraceLevel = [NSNumber numberWithInt:1];
     }
     return _defaultTraceLevel;
+}
+
+-(NSArray*)traceLevels{
+    if(!_traceLevels)
+    {
+        _traceLevels = [[NSArray alloc] initWithObjects:@"Off", @"Error", @"Warning", @"Info", @"Verbose", nil];
+    }
+    return _traceLevels;
+}
+
+-(NSString*)description{
+    return [NSString stringWithFormat:@"Log Levels = %@\nTrace Levels = %@", self.logLevels, self.traceLevels];
 }
 
 @end

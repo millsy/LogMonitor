@@ -12,6 +12,7 @@
 
 @property (nonatomic, strong) NSString* machineName;
 @property (nonatomic, strong) NSMutableDictionary* logLevels;
+@property (nonatomic, retain, readonly) NSArray* traceLevels;
 
 -(id)init;
 -(id)initWithMachineName:(NSString*)machineName;

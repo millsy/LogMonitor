@@ -7,12 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MSLogViewer.h"
 
 @interface MSLogLevelViewController : UITableViewController
 
-//@property (nonatomic, retain) NSArray *logLevelsArray; 
-@property (nonatomic, retain) NSArray *traceLevels;
-@property (nonatomic, retain) NSMutableDictionary *customLevels;
+@property (nonatomic, retain) MSLogViewer *settings;
+
 @property (retain, nonatomic) IBOutlet UITableView *logLevelTableView;
 
 @end
