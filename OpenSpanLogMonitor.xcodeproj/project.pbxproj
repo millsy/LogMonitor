@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		83E2AD4414D87BA900829924 /* MSStartupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E2AD4314D87BA900829924 /* MSStartupViewController.m */; };
+		83E2AD4C14D9D22B00829924 /* MSScreenShotViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E2AD4B14D9D22B00829924 /* MSScreenShotViewController.m */; };
 		83E61CFA14D827A400B68046 /* MSLogViewer.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E61CF914D827A400B68046 /* MSLogViewer.m */; };
 		83F79A8114D6DE9A00C9A985 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83F79A8014D6DE9A00C9A985 /* UIKit.framework */; };
 		83F79A8314D6DE9A00C9A985 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83F79A8214D6DE9A00C9A985 /* Foundation.framework */; };
@@ -37,6 +38,8 @@
 /* Begin PBXFileReference section */
 		83E2AD4214D87BA900829924 /* MSStartupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSStartupViewController.h; sourceTree = "<group>"; };
 		83E2AD4314D87BA900829924 /* MSStartupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSStartupViewController.m; sourceTree = "<group>"; };
+		83E2AD4A14D9D22B00829924 /* MSScreenShotViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSScreenShotViewController.h; sourceTree = "<group>"; };
+		83E2AD4B14D9D22B00829924 /* MSScreenShotViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSScreenShotViewController.m; sourceTree = "<group>"; };
 		83E61CF814D827A400B68046 /* MSLogViewer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSLogViewer.h; sourceTree = "<group>"; };
 		83E61CF914D827A400B68046 /* MSLogViewer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSLogViewer.m; sourceTree = "<group>"; };
 		83F79A7C14D6DE9A00C9A985 /* OpenSpanLogMonitor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OpenSpanLogMonitor.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -110,6 +113,8 @@
 				83F79AD014D72DD900C9A985 /* MSLogLevelViewController.m */,
 				83E2AD4214D87BA900829924 /* MSStartupViewController.h */,
 				83E2AD4314D87BA900829924 /* MSStartupViewController.m */,
+				83E2AD4A14D9D22B00829924 /* MSScreenShotViewController.h */,
+				83E2AD4B14D9D22B00829924 /* MSScreenShotViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -313,6 +318,7 @@
 				83F79AD114D72DD900C9A985 /* MSLogLevelViewController.m in Sources */,
 				83E61CFA14D827A400B68046 /* MSLogViewer.m in Sources */,
 				83E2AD4414D87BA900829924 /* MSStartupViewController.m in Sources */,
+				83E2AD4C14D9D22B00829924 /* MSScreenShotViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

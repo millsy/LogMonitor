@@ -16,6 +16,8 @@
 @property (nonatomic, strong, readonly) NSString* publishKey;
 @property (nonatomic, strong, readonly) NSString* subscribeKey;
 
+@property (nonatomic, strong) NSMutableArray* images;
+
 -(id)init;
 -(id)initWithMachineName:(NSString*)machineName;
 -(id)initWithMachineName:(NSString *)machineName logLevels:(NSMutableDictionary*)logLevels;
@@ -23,6 +25,7 @@
 -(id)initWithMachineName:(NSString *)machineName logLevels:(NSMutableDictionary*)logLevels machineKey:(NSString*)machineKey;
 
 -(void)sendLogLevels;
+-(void)requestScreenShot;
 
 +(NSArray*)traceLevels;
 @end

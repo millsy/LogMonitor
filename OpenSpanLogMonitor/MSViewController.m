@@ -30,8 +30,12 @@ BOOL viewPushed = NO;
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
+    if([segue.identifier isEqualToString:@"showScreenshot"])
+    {
+        [segue.destinationViewController setImageURLs:self.settings.images];
+        //[segue.destinationViewController showImageWithURL:[self.settings.images lastObject]];
+    }
 }
-
 -(CEPubnub*)pubnub
 {
     if(!_pubnub)
@@ -132,17 +136,19 @@ BOOL viewPushed = NO;
 }
 
 - (IBAction)stateChange:(id)sender {
-    UIButton* btn = sender;
     if(self.listening)
     {
         [self.pubnub unsubscribe:@"OPENSPAN_LOGS"];
-        [btn setTitle:@"Start" forState:UIControlStateNormal];
+        [sender setTitle:@"Start"];
         self.listening = NO;
     }else{
         [self.pubnub subscribe: @"OPENSPAN_LOGS" delegate:self];
         self.listening = YES;
-        [btn setTitle:@"Stop" forState:UIControlStateNormal];
+        [sender setTitle:@"Stop"];
     }
+}
+- (IBAction)screenShot:(id)sender {
+    [self.settings requestScreenShot];
 }
 
 - (IBAction)clear {

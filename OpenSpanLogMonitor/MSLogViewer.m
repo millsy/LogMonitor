@@ -15,6 +15,8 @@
 
 - (NSArray*)defaultLogTypes;
 - (NSMutableDictionary*)defaultLogLevels;
+-(void)sendMessage:(id)message toChannel:(NSString*)channel;
+-(void)addImageNamed:(NSString*)name inFolder:(NSString*)folder;
 
 @end
 
@@ -62,6 +64,16 @@ static NSArray* _traceLevels;
 @synthesize key = _key;
 @synthesize publishKey = _publishKey;
 @synthesize subscribeKey = _subscribeKey;
+@synthesize images = _images;
+
+-(NSMutableArray*)images
+{
+    if(!_images)
+    {
+        _images = [[NSMutableArray alloc]init];
+    }
+    return _images;
+}
 
 -(NSString*)publishKey
 {
@@ -142,15 +154,7 @@ static NSArray* _traceLevels;
     {
         NSDictionary* msg = [NSDictionary dictionaryWithObjectsAndKeys: self.machineName, @"MachineName", @"TraceLevel", @"Type", self.key, @"MachineKey", self.logLevels, @"Levels", nil];
         
-        CEPubnub* pn = [[[CEPubnub alloc] autorelease]
-         publishKey:   self.publishKey
-         subscribeKey: self.subscribeKey 
-         secretKey:    @""//@"sec-649a5039-cb8d-40eb-beec-21b9c07aec64" 
-         sslOn:        YES
-         origin:       @"pubsub.pubnub.com"
-         ]; 
-        
-        [pn publish:@"LOGENABLER" message:msg delegate:self];
+        [self sendMessage:msg toChannel:@"LOGENABLER"];
         
         NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
         
@@ -158,6 +162,40 @@ static NSArray* _traceLevels;
         
         [defaults synchronize];
     }
+}
+
+-(void)requestScreenShot
+{
+    if(self.machineName && self.key)
+    {
+        NSString* filename = [[[NSProcessInfo processInfo] globallyUniqueString] stringByAppendingString:@".jpg"];
+        NSString* folder = self.machineName;
+        NSString* bucket = @"openspanimages";
+        
+        NSDictionary* msg = [NSDictionary dictionaryWithObjectsAndKeys: self.machineName, @"MachineName", @"screenshot", @"Type", self.key, @"MachineKey", bucket, @"Bucket", filename, @"Filename", folder, @"Folder", nil];
+        
+        [self sendMessage:msg toChannel:@"LOGENABLER"];
+        
+        [self addImageNamed:filename inFolder:folder];
+    }
+}
+
+-(void)addImageNamed:(NSString*)name inFolder:(NSString*)folder
+{
+    NSString* url = [NSString stringWithFormat:@"http://openspanimages.s3.amazonaws.com/%@/%@", folder , name];
+    [self.images addObject:url];
+}
+
+-(void)sendMessage:(id)message toChannel:(NSString*)channel
+{
+    CEPubnub* pn = [[[CEPubnub alloc] autorelease]
+                    publishKey:   self.publishKey
+                    subscribeKey: self.subscribeKey 
+                    secretKey:    @""//@"sec-649a5039-cb8d-40eb-beec-21b9c07aec64" 
+                    sslOn:        YES
+                    origin:       @"pubsub.pubnub.com"
+                    ];
+    [pn publish:channel message:message delegate:self];
 }
 
 @end
