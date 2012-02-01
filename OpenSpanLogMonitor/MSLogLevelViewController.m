@@ -13,6 +13,9 @@
 @synthesize logLevelTableView = _logLevelTableView;
 @synthesize settings = _settings;
 
+
+static BOOL edited = NO;
+
 -(void)viewDidLoad{
     [super viewDidLoad];
 }
@@ -62,9 +65,9 @@
     return cell;
 }
 
-- (void)willMoveToSuperview:(UIView *)newSuperview
+-(void) viewWillDisappear:(BOOL)animated
 {
-
+    if(edited)[self.settings sendLogLevels];
 }
 
 - (void)stepperPressed:(UIStepper*)sender
@@ -77,6 +80,8 @@
     [self.settings.logLevels setValue:value forKey:text];
     UILabel* valueLabel = (UILabel *)[cell.contentView viewWithTag:1];
     valueLabel.text = [self.settings.traceLevels objectAtIndex:[value integerValue]];
+    
+    edited = YES;
 }
 
 - (void)dealloc {

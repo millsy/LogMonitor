@@ -13,9 +13,16 @@
 @property (nonatomic, strong) NSString* machineName;
 @property (nonatomic, strong) NSMutableDictionary* logLevels;
 @property (nonatomic, retain, readonly) NSArray* traceLevels;
+@property (nonatomic, strong) NSString* key;
+@property (nonatomic, strong, readonly) NSString* publishKey;
+@property (nonatomic, strong, readonly) NSString* subscribeKey;
 
 -(id)init;
 -(id)initWithMachineName:(NSString*)machineName;
 -(id)initWithMachineName:(NSString *)machineName logLevels:(NSMutableDictionary*)logLevels;
+-(id)initWithMachineName:(NSString *)machineName machineKey:(NSString*)machineKey;
+-(id)initWithMachineName:(NSString *)machineName logLevels:(NSMutableDictionary*)logLevels machineKey:(NSString*)machineKey;
+
+-(void)sendLogLevels;
 
 @end

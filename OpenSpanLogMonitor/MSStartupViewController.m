@@ -13,6 +13,7 @@
 @implementation MSStartupViewController
 
 @synthesize machineName = _machineName;
+@synthesize machineKey = _machineKey;
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
@@ -20,12 +21,23 @@
     return YES;
 }
 
+-(NSMutableDictionary*)savedLogLevels
+{
+    //check if we have stored prefs
+    if ([[NSUserDefaults standardUserDefaults] dictionaryForKey:@"logLevels"]) {
+        return [[[NSUserDefaults standardUserDefaults] dictionaryForKey:@"logLevels"]mutableCopy];
+    }
+    return nil;
+}
+
 - (void)dealloc {
     [_machineName release];
+    [_machineKey release];
     [super dealloc];
 }
 - (void)viewDidUnload {
     [self setMachineName:nil];
+    [self setMachineKey:nil];
     [super viewDidUnload];
 }
 
@@ -33,7 +45,7 @@
 {
     if([segue.identifier isEqualToString:@"showLog"])
     {
-        MSLogViewer* logSettings = [[[MSLogViewer alloc]initWithMachineName:self.machineName.text]autorelease];
+        MSLogViewer* logSettings = [[[MSLogViewer alloc]initWithMachineName:self.machineName.text logLevels:[self savedLogLevels] machineKey:self.machineKey.text]autorelease];
         [(MSViewController*)segue.destinationViewController setSettings:logSettings];
     }
 }

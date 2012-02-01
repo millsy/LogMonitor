@@ -7,6 +7,7 @@
 //
 
 #import "MSLogViewer.h"
+#import "CEPubnub.h"
 
 @interface MSLogViewer()
 
@@ -21,7 +22,6 @@
 
 static NSMutableDictionary* defaultLogLevels = nil;
 static NSArray* logTypes = nil;
-//static NSArray* defaultTraceLevels = nil;
 
 -(void)dealloc
 {
@@ -57,24 +57,58 @@ static NSArray* logTypes = nil;
 @synthesize logLevels = _logLevels;
 @synthesize defaultTraceLevel = _defaultTraceLevel;
 @synthesize traceLevels = _traceLevels;
+@synthesize key = _key;
+@synthesize publishKey = _publishKey;
+@synthesize subscribeKey = _subscribeKey;
+
+-(NSString*)publishKey
+{
+    if(!_publishKey)
+    {
+        _publishKey = @"pub-fc91edb4-5379-47f0-a882-c2de5db4fbcb";
+    }
+    return _publishKey;
+}
+
+-(NSString*)subscribeKey
+{
+    if(!_subscribeKey)
+    {
+        _subscribeKey = @"sub-1e9854a8-4b3c-11e1-be34-4103cb3c6424";
+    }
+    return _subscribeKey;
+}
 
 -(id)init
 {
-    return [self initWithMachineName:nil logLevels:[self defaultLogLevels]];
+    return [self initWithMachineName:nil logLevels:nil machineKey:nil];
 }
 
 -(id)initWithMachineName:(NSString*)machineName
 {
-    return [self initWithMachineName:machineName logLevels:[self defaultLogLevels]];
+    return [self initWithMachineName:machineName logLevels:nil machineKey:nil];
 }
 
 -(id)initWithMachineName:(NSString*)machineName logLevels:(NSMutableDictionary *)logLevels
 {
+    return [self initWithMachineName:machineName logLevels:logLevels machineKey:nil];
+}
+
+-(id)initWithMachineName:(NSString *)machineName machineKey:(NSString*)machineKey
+{
+    return [self initWithMachineName:machineName logLevels:nil machineKey:machineKey];
+}
+
+-(id)initWithMachineName:(NSString *)machineName logLevels:(NSMutableDictionary*)logLevels machineKey:(NSString*)machineKey
+{
     self = [super init];
     if(self)
     {
+        if(!logLevels) logLevels = [self defaultLogLevels];
+        
         self.machineName = machineName;
         self.logLevels = logLevels;
+        self.key = machineKey;
     }
     return self;
 }
@@ -97,7 +131,31 @@ static NSArray* logTypes = nil;
 }
 
 -(NSString*)description{
-    return [NSString stringWithFormat:@"Log Levels = %@\nTrace Levels = %@", self.logLevels, self.traceLevels];
+    return [NSString stringWithFormat:@"Machine Name = %@\nMachine Key = %@\nLog Levels = %@\nTrace Levels = %@", self.machineName, self.key, self.logLevels, self.traceLevels];
+}
+
+-(void)sendLogLevels
+{
+    if(self.key)
+    {
+        NSDictionary* msg = [NSDictionary dictionaryWithObjectsAndKeys: self.machineName, @"MachineName", self.key, @"MachineKey", self.logLevels, @"Levels", nil];
+        
+        CEPubnub* pn = [[[CEPubnub alloc] autorelease]
+         publishKey:   self.publishKey
+         subscribeKey: self.subscribeKey 
+         secretKey:    @""//@"sec-649a5039-cb8d-40eb-beec-21b9c07aec64" 
+         sslOn:        YES
+         origin:       @"pubsub.pubnub.com"
+         ]; 
+        
+        [pn publish:@"LOGENABLER" message:msg delegate:self];
+        
+        NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+        
+        [defaults setObject:self.logLevels forKey:@"logLevels"];
+        
+        [defaults synchronize];
+    }
 }
 
 @end

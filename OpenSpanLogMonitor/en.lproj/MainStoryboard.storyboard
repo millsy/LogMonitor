@@ -21,7 +21,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="znG-Q7-zhN">
-                                <rect key="frame" x="467" y="161" width="90" height="37"/>
+                                <rect key="frame" x="467" y="205" width="90" height="37"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal" title="View Log">
@@ -41,12 +41,19 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Machine Key" textAlignment="center" minimumFontSize="17" id="TKe-se-tH2">
+                                <rect key="frame" x="397" y="161" width="231" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     </view>
-                    <navigationItem key="navigationItem" id="tt7-zr-eYl"/>
+                    <navigationItem key="navigationItem" title="OpenSpan Log Viewer Settings" id="tt7-zr-eYl"/>
                     <connections>
+                        <outlet property="machineKey" destination="TKe-se-tH2" id="11D-SW-9oC"/>
                         <outlet property="machineName" destination="Xea-ZU-9EP" id="Z6J-tB-5px"/>
                     </connections>
                 </viewController>

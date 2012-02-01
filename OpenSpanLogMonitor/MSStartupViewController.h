@@ -11,5 +11,6 @@
 @interface MSStartupViewController : UIViewController
 
 @property (retain, nonatomic) IBOutlet UITextField *machineName;
+@property (retain, nonatomic) IBOutlet UITextField *machineKey;
 
 @end

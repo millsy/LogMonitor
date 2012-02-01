@@ -13,8 +13,7 @@
 @interface MSViewController : UIViewController <CEPubnubDelegate>
 
 @property (nonatomic, strong) MSLogViewer* settings;
-
-@property (nonatomic, strong) CEPubnub *pubnub;
+@property (nonatomic, retain, readonly) CEPubnub *pubnub;
 
 - (void)pubnub:(CEPubnub *)pubnub subscriptionDidReceiveDictionary:(NSDictionary *)response onChannel:(NSString *)channel;
 - (void)pubnub:(CEPubnub *)pubnub subscriptionDidReceiveArray:(NSArray *)response onChannel:(NSString *)channel;

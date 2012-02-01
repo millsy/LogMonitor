@@ -14,6 +14,7 @@
 
 @property (nonatomic) BOOL listening;
 
+
 -(void)appendMessage:(NSString*)message andScroll:(BOOL)scroll;
 
 @end
@@ -25,14 +26,7 @@
 @synthesize listening = _listening;
 @synthesize settings = _settings;
 
--(MSLogViewer*)settings
-{
-    if(!_settings)
-    {
-        //_settings = [[MSLogViewer alloc]initWithMachineName:nil];
-    }
-    return _settings;
-}
+BOOL viewPushed = NO;
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
@@ -40,18 +34,29 @@
     {        
         //NSLog(@"Logs %@", self.settings.logLevels);
         [segue.destinationViewController setSettings:self.settings];
+        viewPushed = YES;
     }
+}
+
+-(CEPubnub*)pubnub
+{
+    if(!_pubnub)
+    {
+        _pubnub = [[CEPubnub alloc]
+                       publishKey:   self.settings.publishKey
+                       subscribeKey: self.settings.subscribeKey 
+                       secretKey:    @""//@"sec-649a5039-cb8d-40eb-beec-21b9c07aec64" 
+                       sslOn:        YES
+                       origin:       @"pubsub.pubnub.com"
+                       ]; 
+    }
+    
+    return _pubnub;
 }
 
 -(void)awakeFromNib
 {
-    self.pubnub = [[[CEPubnub alloc] autorelease]
-                   publishKey:   @"pub-fc91edb4-5379-47f0-a882-c2de5db4fbcb" 
-                   subscribeKey: @"sub-1e9854a8-4b3c-11e1-be34-4103cb3c6424" 
-                   secretKey:    @""//@"sec-649a5039-cb8d-40eb-beec-21b9c07aec64" 
-                   sslOn:        YES
-                   origin:       @"pubsub.pubnub.com"
-                   ];    
+   
 }
 
 - (void)pubnub:(CEPubnub *)pubnub subscriptionDidReceiveDictionary:(NSDictionary *)response onChannel:(NSString *)channel
@@ -74,7 +79,7 @@
         }
     }
     
-    NSString* message = [NSString stringWithFormat:@"%@ %@\n", [response objectForKey:@"DateTime"], [response objectForKey:@"Message"]];
+    NSString* message = [NSString stringWithFormat:@"%@ %@ %@\n", [response objectForKey:@"DateTime"],[response objectForKey:@"Category"], [response objectForKey:@"Message"]];
     
     [self appendMessage:message andScroll:YES];
 }
@@ -122,6 +127,15 @@
     [super viewDidUnload];
 }
 
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    if (viewPushed) {
+        viewPushed = NO;
+    } else {
+        // Here, you know that back button was pressed
+        [self.pubnub unsubscribe:@"OPENSPAN_LOGS"];
+    }   
+}
 
 - (IBAction)stateChange:(id)sender {
     UIButton* btn = sender;
