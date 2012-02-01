@@ -30,12 +30,6 @@ BOOL viewPushed = NO;
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if([segue.identifier isEqualToString:@"displayLogLevels"])
-    {        
-        //NSLog(@"Logs %@", self.settings.logLevels);
-        [segue.destinationViewController setSettings:self.settings];
-        viewPushed = YES;
-    }
 }
 
 -(CEPubnub*)pubnub

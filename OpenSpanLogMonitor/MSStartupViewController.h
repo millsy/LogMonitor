@@ -7,10 +7,22 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MSLogViewer.h"
 
-@interface MSStartupViewController : UIViewController
+@protocol MSStartupViewControllerDelegate
+
+@optional
+
+- (void)didUpdateLogLevels:(NSMutableDictionary *)logLevels;
+
+@end
+
+@interface MSStartupViewController : UIViewController <MSStartupViewControllerDelegate>
 
 @property (retain, nonatomic) IBOutlet UITextField *machineName;
 @property (retain, nonatomic) IBOutlet UITextField *machineKey;
+@property (nonatomic, strong) MSLogViewer* settings;
+
+-(NSMutableDictionary*)savedLogLevels;
 
 @end

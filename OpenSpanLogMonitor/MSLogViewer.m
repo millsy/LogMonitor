@@ -56,7 +56,9 @@ static NSArray* logTypes = nil;
 @synthesize machineName = _machineName;
 @synthesize logLevels = _logLevels;
 @synthesize defaultTraceLevel = _defaultTraceLevel;
-@synthesize traceLevels = _traceLevels;
+
+static NSArray* _traceLevels;
+
 @synthesize key = _key;
 @synthesize publishKey = _publishKey;
 @synthesize subscribeKey = _subscribeKey;
@@ -122,7 +124,7 @@ static NSArray* logTypes = nil;
     return _defaultTraceLevel;
 }
 
--(NSArray*)traceLevels{
++(NSArray*)traceLevels{
     if(!_traceLevels)
     {
         _traceLevels = [[NSArray alloc] initWithObjects:@"Off", @"Error", @"Warning", @"Info", @"Verbose", nil];
@@ -131,14 +133,14 @@ static NSArray* logTypes = nil;
 }
 
 -(NSString*)description{
-    return [NSString stringWithFormat:@"Machine Name = %@\nMachine Key = %@\nLog Levels = %@\nTrace Levels = %@", self.machineName, self.key, self.logLevels, self.traceLevels];
+    return [NSString stringWithFormat:@"Machine Name = %@\nMachine Key = %@\nLog Levels = %@\nTrace Levels = %@", self.machineName, self.key, self.logLevels, [[self class]traceLevels]];
 }
 
 -(void)sendLogLevels
 {
-    if(self.key)
+    if(self.machineName && self.key)
     {
-        NSDictionary* msg = [NSDictionary dictionaryWithObjectsAndKeys: self.machineName, @"MachineName", self.key, @"MachineKey", self.logLevels, @"Levels", nil];
+        NSDictionary* msg = [NSDictionary dictionaryWithObjectsAndKeys: self.machineName, @"MachineName", @"TraceLevel", @"Type", self.key, @"MachineKey", self.logLevels, @"Levels", nil];
         
         CEPubnub* pn = [[[CEPubnub alloc] autorelease]
          publishKey:   self.publishKey

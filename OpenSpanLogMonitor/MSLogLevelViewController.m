@@ -11,8 +11,8 @@
 @implementation MSLogLevelViewController
 
 @synthesize logLevelTableView = _logLevelTableView;
-@synthesize settings = _settings;
-
+@synthesize logLevels = _logLevels;
+@synthesize delegate = _delegate;
 
 static BOOL edited = NO;
 
@@ -22,7 +22,12 @@ static BOOL edited = NO;
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [self.settings.logLevels count];
+    return [self.logLevels count];
+}
+
+-(void)setLogLevels:(NSMutableDictionary *)logLevels
+{
+    _logLevels = [logLevels mutableCopy];
 }
 
 
@@ -45,15 +50,15 @@ static BOOL edited = NO;
     
     UILabel* nameLabel = [[[UILabel alloc]initWithFrame:CGRectMake(stepper.bounds.size.width + 40, 0, width, cell.bounds.size.height)]autorelease];
     
-    NSString* key = [[self.settings.logLevels allKeys] objectAtIndex:indexPath.row];    
+    NSString* key = [[self.logLevels allKeys] objectAtIndex:indexPath.row];    
     nameLabel.text = key;
     
     UILabel* valueLabel = [[[UILabel alloc]initWithFrame:CGRectMake(stepper.bounds.size.width + 40+ nameLabel.bounds.size.width + 40, 0, width, cell.bounds.size.height)]autorelease];
-    NSNumber* level = [self.settings.logLevels objectForKey:nameLabel.text];
+    NSNumber* level = [self.logLevels objectForKey:nameLabel.text];
     
     [stepper setValue:[level intValue]];
     
-    valueLabel.text = [self.settings.traceLevels objectAtIndex:[level integerValue]];
+    valueLabel.text = [[MSLogViewer traceLevels] objectAtIndex:[level integerValue]];
     valueLabel.contentMode = UIViewContentModeRedraw;
     valueLabel.tag = 1;
     // Configure the cell. 
@@ -65,9 +70,9 @@ static BOOL edited = NO;
     return cell;
 }
 
--(void) viewWillDisappear:(BOOL)animated
-{
-    if(edited)[self.settings sendLogLevels];
+- (IBAction)saveLogLevels:(id)sender {
+    [self.delegate didUpdateLogLevels:self.logLevels];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)stepperPressed:(UIStepper*)sender
@@ -75,11 +80,11 @@ static BOOL edited = NO;
     UITableViewCell *cell = (UITableViewCell *) [[sender superview]superview];    
     NSIndexPath *indexPath = [self.logLevelTableView indexPathForCell:cell];
     UIStepper* stepper = sender;
-    NSString* text = [[self.settings.logLevels allKeys] objectAtIndex:indexPath.row];
+    NSString* text = [[self.logLevels allKeys] objectAtIndex:indexPath.row];
     NSNumber* value = [NSNumber numberWithDouble:[stepper value]];
-    [self.settings.logLevels setValue:value forKey:text];
+    [self.logLevels setValue:value forKey:text];
     UILabel* valueLabel = (UILabel *)[cell.contentView viewWithTag:1];
-    valueLabel.text = [self.settings.traceLevels objectAtIndex:[value integerValue]];
+    valueLabel.text = [[MSLogViewer traceLevels] objectAtIndex:[value integerValue]];
     
     edited = YES;
 }

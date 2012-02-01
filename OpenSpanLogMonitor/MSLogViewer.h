@@ -12,7 +12,6 @@
 
 @property (nonatomic, strong) NSString* machineName;
 @property (nonatomic, strong) NSMutableDictionary* logLevels;
-@property (nonatomic, retain, readonly) NSArray* traceLevels;
 @property (nonatomic, strong) NSString* key;
 @property (nonatomic, strong, readonly) NSString* publishKey;
 @property (nonatomic, strong, readonly) NSString* subscribeKey;
@@ -25,4 +24,5 @@
 
 -(void)sendLogLevels;
 
++(NSArray*)traceLevels;
 @end

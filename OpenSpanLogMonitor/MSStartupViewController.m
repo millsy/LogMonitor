@@ -8,17 +8,27 @@
 
 #import "MSStartupViewController.h"
 #import "MSViewController.h"
-#import "MSLogViewer.h"
+#import "MSLogLevelViewController.h"
 
-@implementation MSStartupViewController
+@implementation MSStartupViewController 
 
 @synthesize machineName = _machineName;
 @synthesize machineKey = _machineKey;
+@synthesize settings = _settings;
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     // Return YES for supported orientations
     return YES;
+}
+
+-(MSLogViewer*)settings
+{
+    if(!_settings)
+    {
+        _settings = [[[MSLogViewer alloc]initWithMachineName:self.machineName.text logLevels:[self savedLogLevels] machineKey:self.machineKey.text]autorelease];
+    }
+    return _settings;
 }
 
 -(NSMutableDictionary*)savedLogLevels
@@ -41,13 +51,29 @@
     [super viewDidUnload];
 }
 
+
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
+    self.settings.machineName = self.machineName.text;
+    self.settings.key = self.machineKey.text;
+    
     if([segue.identifier isEqualToString:@"showLog"])
     {
-        MSLogViewer* logSettings = [[[MSLogViewer alloc]initWithMachineName:self.machineName.text logLevels:[self savedLogLevels] machineKey:self.machineKey.text]autorelease];
-        [(MSViewController*)segue.destinationViewController setSettings:logSettings];
+        [(MSViewController*)segue.destinationViewController setSettings:self.settings];
     }
+    else if([segue.identifier isEqualToString:@"displayLogLevels"])
+    {
+        MSLogLevelViewController* logVC = (MSLogLevelViewController*)segue.destinationViewController;
+        logVC.delegate = self;
+        [logVC setLogLevels:self.settings.logLevels];
+    }
+
+}
+
+- (void)didUpdateLogLevels:(NSMutableDictionary *)logLevels
+{
+    [self.settings setLogLevels:logLevels];
+    [self.settings sendLogLevels];
 }
 
 @end

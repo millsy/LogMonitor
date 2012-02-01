@@ -8,11 +8,14 @@
 
 #import <UIKit/UIKit.h>
 #import "MSLogViewer.h"
+#import "MSStartupViewController.h"
 
 @interface MSLogLevelViewController : UITableViewController
 
-@property (nonatomic, retain) MSLogViewer *settings;
-
+@property (nonatomic, assign) id<MSStartupViewControllerDelegate> delegate;
+@property (nonatomic, retain) NSMutableDictionary * logLevels;
 @property (retain, nonatomic) IBOutlet UITableView *logLevelTableView;
+
+
 
 @end
