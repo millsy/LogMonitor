@@ -28,6 +28,7 @@
         [self showImageWithURL:[self.imageURLs objectAtIndex:index]];
     }
 }
+
 - (IBAction)previousImage:(id)sender {
     if(self.imageURLs && [self.imageURLs count] > 0 && self.index > 0)
     {
