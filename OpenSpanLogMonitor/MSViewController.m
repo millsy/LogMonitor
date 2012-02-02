@@ -46,9 +46,21 @@ BOOL viewPushed = NO;
     return _logEntries;
 }
 
+- (NSString *) tableView: (UITableView *) tableview titleForHeaderInSection: (NSInteger) section {
+    if(section == 0){
+        return @"Date";
+    }
+    return @"Message";
+}
+
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return [self.logEntries count];
+}
+
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 2;
 }
 
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -60,8 +72,18 @@ BOOL viewPushed = NO;
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease]; 
     } 
     
-    cell.textLabel.text = [self.logEntries objectAtIndex:indexPath.row];
+    NSDictionary* dict = [self.logEntries objectAtIndex:indexPath.row];
     
+    if(indexPath.section == 0)
+    {
+        NSDateFormatter *df = [[NSDateFormatter alloc] init];
+        [df setDateFormat:@"yyyy-MM-dd HH:mm:ss.SSS"];
+        NSDate *myDate = [df dateFromString: [dict objectForKey:@"DateTime"]];
+        cell.textLabel.text = [myDate description];
+        
+    }else{
+        cell.textLabel.text = [dict objectForKey:@"Message"];
+    }
     return cell;
 }
 
@@ -108,8 +130,10 @@ BOOL viewPushed = NO;
     
     NSString* message = [NSString stringWithFormat:@"%@ %@ %@\n", [response objectForKey:@"DateTime"],[response objectForKey:@"Category"], [response objectForKey:@"Message"]];
     
+
+    
+    [self.logEntries addObject:response];
     [self.tableLogEntries reloadData];
-    [self.logEntries addObject:message];
     //[self appendMessage:message andScroll:YES];
 }
 - (void)pubnub:(CEPubnub *)pubnub subscriptionDidReceiveArray:(NSArray *)response onChannel:(NSString *)channel

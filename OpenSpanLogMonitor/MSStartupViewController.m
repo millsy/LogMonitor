@@ -70,6 +70,14 @@
 
 }
 
+-(void)viewDidLoad{
+    [NSThread sleepForTimeInterval:3];
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    
+}
+
 - (void)didUpdateLogLevels:(NSMutableDictionary *)logLevels
 {
     [self.settings setLogLevels:logLevels];
