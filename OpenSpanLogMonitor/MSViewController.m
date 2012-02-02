@@ -19,10 +19,12 @@
 
 @end
 
-@implementation MSViewController
+@implementation MSViewController 
 
 @synthesize logViewer = _logViewer;
 @synthesize pubnub = _pubnub;
+@synthesize tableLogEntries = _tableLogEntries;
+@synthesize logEntries = _logEntries;
 @synthesize listening = _listening;
 @synthesize settings = _settings;
 
@@ -33,9 +35,36 @@ BOOL viewPushed = NO;
     if([segue.identifier isEqualToString:@"showScreenshot"])
     {
         [segue.destinationViewController setImageURLs:self.settings.images];
-        //[segue.destinationViewController showImageWithURL:[self.settings.images lastObject]];
     }
 }
+
+-(NSMutableArray*)logEntries{
+    if(!_logEntries)
+    {
+        _logEntries = [[NSMutableArray alloc]init];
+    }
+    return _logEntries;
+}
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return [self.logEntries count];
+}
+
+-(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *CellIdentifier = @"Cell"; 
+    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier]; 
+    if (cell == nil) { 
+        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease]; 
+    } 
+    
+    cell.textLabel.text = [self.logEntries objectAtIndex:indexPath.row];
+    
+    return cell;
+}
+
 -(CEPubnub*)pubnub
 {
     if(!_pubnub)
@@ -54,7 +83,7 @@ BOOL viewPushed = NO;
 
 -(void)awakeFromNib
 {
-   
+    
 }
 
 - (void)pubnub:(CEPubnub *)pubnub subscriptionDidReceiveDictionary:(NSDictionary *)response onChannel:(NSString *)channel
@@ -79,7 +108,9 @@ BOOL viewPushed = NO;
     
     NSString* message = [NSString stringWithFormat:@"%@ %@ %@\n", [response objectForKey:@"DateTime"],[response objectForKey:@"Category"], [response objectForKey:@"Message"]];
     
-    [self appendMessage:message andScroll:YES];
+    [self.tableLogEntries reloadData];
+    [self.logEntries addObject:message];
+    //[self appendMessage:message andScroll:YES];
 }
 - (void)pubnub:(CEPubnub *)pubnub subscriptionDidReceiveArray:(NSArray *)response onChannel:(NSString *)channel
 {
@@ -118,10 +149,13 @@ BOOL viewPushed = NO;
 
 - (void)dealloc {
 
+    [_tableLogEntries release];
     [super dealloc];
 }
 - (void)viewDidUnload {
     [self setLogViewer:nil];
+    [self setTableLogEntries:nil];
+
     [super viewDidUnload];
 }
 

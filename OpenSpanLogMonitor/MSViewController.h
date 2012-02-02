@@ -10,10 +10,12 @@
 #import "CEPubnub.h"
 #import "MSLogViewer.h"
 
-@interface MSViewController : UIViewController <CEPubnubDelegate>
+@interface MSViewController : UIViewController <CEPubnubDelegate, UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong) MSLogViewer* settings;
 @property (nonatomic, retain, readonly) CEPubnub *pubnub;
+@property (retain, nonatomic) IBOutlet UITableView *tableLogEntries;
+@property (nonatomic, retain) NSMutableArray* logEntries;
 
 - (void)pubnub:(CEPubnub *)pubnub subscriptionDidReceiveDictionary:(NSDictionary *)response onChannel:(NSString *)channel;
 - (void)pubnub:(CEPubnub *)pubnub subscriptionDidReceiveArray:(NSArray *)response onChannel:(NSString *)channel;
