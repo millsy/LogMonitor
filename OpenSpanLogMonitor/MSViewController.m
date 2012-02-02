@@ -46,26 +46,15 @@ BOOL viewPushed = NO;
     return _logEntries;
 }
 
-- (NSString *) tableView: (UITableView *) tableview titleForHeaderInSection: (NSInteger) section {
-    if(section == 0){
-        return @"Date";
-    }
-    return @"Message";
-}
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return [self.logEntries count];
 }
 
--(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    return 2;
-}
-
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell"; 
+    static NSString *CellIdentifier = @"logEntryCell"; 
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier]; 
     if (cell == nil) { 
@@ -74,16 +63,15 @@ BOOL viewPushed = NO;
     
     NSDictionary* dict = [self.logEntries objectAtIndex:indexPath.row];
     
-    if(indexPath.section == 0)
-    {
-        NSDateFormatter *df = [[NSDateFormatter alloc] init];
-        [df setDateFormat:@"yyyy-MM-dd HH:mm:ss.SSS"];
-        NSDate *myDate = [df dateFromString: [dict objectForKey:@"DateTime"]];
-        cell.textLabel.text = [myDate description];
-        
-    }else{
-        cell.textLabel.text = [dict objectForKey:@"Message"];
-    }
+    NSDateFormatter *df = [[NSDateFormatter alloc] init];
+    [df setDateFormat:@"yyyy-MM-dd HH:mm:ss.SSS"];
+    NSDate *myDate = [df dateFromString: [dict objectForKey:@"DateTime"]];
+    
+    UILabel* dl = (UILabel*)[cell viewWithTag:0];
+    [dl setText:[myDate description]];
+    UILabel* ml = (UILabel*)[cell viewWithTag:1];
+    [ml setText:[dict objectForKey:@"Message"]];
+    
     return cell;
 }
 
