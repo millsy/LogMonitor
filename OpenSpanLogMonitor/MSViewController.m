@@ -66,11 +66,14 @@ BOOL viewPushed = NO;
     NSDateFormatter *df = [[NSDateFormatter alloc] init];
     [df setDateFormat:@"yyyy-MM-dd HH:mm:ss.SSS"];
     NSDate *myDate = [df dateFromString: [dict objectForKey:@"DateTime"]];
+    [df setDateFormat:@"dd-MM-yy HH:mm:ss.SSS"];
+    NSString* formattedDate = [df stringFromDate:myDate];
     
     UILabel* dl = (UILabel*)[cell viewWithTag:0];
-    [dl setText:[myDate description]];
-    UILabel* ml = (UILabel*)[cell viewWithTag:1];
-    [ml setText:[dict objectForKey:@"Message"]];
+    
+    NSString* message = [NSString stringWithFormat:@"%@ %@ %@\n", formattedDate,[dict objectForKey:@"Category"], [dict objectForKey:@"Message"]];
+
+    [dl setText:message];
     
     return cell;
 }
@@ -116,11 +119,9 @@ BOOL viewPushed = NO;
         }
     }
     
-    NSString* message = [NSString stringWithFormat:@"%@ %@ %@\n", [response objectForKey:@"DateTime"],[response objectForKey:@"Category"], [response objectForKey:@"Message"]];
-    
-
     
     [self.logEntries addObject:response];
+    
     [self.tableLogEntries reloadData];
     //[self appendMessage:message andScroll:YES];
 }

@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "CEPubnub.h"
 #import "MSLogViewer.h"
-#import "MSLogViewCell.h"
 
 @interface MSViewController : UIViewController <CEPubnubDelegate, UITableViewDelegate, UITableViewDataSource>
 

@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		83BAA3DD14DAC36C00E04EF6 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 83BAA3DC14DAC36C00E04EF6 /* logo.png */; };
-		83BAA3E214DAC48500E04EF6 /* MSLogViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 83BAA3E114DAC48500E04EF6 /* MSLogViewCell.m */; };
 		83E2AD4414D87BA900829924 /* MSStartupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E2AD4314D87BA900829924 /* MSStartupViewController.m */; };
 		83E2AD4C14D9D22B00829924 /* MSScreenShotViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E2AD4B14D9D22B00829924 /* MSScreenShotViewController.m */; };
 		83E61CFA14D827A400B68046 /* MSLogViewer.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E61CF914D827A400B68046 /* MSLogViewer.m */; };
@@ -41,8 +40,6 @@
 
 /* Begin PBXFileReference section */
 		83BAA3DC14DAC36C00E04EF6 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
-		83BAA3E014DAC48500E04EF6 /* MSLogViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSLogViewCell.h; sourceTree = "<group>"; };
-		83BAA3E114DAC48500E04EF6 /* MSLogViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSLogViewCell.m; sourceTree = "<group>"; };
 		83E2AD4214D87BA900829924 /* MSStartupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSStartupViewController.h; sourceTree = "<group>"; };
 		83E2AD4314D87BA900829924 /* MSStartupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSStartupViewController.m; sourceTree = "<group>"; };
 		83E2AD4A14D9D22B00829924 /* MSScreenShotViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSScreenShotViewController.h; sourceTree = "<group>"; };
@@ -116,8 +113,6 @@
 		83BAA3DF14DAC43700E04EF6 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				83BAA3E014DAC48500E04EF6 /* MSLogViewCell.h */,
-				83BAA3E114DAC48500E04EF6 /* MSLogViewCell.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -352,7 +347,6 @@
 				83E61CFA14D827A400B68046 /* MSLogViewer.m in Sources */,
 				83E2AD4414D87BA900829924 /* MSStartupViewController.m in Sources */,
 				83E2AD4C14D9D22B00829924 /* MSScreenShotViewController.m in Sources */,
-				83BAA3E214DAC48500E04EF6 /* MSLogViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
