@@ -8,7 +8,7 @@
 
 #import "MSViewController.h"
 #import "MSLogLevelViewController.h"
-#import "MSLogLevelViewController.h"
+#import "MSLogEntry.h"
 
 @interface MSViewController()
 
@@ -54,26 +54,25 @@ BOOL viewPushed = NO;
 
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"logEntryCell"; 
+    static NSString *CellIdentifier = @"logEntryCell1"; 
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier]; 
     if (cell == nil) { 
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease]; 
+        
+        cell.textLabel.lineBreakMode = UILineBreakModeWordWrap;
+        cell.textLabel.numberOfLines = 0;
     } 
     
-    NSDictionary* dict = [self.logEntries objectAtIndex:indexPath.row];
+    MSLogEntry* entry = [self.logEntries objectAtIndex:indexPath.row];
     
     NSDateFormatter *df = [[NSDateFormatter alloc] init];
-    [df setDateFormat:@"yyyy-MM-dd HH:mm:ss.SSS"];
-    NSDate *myDate = [df dateFromString: [dict objectForKey:@"DateTime"]];
     [df setDateFormat:@"dd-MM-yy HH:mm:ss.SSS"];
-    NSString* formattedDate = [df stringFromDate:myDate];
+    NSString* formattedDate = [df stringFromDate:entry.logDate];
     
-    UILabel* dl = (UILabel*)[cell viewWithTag:0];
+    NSString* message = [NSString stringWithFormat:@"%@ %@ %@\n", formattedDate,@"", entry.logMessage];
     
-    NSString* message = [NSString stringWithFormat:@"%@ %@ %@\n", formattedDate,[dict objectForKey:@"Category"], [dict objectForKey:@"Message"]];
-
-    [dl setText:message];
+    cell.textLabel.text = message;
     
     return cell;
 }
@@ -119,12 +118,33 @@ BOOL viewPushed = NO;
         }
     }
     
+    NSDateFormatter *df = [[NSDateFormatter alloc] init];
+    [df setDateFormat:@"yyyy-MM-dd HH:mm:ss.SSS"];
+    NSDate *myDate = [df dateFromString: [response objectForKey:@"DateTime"]];
     
-    [self.logEntries addObject:response];
+    NSString* message = [response objectForKey:@"Message"];
+    
+    MSLogEntry* logEntry = [[[MSLogEntry alloc]init]autorelease];
+    logEntry.logMessage = message;
+    logEntry.logDate = myDate;
+    
+    [self.logEntries addObject:logEntry];
+    
+    self.logEntries = [[self.logEntries sortedArrayUsingComparator:^(id a, id b) {
+        MSLogEntry* first = (MSLogEntry*) a;
+        MSLogEntry* second = (MSLogEntry*) b;
+        return [first.logDate compare:second.logDate];
+    }] mutableCopy];
     
     [self.tableLogEntries reloadData];
+    
+    NSIndexPath *scrollIndexPath = [NSIndexPath indexPathForRow:([self.logEntries count] - 1) inSection:0];
+    [self.tableLogEntries scrollToRowAtIndexPath:scrollIndexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+    
     //[self appendMessage:message andScroll:YES];
 }
+
+
 - (void)pubnub:(CEPubnub *)pubnub subscriptionDidReceiveArray:(NSArray *)response onChannel:(NSString *)channel
 {
     

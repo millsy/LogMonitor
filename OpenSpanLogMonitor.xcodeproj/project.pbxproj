@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		83BAA3DD14DAC36C00E04EF6 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 83BAA3DC14DAC36C00E04EF6 /* logo.png */; };
+		83BAA3ED14DB056B00E04EF6 /* AppLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 83BAA3EC14DB056B00E04EF6 /* AppLogo.png */; };
+		83BAA3F014DB267200E04EF6 /* MSLogEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 83BAA3EF14DB267200E04EF6 /* MSLogEntry.m */; };
 		83E2AD4414D87BA900829924 /* MSStartupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E2AD4314D87BA900829924 /* MSStartupViewController.m */; };
 		83E2AD4C14D9D22B00829924 /* MSScreenShotViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E2AD4B14D9D22B00829924 /* MSScreenShotViewController.m */; };
 		83E61CFA14D827A400B68046 /* MSLogViewer.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E61CF914D827A400B68046 /* MSLogViewer.m */; };
@@ -40,6 +42,9 @@
 
 /* Begin PBXFileReference section */
 		83BAA3DC14DAC36C00E04EF6 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
+		83BAA3EC14DB056B00E04EF6 /* AppLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AppLogo.png; sourceTree = "<group>"; };
+		83BAA3EE14DB267200E04EF6 /* MSLogEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSLogEntry.h; sourceTree = "<group>"; };
+		83BAA3EF14DB267200E04EF6 /* MSLogEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSLogEntry.m; sourceTree = "<group>"; };
 		83E2AD4214D87BA900829924 /* MSStartupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSStartupViewController.h; sourceTree = "<group>"; };
 		83E2AD4314D87BA900829924 /* MSStartupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSStartupViewController.m; sourceTree = "<group>"; };
 		83E2AD4A14D9D22B00829924 /* MSScreenShotViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSScreenShotViewController.h; sourceTree = "<group>"; };
@@ -146,6 +151,8 @@
 			children = (
 				83E61CF814D827A400B68046 /* MSLogViewer.h */,
 				83E61CF914D827A400B68046 /* MSLogViewer.m */,
+				83BAA3EE14DB267200E04EF6 /* MSLogEntry.h */,
+				83BAA3EF14DB267200E04EF6 /* MSLogEntry.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -153,6 +160,7 @@
 		83F74BCC14DABA370096CC47 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				83BAA3EC14DB056B00E04EF6 /* AppLogo.png */,
 				83BAA3DC14DAC36C00E04EF6 /* logo.png */,
 				83F74BD214DABAB00096CC47 /* Default-Portrait~ipad.png */,
 				83F74BD014DABA9F0096CC47 /* Default-Landscape~ipad.png */,
@@ -316,6 +324,7 @@
 				83F74BD114DABA9F0096CC47 /* Default-Landscape~ipad.png in Resources */,
 				83F74BD314DABAB00096CC47 /* Default-Portrait~ipad.png in Resources */,
 				83BAA3DD14DAC36C00E04EF6 /* logo.png in Resources */,
+				83BAA3ED14DB056B00E04EF6 /* AppLogo.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -347,6 +356,7 @@
 				83E61CFA14D827A400B68046 /* MSLogViewer.m in Sources */,
 				83E2AD4414D87BA900829924 /* MSStartupViewController.m in Sources */,
 				83E2AD4C14D9D22B00829924 /* MSScreenShotViewController.m in Sources */,
+				83BAA3F014DB267200E04EF6 /* MSLogEntry.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

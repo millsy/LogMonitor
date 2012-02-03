@@ -98,6 +98,18 @@ static NSArray* _traceLevels;
     return [self initWithMachineName:nil logLevels:nil machineKey:nil];
 }
 
+-(id)key
+{
+    if(_key)
+    {
+        if([_key isEqualToString:@""])
+        {
+            _key = nil;
+        }
+    }
+    return _key;
+}
+
 -(id)initWithMachineName:(NSString*)machineName
 {
     return [self initWithMachineName:machineName logLevels:nil machineKey:nil];
@@ -120,9 +132,18 @@ static NSArray* _traceLevels;
     {
         if(!logLevels) logLevels = [self defaultLogLevels];
         
-        self.machineName = machineName;
+        if(![machineName isEqualToString:@""])
+        {
+            self.machineName = machineName;
+        }
+        
+        if(![machineKey isEqualToString:@""])
+        {
+            self.key = machineKey;
+        }
+        
         self.logLevels = logLevels;
-        self.key = machineKey;
+        
     }
     return self;
 }
@@ -150,7 +171,7 @@ static NSArray* _traceLevels;
 
 -(void)sendLogLevels
 {
-    if(self.machineName && self.key)
+    if((self.machineName) && (self.key))
     {
         NSDictionary* msg = [NSDictionary dictionaryWithObjectsAndKeys: self.machineName, @"MachineName", @"TraceLevel", @"Type", self.key, @"MachineKey", self.logLevels, @"Levels", nil];
         
