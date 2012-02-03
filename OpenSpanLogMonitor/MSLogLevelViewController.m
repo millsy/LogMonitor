@@ -22,11 +22,19 @@ static BOOL edited = NO;
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [self.logLevels count];
+    if(self.logLevels)
+        return [self.logLevels count];
+    
+    return 0;
 }
 
 -(void)setLogLevels:(NSMutableDictionary *)logLevels
 {
+    if(_logLevels)
+    {
+        [_logLevels release];
+    }
+    
     _logLevels = [logLevels mutableCopy];
 }
 

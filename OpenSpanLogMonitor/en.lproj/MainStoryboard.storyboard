@@ -10,31 +10,31 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="r94-HT-GC7" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="qc6-au-9BF" customClass="MSStartupViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="yoB-l7-b5e">
-                        <rect key="frame" x="0.0" y="64" width="1024" height="704"/>
+                        <rect key="frame" x="0.0" y="64" width="768" height="960"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" id="QPZ-yq-Nfp">
-                                <rect key="frame" x="0.0" y="0.0" width="1024" height="704"/>
+                                <rect key="frame" x="0.0" y="0.0" width="768" height="960"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="center" image="logo.png" id="1MK-AY-wqo">
-                                        <rect key="frame" x="392" y="56" width="240" height="128"/>
+                                        <rect key="frame" x="264" y="81" width="240" height="128"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                     </imageView>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Machine Name" textAlignment="center" minimumFontSize="17" id="Xea-ZU-9EP">
-                                        <rect key="frame" x="391" y="281" width="241" height="31"/>
+                                        <rect key="frame" x="263" y="388" width="241" height="31"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Machine Key" textAlignment="center" minimumFontSize="17" id="TKe-se-tH2">
-                                        <rect key="frame" x="391" y="327" width="241" height="31"/>
+                                        <rect key="frame" x="263" y="451" width="241" height="31"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <button opaque="NO" contentMode="TopLeft" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Wl9-SV-lud">
-                                        <rect key="frame" x="459" y="374" width="105" height="37"/>
+                                        <rect key="frame" x="331" y="517" width="105" height="37"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                         <state key="normal" title="Log Levels">
@@ -45,18 +45,18 @@
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <segue destination="shb-dk-072" kind="push" identifier="displayLogLevels" id="Bkp-K8-fWC"/>
+                                            <action selector="validateInputValues:" destination="qc6-au-9BF" eventType="touchUpInside" id="jLT-Pg-00J"/>
                                         </connections>
                                     </button>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Enter the machine name you wish to view logs for" lineBreakMode="tailTruncation" minimumFontSize="10" id="hqJ-0W-KVV">
-                                        <rect key="frame" x="323" y="239" width="378" height="21"/>
+                                        <rect key="frame" x="195" y="328" width="378" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="TopLeft" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="znG-Q7-zhN">
-                                        <rect key="frame" x="460" y="428" width="105" height="37"/>
+                                        <rect key="frame" x="331" y="592" width="105" height="37"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                         <state key="normal" title="View Log">
@@ -67,7 +67,7 @@
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <segue destination="2" kind="push" identifier="showLog" id="Nck-En-kuk"/>
+                                            <action selector="validateInputValues:" destination="qc6-au-9BF" eventType="touchUpInside" id="yD3-RS-esd"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -75,39 +75,40 @@
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     </view>
                     <navigationItem key="navigationItem" title="OpenSpan Log Viewer Settings" id="tt7-zr-eYl"/>
                     <connections>
                         <outlet property="machineKey" destination="TKe-se-tH2" id="11D-SW-9oC"/>
                         <outlet property="machineName" destination="Xea-ZU-9EP" id="Z6J-tB-5px"/>
+                        <segue destination="shb-dk-072" kind="push" identifier="displayLogLevels" id="x63-eX-9yM"/>
+                        <segue destination="2" kind="push" identifier="showLog" id="cU4-Jm-IF6"/>
                     </connections>
                 </viewController>
             </objects>
-            <point key="canvasLocation" x="-427" y="-338"/>
+            <point key="canvasLocation" x="-175" y="-335"/>
         </scene>
         <scene sceneID="4">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3" sceneMemberID="firstResponder"/>
                 <viewController id="2" customClass="MSViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5">
-                        <rect key="frame" x="0.0" y="64" width="1024" height="704"/>
+                        <rect key="frame" x="0.0" y="64" width="768" height="960"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" pagingEnabled="YES" indicatorStyle="black" delaysContentTouches="NO" bouncesZoom="NO" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="Obg-4a-hwT">
-                                <rect key="frame" x="20" y="20" width="984" height="627"/>
+                                <rect key="frame" x="20" y="20" width="728" height="883"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="logEntryCell" id="hUc-TN-W5H">
-                                        <rect key="frame" x="0.0" y="22" width="984" height="44"/>
+                                        <rect key="frame" x="0.0" y="22" width="728" height="44"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="984" height="43"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="728" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" id="APc-Yh-GSE">
-                                                    <rect key="frame" x="0.0" y="11" width="984" height="22"/>
+                                                    <rect key="frame" x="0.0" y="11" width="728" height="22"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -126,7 +127,7 @@
                                 </connections>
                             </tableView>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="78b-hh-rNg">
-                                <rect key="frame" x="0.0" y="660" width="1024" height="44"/>
+                                <rect key="frame" x="0.0" y="916" width="768" height="44"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <items>
                                     <barButtonItem title="Start" id="aXv-Pe-1Gj">
@@ -153,7 +154,6 @@
                             </toolbar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     </view>
                     <navigationItem key="navigationItem" title="OpenSpan Log Viewer" id="V3p-7G-pMH"/>
                     <connections>
@@ -168,15 +168,15 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="s8p-Db-4QW" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="LGs-oG-ela" customClass="MSScreenShotViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="jKb-mg-F8T">
-                        <rect key="frame" x="0.0" y="64" width="1024" height="704"/>
+                        <rect key="frame" x="0.0" y="64" width="768" height="960"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="TmO-of-5AO">
-                                <rect key="frame" x="20" y="20" width="984" height="606"/>
+                                <rect key="frame" x="20" y="20" width="728" height="862"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             </imageView>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="hQB-FQ-E9Y">
-                                <rect key="frame" x="0.0" y="660" width="1024" height="44"/>
+                                <rect key="frame" x="0.0" y="916" width="768" height="44"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <items>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="dKU-Qv-Del"/>
@@ -195,7 +195,6 @@
                             </toolbar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     </view>
                     <navigationItem key="navigationItem" title="Screenshot" id="TIs-d0-BUL"/>
                     <connections>
@@ -210,16 +209,15 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3VD-rh-44w" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tableViewController id="shb-dk-072" customClass="MSLogLevelViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="redraw" bounces="NO" alwaysBounceVertical="YES" pagingEnabled="YES" bouncesZoom="NO" dataMode="prototypes" style="plain" allowsSelection="NO" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="TvP-J3-nPJ">
-                        <rect key="frame" x="0.0" y="64" width="1024" height="704"/>
+                        <rect key="frame" x="0.0" y="64" width="768" height="960"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="logLevelCell" id="XAj-sv-H3r">
-                                <rect key="frame" x="0.0" y="22" width="1024" height="44"/>
+                                <rect key="frame" x="0.0" y="22" width="768" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="0.0" y="0.0" width="1024" height="43"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="768" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
@@ -299,7 +297,7 @@
     </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackTranslucent"/>
-        <simulatedOrientationMetrics key="orientation" orientation="landscapeRight"/>
+        <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
 </document>

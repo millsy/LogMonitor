@@ -54,9 +54,6 @@
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    self.settings.machineName = self.machineName.text;
-    self.settings.key = self.machineKey.text;
-    
     if([segue.identifier isEqualToString:@"showLog"])
     {
         [(MSViewController*)segue.destinationViewController setSettings:self.settings];
@@ -67,7 +64,21 @@
         logVC.delegate = self;
         [logVC setLogLevels:self.settings.logLevels];
     }
+}
 
+- (IBAction)validateInputValues:(UIButton*)sender {
+    if([self.machineName.text length] > 0)
+    {
+        self.settings.machineName = self.machineName.text;
+        self.settings.key = self.machineKey.text;
+        
+        if([sender.titleLabel.text isEqualToString:@"Log Levels"])
+        {
+            [self performSegueWithIdentifier:@"displayLogLevels" sender:self];
+        }else{
+            [self performSegueWithIdentifier:@"showLog" sender:self];
+        }
+    }
 }
 
 -(void)viewDidLoad{

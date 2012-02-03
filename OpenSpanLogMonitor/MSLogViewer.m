@@ -12,6 +12,7 @@
 @interface MSLogViewer()
 
 @property (nonatomic, strong, readonly) NSNumber* defaultTraceLevel;
+@property (nonatomic, strong) NSArray* logTypes;
 
 - (NSArray*)defaultLogTypes;
 - (NSMutableDictionary*)defaultLogLevels;
@@ -23,20 +24,22 @@
 @implementation MSLogViewer
 
 static NSMutableDictionary* defaultLogLevels = nil;
-static NSArray* logTypes = nil;
+//static NSArray* logTypes = nil;
+
+@synthesize logTypes = _logTypes;
 
 -(void)dealloc
 {
     if(defaultLogLevels) [defaultLogLevels dealloc];
-    if(logTypes) [logTypes dealloc];
+    if(_logTypes) [_logTypes dealloc];
 }
 
 - (NSArray*)defaultLogTypes {
-    if(logTypes == nil)
+    if(!_logTypes)
     {
-        logTypes = [NSArray arrayWithObjects:@"Default", @"Keys", @"Matching", @"Adapters", @"Java Adapter", @"Text Adapter", @"Text Screens", nil];
+        _logTypes = [[NSArray alloc] initWithObjects:@"Default", @"Keys", @"Matching", @"Adapters", @"Java Adapter", @"Text Adapter", @"Text Screens", nil];
     }
-    return logTypes;
+    return _logTypes;
 }
 
 - (NSMutableDictionary*)defaultLogLevels {
@@ -98,16 +101,22 @@ static NSArray* _traceLevels;
     return [self initWithMachineName:nil logLevels:nil machineKey:nil];
 }
 
--(id)key
+-(NSString*)key
 {
-    if(_key)
+    if([_key length] > 0)
     {
-        if([_key isEqualToString:@""])
-        {
-            _key = nil;
-        }
+        return _key;
     }
-    return _key;
+    return nil;
+}
+
+-(NSString*)machineName
+{
+    if([_machineName length] > 0)
+    {
+        return _machineName;
+    }
+    return nil;
 }
 
 -(id)initWithMachineName:(NSString*)machineName
