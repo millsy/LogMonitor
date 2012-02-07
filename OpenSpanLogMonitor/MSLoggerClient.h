@@ -16,7 +16,8 @@
 @property (strong, nonatomic, readonly) NSString* receiverChannel;
 @property (strong, nonatomic, readonly) NSString* senderChannel;
 @property (strong, nonatomic, readonly) NSString* encryptedKey;
-@property (strong, nonatomic, readonly) NSString* key;
+
+@property (strong, nonatomic, readonly) NSArray* logEntries;
 
 -(id)initWithUserName:(NSString*)userName machineName:(NSString*)machineName receiverChannel:(NSString*) receiverChannel senderChannel:(NSString*)senderChannel encrypedKey:(NSString*) encryptedKey;
 
