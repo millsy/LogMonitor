@@ -1,0 +1,22 @@
+//
+//  MSLoggerClient.h
+//  OpenSpanLogMonitor
+//
+//  Created by Chris Mills on 07/02/2012.
+//  Copyright (c) 2012 MillsySoft. All rights reserved.
+//
+
+#import <Foundation/Foundation.h>
+
+@interface MSLoggerClient : NSObject
+
+@property (strong, nonatomic, readonly) NSString* userName;
+@property (strong, nonatomic, readonly) NSString* machineName;
+@property (strong, nonatomic, readonly) NSString* receiverChannel;
+@property (strong, nonatomic, readonly) NSString* senderChannel;
+@property (strong, nonatomic, readonly) NSString* encryptedKey;
+@property (strong, nonatomic, readonly) NSString* key;
+
+-(id)initWithUserName:(NSString*)userName machineName:(NSString*)machineName receiverChannel:(NSString*) receiverChannel senderChannel:(NSString*)senderChannel encrypedKey:(NSString*) encryptedKey;
+
+@end

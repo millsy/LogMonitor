@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		831A73CE14E13D0000BDF979 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 831A73CD14E13D0000BDF979 /* Security.framework */; };
+		831A73D214E1640B00BDF979 /* MSLoggerClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 831A73D114E1640B00BDF979 /* MSLoggerClient.m */; };
+		831A73DB14E17ED000BDF979 /* NSData+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 831A73D514E17ED000BDF979 /* NSData+Extension.m */; };
+		831A73DC14E17ED000BDF979 /* Base64Transcoder.c in Sources */ = {isa = PBXBuildFile; fileRef = 831A73D714E17ED000BDF979 /* Base64Transcoder.c */; };
+		831A73DD14E17ED000BDF979 /* NSString+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 831A73DA14E17ED000BDF979 /* NSString+Extension.m */; };
+		831A73E114E17F1E00BDF979 /* MSEncryption.m in Sources */ = {isa = PBXBuildFile; fileRef = 831A73E014E17F1E00BDF979 /* MSEncryption.m */; };
 		83BAA3DD14DAC36C00E04EF6 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 83BAA3DC14DAC36C00E04EF6 /* logo.png */; };
 		83BAA3ED14DB056B00E04EF6 /* AppLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 83BAA3EC14DB056B00E04EF6 /* AppLogo.png */; };
 		83BAA3F014DB267200E04EF6 /* MSLogEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 83BAA3EF14DB267200E04EF6 /* MSLogEntry.m */; };
@@ -41,6 +47,18 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		831A73CD14E13D0000BDF979 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		831A73D014E1640B00BDF979 /* MSLoggerClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSLoggerClient.h; sourceTree = "<group>"; };
+		831A73D114E1640B00BDF979 /* MSLoggerClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSLoggerClient.m; sourceTree = "<group>"; };
+		831A73D414E17ED000BDF979 /* NSData+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+Extension.h"; sourceTree = "<group>"; };
+		831A73D514E17ED000BDF979 /* NSData+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+Extension.m"; sourceTree = "<group>"; };
+		831A73D614E17ED000BDF979 /* Base64Transcoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Base64Transcoder.h; sourceTree = "<group>"; };
+		831A73D714E17ED000BDF979 /* Base64Transcoder.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Base64Transcoder.c; sourceTree = "<group>"; };
+		831A73D814E17ED000BDF979 /* Logging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Logging.h; sourceTree = "<group>"; };
+		831A73D914E17ED000BDF979 /* NSString+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Extension.h"; sourceTree = "<group>"; };
+		831A73DA14E17ED000BDF979 /* NSString+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Extension.m"; sourceTree = "<group>"; };
+		831A73DF14E17F1E00BDF979 /* MSEncryption.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSEncryption.h; sourceTree = "<group>"; };
+		831A73E014E17F1E00BDF979 /* MSEncryption.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSEncryption.m; sourceTree = "<group>"; };
 		83BAA3DC14DAC36C00E04EF6 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
 		83BAA3EC14DB056B00E04EF6 /* AppLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AppLogo.png; sourceTree = "<group>"; };
 		83BAA3EE14DB267200E04EF6 /* MSLogEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSLogEntry.h; sourceTree = "<group>"; };
@@ -106,6 +124,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				831A73CE14E13D0000BDF979 /* Security.framework in Frameworks */,
 				83F79A8114D6DE9A00C9A985 /* UIKit.framework in Frameworks */,
 				83F79A8314D6DE9A00C9A985 /* Foundation.framework in Frameworks */,
 				83F79A8514D6DE9A00C9A985 /* CoreGraphics.framework in Frameworks */,
@@ -115,6 +134,29 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		831A73D314E17EBE00BDF979 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				831A73D414E17ED000BDF979 /* NSData+Extension.h */,
+				831A73D514E17ED000BDF979 /* NSData+Extension.m */,
+				831A73D614E17ED000BDF979 /* Base64Transcoder.h */,
+				831A73D714E17ED000BDF979 /* Base64Transcoder.c */,
+				831A73D814E17ED000BDF979 /* Logging.h */,
+				831A73D914E17ED000BDF979 /* NSString+Extension.h */,
+				831A73DA14E17ED000BDF979 /* NSString+Extension.m */,
+			);
+			name = Extensions;
+			sourceTree = "<group>";
+		};
+		831A73DE14E17F0300BDF979 /* Encryption */ = {
+			isa = PBXGroup;
+			children = (
+				831A73DF14E17F1E00BDF979 /* MSEncryption.h */,
+				831A73E014E17F1E00BDF979 /* MSEncryption.m */,
+			);
+			name = Encryption;
+			sourceTree = "<group>";
+		};
 		83BAA3DF14DAC43700E04EF6 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -149,10 +191,14 @@
 		83E61CF714D8278100B68046 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				831A73DE14E17F0300BDF979 /* Encryption */,
+				831A73D314E17EBE00BDF979 /* Extensions */,
 				83E61CF814D827A400B68046 /* MSLogViewer.h */,
 				83E61CF914D827A400B68046 /* MSLogViewer.m */,
 				83BAA3EE14DB267200E04EF6 /* MSLogEntry.h */,
 				83BAA3EF14DB267200E04EF6 /* MSLogEntry.m */,
+				831A73D014E1640B00BDF979 /* MSLoggerClient.h */,
+				831A73D114E1640B00BDF979 /* MSLoggerClient.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -191,6 +237,7 @@
 		83F79A7F14D6DE9A00C9A985 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				831A73CD14E13D0000BDF979 /* Security.framework */,
 				83F79A8014D6DE9A00C9A985 /* UIKit.framework */,
 				83F79A8214D6DE9A00C9A985 /* Foundation.framework */,
 				83F79A8414D6DE9A00C9A985 /* CoreGraphics.framework */,
@@ -357,6 +404,11 @@
 				83E2AD4414D87BA900829924 /* MSStartupViewController.m in Sources */,
 				83E2AD4C14D9D22B00829924 /* MSScreenShotViewController.m in Sources */,
 				83BAA3F014DB267200E04EF6 /* MSLogEntry.m in Sources */,
+				831A73D214E1640B00BDF979 /* MSLoggerClient.m in Sources */,
+				831A73DB14E17ED000BDF979 /* NSData+Extension.m in Sources */,
+				831A73DC14E17ED000BDF979 /* Base64Transcoder.c in Sources */,
+				831A73DD14E17ED000BDF979 /* NSString+Extension.m in Sources */,
+				831A73E114E17F1E00BDF979 /* MSEncryption.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
