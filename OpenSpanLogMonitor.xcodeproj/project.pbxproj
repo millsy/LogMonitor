@@ -14,6 +14,7 @@
 		831A73DD14E17ED000BDF979 /* NSString+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 831A73DA14E17ED000BDF979 /* NSString+Extension.m */; };
 		831A73E114E17F1E00BDF979 /* MSEncryption.m in Sources */ = {isa = PBXBuildFile; fileRef = 831A73E014E17F1E00BDF979 /* MSEncryption.m */; };
 		831A73ED14E1B38F00BDF979 /* MSHeartbeatClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 831A73EC14E1B38E00BDF979 /* MSHeartbeatClient.m */; };
+		831A73F314E1C95F00BDF979 /* MSConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 831A73F214E1C95F00BDF979 /* MSConstants.m */; };
 		83BAA3DD14DAC36C00E04EF6 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 83BAA3DC14DAC36C00E04EF6 /* logo.png */; };
 		83BAA3ED14DB056B00E04EF6 /* AppLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 83BAA3EC14DB056B00E04EF6 /* AppLogo.png */; };
 		83BAA3F014DB267200E04EF6 /* MSLogEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 83BAA3EF14DB267200E04EF6 /* MSLogEntry.m */; };
@@ -62,6 +63,8 @@
 		831A73E014E17F1E00BDF979 /* MSEncryption.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSEncryption.m; sourceTree = "<group>"; };
 		831A73EB14E1B38E00BDF979 /* MSHeartbeatClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSHeartbeatClient.h; sourceTree = "<group>"; };
 		831A73EC14E1B38E00BDF979 /* MSHeartbeatClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSHeartbeatClient.m; sourceTree = "<group>"; };
+		831A73F114E1C95E00BDF979 /* MSConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSConstants.h; sourceTree = "<group>"; };
+		831A73F214E1C95F00BDF979 /* MSConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSConstants.m; sourceTree = "<group>"; };
 		83BAA3DC14DAC36C00E04EF6 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
 		83BAA3EC14DB056B00E04EF6 /* AppLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AppLogo.png; sourceTree = "<group>"; };
 		83BAA3EE14DB267200E04EF6 /* MSLogEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSLogEntry.h; sourceTree = "<group>"; };
@@ -204,6 +207,8 @@
 				831A73D114E1640B00BDF979 /* MSLoggerClient.m */,
 				831A73EB14E1B38E00BDF979 /* MSHeartbeatClient.h */,
 				831A73EC14E1B38E00BDF979 /* MSHeartbeatClient.m */,
+				831A73F114E1C95E00BDF979 /* MSConstants.h */,
+				831A73F214E1C95F00BDF979 /* MSConstants.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -415,6 +420,7 @@
 				831A73DD14E17ED000BDF979 /* NSString+Extension.m in Sources */,
 				831A73E114E17F1E00BDF979 /* MSEncryption.m in Sources */,
 				831A73ED14E1B38F00BDF979 /* MSHeartbeatClient.m in Sources */,
+				831A73F314E1C95F00BDF979 /* MSConstants.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

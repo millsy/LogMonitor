@@ -8,21 +8,17 @@
 
 #import "MSLoggerClient.h"
 #import "MSEncryption.h"
+#import "MSConstants.h"
 
 @interface MSLoggerClient()
 
 @property (strong, nonatomic) CEPubnub* pubnub;
-@property (strong, nonatomic, readonly) NSString* publishKey;
-@property (strong, nonatomic, readonly) NSString* subscribeKey;
 @property (strong, nonatomic) NSMutableArray* privateLogEntries;
 @property (strong, nonatomic, readonly) NSString* key;
 
 @end
 
 @implementation MSLoggerClient
-
-const static NSString* LM_MSG_IV = @"IV";
-const static NSString* LM_MSG_MSG = @"MESSAGE";
 
 //public
 @synthesize userName = _userName;
@@ -35,8 +31,6 @@ const static NSString* LM_MSG_MSG = @"MESSAGE";
 //private
 @synthesize key = _key;
 @synthesize pubnub = _pubnub;
-@synthesize publishKey = _publishKey;
-@synthesize subscribeKey = _subscribeKey;
 @synthesize privateLogEntries = _privateLogEntries;
 
 -(id)init
@@ -144,8 +138,8 @@ const static NSString* LM_MSG_MSG = @"MESSAGE";
     if(!_pubnub)
     {
         _pubnub = [[CEPubnub alloc]
-                   publishKey:   self.publishKey
-                   subscribeKey: self.subscribeKey 
+                   publishKey:   PUBLISHERKEY
+                   subscribeKey: SUBSCRIBERKEY
                    secretKey:    @""//@"sec-649a5039-cb8d-40eb-beec-21b9c07aec64" 
                    sslOn:        YES
                    origin:       @"pubsub.pubnub.com"
@@ -155,22 +149,5 @@ const static NSString* LM_MSG_MSG = @"MESSAGE";
     return _pubnub;
 }
 
--(NSString*)publishKey
-{
-    if(!_publishKey)
-    {
-        _publishKey = @"pub-fc91edb4-5379-47f0-a882-c2de5db4fbcb";
-    }
-    return _publishKey;
-}
-
--(NSString*)subscribeKey
-{
-    if(!_subscribeKey)
-    {
-        _subscribeKey = @"sub-1e9854a8-4b3c-11e1-be34-4103cb3c6424";
-    }
-    return _subscribeKey;
-}
 
 @end
