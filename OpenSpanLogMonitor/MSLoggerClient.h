@@ -21,4 +21,7 @@
 
 -(id)initWithUserName:(NSString*)userName machineName:(NSString*)machineName receiverChannel:(NSString*) receiverChannel senderChannel:(NSString*)senderChannel encrypedKey:(NSString*) encryptedKey;
 
+-(void)startListening;
+-(void)stopListening;
+
 @end

@@ -54,13 +54,20 @@ const static NSString* LM_MSG_MSG = @"MESSAGE";
         _receiverChannel = receiverChannel;
         _senderChannel = senderChannel;
         _encryptedKey = encryptedKey;
-        
-        //start listening on subscriber
-        
-        [self.pubnub subscribe: self.receiverChannel delegate:self];
     }
     
     return self;
+}
+
+-(void)startListening
+{
+    //start listening on subscriber
+    [self.pubnub subscribe: self.receiverChannel delegate:self];
+}
+
+-(void)stopListening
+{
+    [self.pubnub unsubscribe:self.receiverChannel];
 }
 
 //pubsub delegate methods
