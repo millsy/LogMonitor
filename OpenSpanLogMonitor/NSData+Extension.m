@@ -84,7 +84,7 @@
 	return nil;
 }
 
-- (NSData*) aesDecryptWithKey:(NSString *)key initialVector:(NSString*)iv
+- (NSData*) aesDecryptWithKey:(NSData*)key initialVector:(NSData*)iv
 {
 	long keyLength = [key length];
 	if(keyLength != kCCKeySizeAES128 && keyLength != kCCKeySizeAES192 && keyLength != kCCKeySizeAES256)
@@ -96,11 +96,14 @@
     
 	char keyBytes[keyLength+1];
 	bzero(keyBytes, sizeof(keyBytes));
-	[key getCString:keyBytes maxLength:sizeof(keyBytes) encoding:NSUTF8StringEncoding];
+	//[key getCString:keyBytes maxLength:sizeof(keyBytes) encoding:NSUTF8StringEncoding];
+    
+    memcpy(keyBytes, [key bytes], keyLength);
     
     char ivBytes[[iv length]+1];
     bzero(ivBytes, sizeof(ivBytes));
-    [iv getCString:ivBytes maxLength:sizeof(ivBytes) encoding:NSUTF8StringEncoding];
+    //[iv getCString:ivBytes maxLength:sizeof(ivBytes) encoding:NSUTF8StringEncoding];
+    memcpy(ivBytes, [iv bytes], [iv length]);
     
 	size_t numBytesDecrypted = 0;
 	size_t decryptedLength = [self length] + kCCBlockSizeAES128;

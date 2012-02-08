@@ -9,12 +9,13 @@
 #import "MSLoggerClient.h"
 #import "MSEncryption.h"
 #import "MSConstants.h"
+#import "NSData+Extension.h"
 
 @interface MSLoggerClient()
 
 @property (strong, nonatomic) CEPubnub* pubnub;
 @property (strong, nonatomic) NSMutableArray* privateLogEntries;
-@property (strong, nonatomic, readonly) NSString* key;
+@property (strong, nonatomic) NSData* key;
 
 @end
 
@@ -48,6 +49,8 @@
         _receiverChannel = receiverChannel;
         _senderChannel = senderChannel;
         _encryptedKey = encryptedKey;
+        
+        NSLog(@"initWithUserName:%@ machineName:%@ receiverChannel:%@  senderChannel:%@ encrypedKey:%@ key:%@", self.userName, self.machineName, self.receiverChannel, self.senderChannel, self.encryptedKey, self.key);
     }
     
     return self;
@@ -70,12 +73,12 @@
     //check valid structure
     if([response objectForKey:LM_MSG_IV] && [response objectForKey:LM_MSG_MSG])
     {
-        NSString* iv = [MSEncryption base64DecodeString:[response objectForKey:LM_MSG_IV]];
-        NSString* encryptedMsg = [MSEncryption base64DecodeString:[response objectForKey:LM_MSG_MSG]];
+        NSData* iv = [MSEncryption base64DecodeStringToData:[response objectForKey:LM_MSG_IV]];
+        NSData* encryptedMsg = [MSEncryption base64DecodeStringToData:[response objectForKey:LM_MSG_MSG]];
         
         if(iv && encryptedMsg)
         {
-            NSString* unencryptedMsg = [MSEncryption decryptString:encryptedMsg withKey:self.key vector:iv];
+            NSString* unencryptedMsg = [MSEncryption decryptData:encryptedMsg withKey:self.key vector:iv trimWhitespace:YES];
             if(unencryptedMsg)
             {
                 NSLog(@"Message Received %@", unencryptedMsg);
@@ -109,7 +112,7 @@
 }
 
 //private properties
--(NSString*)key
+-(NSData*)key
 {
     if(!_key)
     {
@@ -117,7 +120,9 @@
         {
             //we have an encrypted key
             //decrypt self.encryptedKey
-            _key = [MSEncryption decryptString:self.encryptedKey withCertificate:[NSURL URLWithString:@"http://localhost/logging.p12"] andPassword:@"12345"];       
+            [self setKey:[MSEncryption decryptString:self.encryptedKey withCertificate:[NSURL URLWithString:@"http://localhost/logging.p12"] andPassword:@"12345"]]; 
+            
+            //NSLog(@"Secret key hex = %@", [_key hexDump]);
         }
     }
     return _key;

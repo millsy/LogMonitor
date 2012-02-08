@@ -10,9 +10,10 @@
 
 @interface MSEncryption : NSObject
 
-+(NSString*)decryptString:(NSString*)data withCertificate:(NSURL*)url andPassword:(NSString*)password;
-+(NSString*)decryptString:(NSString*)data withKey:(NSString*)key vector:(NSString*)vector;
++(NSData*)decryptString:(NSString*)data withCertificate:(NSURL*)url andPassword:(NSString*)password;
++(NSString*)decryptData:(NSData*)data withKey:(NSData*)key vector:(NSData*)vector trimWhitespace:(BOOL)trim;
 +(NSString*)base64DecodeString:(NSString*)data;
 +(NSString*)base64EncodeString:(NSString*)data;
++(NSData*)base64DecodeStringToData:(NSString*)data;
 
 @end

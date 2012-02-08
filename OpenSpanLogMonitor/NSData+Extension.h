@@ -57,7 +57,7 @@
  * key:
  * iv: initial vector (if not nil: CBC mode / nil: ECB mode)
  */
-- (NSData*) aesDecryptWithKey:(NSString *)key initialVector:(NSString*)iv;
+- (NSData*) aesDecryptWithKey:(NSData *)key initialVector:(NSData*)iv;
 
 /**
  * base64 encode

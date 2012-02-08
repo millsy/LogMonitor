@@ -19,9 +19,16 @@ OSStatus extractIdentityAndTrust(CFDataRef inPKCS12Data, NSString* password, Sec
 
 @implementation MSEncryption
 
-+(NSString*)base64DecodeString:(NSString*)data
++(NSData*)base64DecodeStringToData:(NSString*)data
 {
     NSData* decodedData = [data base64DecodedBytes];
+    
+    return decodedData;
+}
+
++(NSString*)base64DecodeString:(NSString*)data
+{
+    NSData* decodedData = [MSEncryption base64DecodeStringToData:data];
     
     return [[[NSString alloc]initWithBytes:decodedData length:[decodedData length] encoding:NSUTF8StringEncoding]autorelease];
 }
@@ -31,20 +38,25 @@ OSStatus extractIdentityAndTrust(CFDataRef inPKCS12Data, NSString* password, Sec
     return [[data dataUsingEncoding:NSUTF8StringEncoding]base64EncodedString];
 }
 
-+(NSString*)decryptString:(NSString*)string withKey:(NSString*)key vector:(NSString*)vector
-{
-    NSData* data = [string dataUsingEncoding:NSUTF8StringEncoding];
++(NSString*)decryptData:(NSData*)data withKey:(NSData*)key vector:(NSData*)vector trimWhitespace:(BOOL)trim
+{   
+    //NSLog(@"Key =\n %@ \n IV = \n %@ 'n", [key hexDump], [vector hexDump]);
     
     NSData* decrypted = [data aesDecryptWithKey:key initialVector:vector];
-    
+       
     NSString* decryptedString =  [[[NSString alloc] initWithData:decrypted encoding:NSUTF8StringEncoding]autorelease];
+    
+    if(trim)
+    {
+        decryptedString = [decryptedString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    }
     
     return decryptedString;
 }
 
-+(NSString*)decryptString:(NSString*)data withCertificate:(NSURL*)url andPassword:(NSString*)password
++(NSData*)decryptString:(NSString*)data withCertificate:(NSURL*)url andPassword:(NSString*)password
 {
-    NSString* result = nil;
+    NSData* result = nil;
     
     NSData *PKCS12Data = [[NSData alloc] initWithContentsOfURL:url];
     
@@ -80,7 +92,7 @@ OSStatus extractIdentityAndTrust(CFDataRef inPKCS12Data, NSString* password, Sec
                 
                 NSData* decodeData = [data base64DecodedBytes];
                 
-                size_t plainBufferSize = 16;//the data is a fixed length of 16 bytes (256bits)
+                size_t plainBufferSize = 32;//the data is a fixed length of 16 bytes (256bits)
                 uint8_t *plainBuffer = malloc(plainBufferSize);
                 
                 //decrypt the key
@@ -89,7 +101,7 @@ OSStatus extractIdentityAndTrust(CFDataRef inPKCS12Data, NSString* password, Sec
                 if(status == 0)
                 {            
                     //got the key
-                    result = [[[NSString alloc] initWithBytes:(char *)plainBuffer length:16 encoding:NSUTF8StringEncoding]autorelease];
+                    result = [NSData dataWithBytes:plainBuffer length:32];
                 }
             }
         }

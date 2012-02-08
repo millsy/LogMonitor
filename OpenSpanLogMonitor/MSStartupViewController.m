@@ -9,12 +9,15 @@
 #import "MSStartupViewController.h"
 #import "MSViewController.h"
 #import "MSLogLevelViewController.h"
+#import "MSHeartbeatClient.h"
 
 @implementation MSStartupViewController 
 
 @synthesize machineName = _machineName;
 @synthesize machineKey = _machineKey;
 @synthesize settings = _settings;
+
+MSHeartbeatClient* client;
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
@@ -83,6 +86,8 @@
 
 -(void)viewDidLoad{
     [NSThread sleepForTimeInterval:3];
+    
+    client = [[MSHeartbeatClient alloc]init];
 }
 
 -(void)viewWillAppear:(BOOL)animated{

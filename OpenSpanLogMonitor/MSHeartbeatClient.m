@@ -36,15 +36,33 @@
     return self;
 }
 
+-(void)dealloc
+{
+    if(self.availableClients)
+        [self.availableClients release];
+    
+    if(self.pubnub)
+    {
+        [self.pubnub unsubscribe:OS_HEARTBEAT_CHANNEL];
+        
+        [self.pubnub release];
+    }
+}
+
 //pubsub delegate methods
 - (void)pubnub:(CEPubnub *)pubnub subscriptionDidReceiveDictionary:(NSDictionary *)response onChannel:(NSString *)channel
 {
     //check valid structure
     if([response objectForKey:HB_MSG_USER] && [response objectForKey:HB_MSG_MACHINE] && [response objectForKey:HB_MSG_REPLY] && [response objectForKey:HB_MSG_BROADCAST] && [response objectForKey:HB_MSG_KEY] && [response objectForKey:HB_MSG_TIME])
     {
-        MSLoggerClient *client = [[MSLoggerClient alloc]initWithUserName:[response objectForKey:HB_MSG_USER] machineName:[response objectForKey:HB_MSG_MACHINE] receiverChannel:[response objectForKey:HB_MSG_BROADCAST] senderChannel:[response objectForKey:HB_MSG_REPLY] encrypedKey:[response objectForKey:HB_MSG_KEY]];
-        
-        [self.availableClients setObject:client forKey:[client machineName]];
+        if(![self.availableClients objectForKey:[response objectForKey:HB_MSG_MACHINE]])
+        {
+            MSLoggerClient *client = [[MSLoggerClient alloc]initWithUserName:[response objectForKey:HB_MSG_USER] machineName:[response objectForKey:HB_MSG_MACHINE] receiverChannel:[response objectForKey:HB_MSG_BROADCAST] senderChannel:[response objectForKey:HB_MSG_REPLY] encrypedKey:[response objectForKey:HB_MSG_KEY]];
+            
+            [self.availableClients setObject:client forKey:[client machineName]];
+            
+            [client startListening];
+        }
         
     }else{
         NSLog(@"Received invalid message");
