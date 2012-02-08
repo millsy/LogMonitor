@@ -9,11 +9,15 @@
 #import "MSHeartbeatClient.h"
 #import "CEPubnub.h"
 #import "MSConstants.h"
+#import "MSCommonDate.h"
 
 @interface MSHeartbeatClient()
 
 @property (strong, atomic) NSMutableDictionary* availableClients;
 @property (strong, nonatomic) CEPubnub* pubnub;
+@property (strong, atomic) NSTimer* loopTimer;
+
+-(void)checkAvailableClients;
 
 @end
 
@@ -23,6 +27,9 @@
 //private properties
 @synthesize availableClients = _availableClients;
 @synthesize pubnub = _pubnub;
+@synthesize loopTimer = _loopTimer;
+
+static int period = -60;
 
 -(id)init
 {
@@ -32,6 +39,8 @@
         _availableClients = [[NSMutableDictionary alloc]init];
         
         [self.pubnub subscribe:OS_HEARTBEAT_CHANNEL delegate:self];
+        
+        [self setLoopTimer:[NSTimer scheduledTimerWithTimeInterval:30.0 target:self selector:@selector(checkAvailableClients) userInfo:nil repeats:YES]];
     }
     return self;
 }
@@ -49,19 +58,44 @@
     }
 }
 
+//timer method to check if clients should be removed from the availableClients dictionary
+-(void)checkAvailableClients
+{
+    NSArray* keys = [self.availableClients allKeys];
+    for (NSString* key in keys) {
+        MSLoggerClient* client = [self.availableClients objectForKey:key];
+        NSDate* now = [NSDate date];
+        NSDate* earlier = [MSCommonDate date:now minusSeconds:period];
+        if(![MSCommonDate date:client.lastSeen isBetweenDate:earlier andDate:now])
+        {
+            //do we need to stop it from listening before removing it?
+            
+            //this is an old one - remove it
+            NSLog(@"Old client %@", client.machineName);
+            [self.availableClients removeObjectForKey:key];
+        }else
+        {
+            NSLog(@"Keeping client %@", client.machineName);
+        }
+    }
+}
+
 //pubsub delegate methods
 - (void)pubnub:(CEPubnub *)pubnub subscriptionDidReceiveDictionary:(NSDictionary *)response onChannel:(NSString *)channel
 {
     //check valid structure
     if([response objectForKey:HB_MSG_USER] && [response objectForKey:HB_MSG_MACHINE] && [response objectForKey:HB_MSG_REPLY] && [response objectForKey:HB_MSG_BROADCAST] && [response objectForKey:HB_MSG_KEY] && [response objectForKey:HB_MSG_TIME])
     {
-        if(![self.availableClients objectForKey:[response objectForKey:HB_MSG_MACHINE]])
+        if(![self.availableClients objectForKey:[response objectForKey:HB_MSG_BROADCAST]])
         {
             MSLoggerClient *client = [[MSLoggerClient alloc]initWithUserName:[response objectForKey:HB_MSG_USER] machineName:[response objectForKey:HB_MSG_MACHINE] receiverChannel:[response objectForKey:HB_MSG_BROADCAST] senderChannel:[response objectForKey:HB_MSG_REPLY] encrypedKey:[response objectForKey:HB_MSG_KEY]];
             
-            [self.availableClients setObject:client forKey:[client machineName]];
+            [self.availableClients setObject:client forKey:[client receiverChannel]];
             
-            [client startListening];
+            //[client startListening];
+        }else{
+            MSLoggerClient *client = [self.availableClients objectForKey:[response objectForKey:HB_MSG_BROADCAST]];
+            [client setLastSeen:[NSDate date]];
         }
         
     }else{

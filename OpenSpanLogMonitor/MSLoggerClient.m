@@ -27,7 +27,7 @@
 @synthesize receiverChannel = _receiverChannel;
 @synthesize senderChannel = _senderChannel;
 @synthesize encryptedKey = _encryptedKey;
-
+@synthesize lastSeen = _lastSeen;
 
 //private
 @synthesize key = _key;
@@ -44,11 +44,13 @@
     self = [super init];
     if(self)
     {
-        _userName = userName;
-        _machineName = machineName;
-        _receiverChannel = receiverChannel;
-        _senderChannel = senderChannel;
-        _encryptedKey = encryptedKey;
+        _userName = [userName copy];
+        _machineName = [machineName copy];
+        _receiverChannel = [receiverChannel copy];
+        _senderChannel = [senderChannel copy];
+        _encryptedKey = [encryptedKey copy];
+        
+        [self setLastSeen:[NSDate date]];
         
         NSLog(@"initWithUserName:%@ machineName:%@ receiverChannel:%@  senderChannel:%@ encrypedKey:%@ key:%@", self.userName, self.machineName, self.receiverChannel, self.senderChannel, self.encryptedKey, self.key);
     }
