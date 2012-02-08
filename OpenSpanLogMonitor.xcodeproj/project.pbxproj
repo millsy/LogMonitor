@@ -163,6 +163,44 @@
 			name = Encryption;
 			sourceTree = "<group>";
 		};
+		831A73FC14E274F200BDF979 /* To be removed */ = {
+			isa = PBXGroup;
+			children = (
+				83E61CF814D827A400B68046 /* MSLogViewer.h */,
+				83E61CF914D827A400B68046 /* MSLogViewer.m */,
+			);
+			name = "To be removed";
+			sourceTree = "<group>";
+		};
+		831A73FD14E2750600BDF979 /* Clients */ = {
+			isa = PBXGroup;
+			children = (
+				831A73D014E1640B00BDF979 /* MSLoggerClient.h */,
+				831A73D114E1640B00BDF979 /* MSLoggerClient.m */,
+				831A73EB14E1B38E00BDF979 /* MSHeartbeatClient.h */,
+				831A73EC14E1B38E00BDF979 /* MSHeartbeatClient.m */,
+			);
+			name = Clients;
+			sourceTree = "<group>";
+		};
+		831A73FE14E2751D00BDF979 /* Logging */ = {
+			isa = PBXGroup;
+			children = (
+				83BAA3EE14DB267200E04EF6 /* MSLogEntry.h */,
+				83BAA3EF14DB267200E04EF6 /* MSLogEntry.m */,
+			);
+			name = Logging;
+			sourceTree = "<group>";
+		};
+		831A73FF14E2752C00BDF979 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				831A73F114E1C95E00BDF979 /* MSConstants.h */,
+				831A73F214E1C95F00BDF979 /* MSConstants.m */,
+			);
+			name = Common;
+			sourceTree = "<group>";
+		};
 		83BAA3DF14DAC43700E04EF6 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -197,18 +235,11 @@
 		83E61CF714D8278100B68046 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				831A73FF14E2752C00BDF979 /* Common */,
+				831A73FE14E2751D00BDF979 /* Logging */,
+				831A73FD14E2750600BDF979 /* Clients */,
 				831A73DE14E17F0300BDF979 /* Encryption */,
 				831A73D314E17EBE00BDF979 /* Extensions */,
-				83E61CF814D827A400B68046 /* MSLogViewer.h */,
-				83E61CF914D827A400B68046 /* MSLogViewer.m */,
-				83BAA3EE14DB267200E04EF6 /* MSLogEntry.h */,
-				83BAA3EF14DB267200E04EF6 /* MSLogEntry.m */,
-				831A73D014E1640B00BDF979 /* MSLoggerClient.h */,
-				831A73D114E1640B00BDF979 /* MSLoggerClient.m */,
-				831A73EB14E1B38E00BDF979 /* MSHeartbeatClient.h */,
-				831A73EC14E1B38E00BDF979 /* MSHeartbeatClient.m */,
-				831A73F114E1C95E00BDF979 /* MSConstants.h */,
-				831A73F214E1C95F00BDF979 /* MSConstants.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -258,6 +289,7 @@
 		83F79A8614D6DE9A00C9A985 /* OpenSpanLogMonitor */ = {
 			isa = PBXGroup;
 			children = (
+				831A73FC14E274F200BDF979 /* To be removed */,
 				83BAA3DF14DAC43700E04EF6 /* Views */,
 				83E61CF714D8278100B68046 /* Models */,
 				83E61CF614D8276300B68046 /* Storyboards */,
