@@ -39,7 +39,7 @@
     //if it's the last seen data only update that row/section in the table
     if([keyPath isEqualToString:@"lastSeen"])
     {
-        [self.tableViewClientDetails reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:0 inSection:3]] withRowAnimation:YES];   
+        [self.tableViewClientDetails reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:4 inSection:0]] withRowAnimation:NO];   
     }
 }
 
@@ -74,6 +74,10 @@
                     title = @"Machine Name";
                     details = self.client.machineName;
                 }else if(indexPath.row == 3){
+                    //machineName
+                    title = @"Company Name";
+                    details = self.client.companyName;
+                }else if(indexPath.row == 4){
                     //lastHeartbeat
                     title = @"Last Heartbeat";                   
                     details = [MSCommonDate date:self.client.lastSeen ToStringFormat:nil];

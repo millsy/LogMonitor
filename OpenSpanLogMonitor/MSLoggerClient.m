@@ -29,6 +29,7 @@
 @synthesize senderChannel = _senderChannel;
 @synthesize encryptedKey = _encryptedKey;
 @synthesize lastSeen = _lastSeen;
+@synthesize companyName = _companyName;
 
 //private
 @synthesize key = _key;
@@ -40,17 +41,18 @@
     return nil;
 }
 
--(id)initWithUserName:(NSString*)userName machineName:(NSString*)machineName domainName:(NSString*)domainName receiverChannel:(NSString*) receiverChannel senderChannel:(NSString*)senderChannel encrypedKey:(NSString*) encryptedKey
+-(id)initWithUserName:(NSString*)userName machineName:(NSString*)machineName domainName:(NSString*)domainName companyName:(NSString*)companyName receiverChannel:(NSString*) receiverChannel senderChannel:(NSString*)senderChannel encrypedKey:(NSString*) encryptedKey
 {
     self = [super init];
     if(self)
     {
-        _userName = [userName copy];
-        _machineName = [machineName copy];
-        _domainName = [machineName copy];
-        _receiverChannel = [receiverChannel copy];
-        _senderChannel = [senderChannel copy];
-        _encryptedKey = [encryptedKey copy];
+        if(userName) _userName = [userName copy];
+        if(machineName) _machineName = [machineName copy];
+        if(domainName) _domainName = [domainName copy];
+        if(receiverChannel) _receiverChannel = [receiverChannel copy];
+        if(senderChannel) _senderChannel = [senderChannel copy];
+        if(encryptedKey) _encryptedKey = [encryptedKey copy];
+        if(companyName) _companyName = [companyName copy];
         
         [self setLastSeen:[NSDate date]];
     }
@@ -71,6 +73,7 @@
     if(self.key)[self.key release];
     if(self.pubnub)[self.pubnub release];
     if(self.privateLogEntries) [self.privateLogEntries release];
+    if(self.companyName) [self.companyName release];
     
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     

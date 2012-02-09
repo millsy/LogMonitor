@@ -17,12 +17,13 @@
 @property (strong, nonatomic, readonly) NSString* receiverChannel;
 @property (strong, nonatomic, readonly) NSString* senderChannel;
 @property (strong, nonatomic, readonly) NSString* encryptedKey;
+@property (strong, nonatomic, readonly) NSString* companyName;
 
 @property (strong, nonatomic) NSDate* lastSeen;
 
 @property (strong, nonatomic, readonly) NSArray* logEntries;
 
--(id)initWithUserName:(NSString*)userName machineName:(NSString*)machineName domainName:(NSString*)domainName receiverChannel:(NSString*) receiverChannel senderChannel:(NSString*)senderChannel encrypedKey:(NSString*) encryptedKey;
+-(id)initWithUserName:(NSString*)userName machineName:(NSString*)machineName domainName:(NSString*)domainName companyName:(NSString*)companyName receiverChannel:(NSString*) receiverChannel senderChannel:(NSString*)senderChannel encrypedKey:(NSString*) encryptedKey;
 
 -(void)startListening;
 -(void)stopListening;
