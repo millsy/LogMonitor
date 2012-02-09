@@ -34,7 +34,13 @@
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
     //NSLog(@"Value changed");
-    [self.tableViewClientDetails reloadData];
+    //[self.tableViewClientDetails reloadData];
+    
+    //if it's the last seen data only update that row/section in the table
+    if([keyPath isEqualToString:@"lastSeen"])
+    {
+        [self.tableViewClientDetails reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:0 inSection:3]] withRowAnimation:YES];   
+    }
 }
 
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -120,7 +126,8 @@
 }
 
 - (void)dealloc {
-    [_tableViewClientDetails release];
+    
+    if(_tableViewClientDetails)[_tableViewClientDetails release];
     
     if(self.client)
     {
