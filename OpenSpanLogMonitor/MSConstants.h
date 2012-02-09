@@ -15,7 +15,7 @@ extern NSString* const HB_MSG_REPLY;
 extern NSString* const HB_MSG_BROADCAST;
 extern NSString* const HB_MSG_KEY;
 extern NSString* const HB_MSG_TIME;
-
+extern NSString* const HB_MSG_DOMAIN;
 extern NSString* const LM_MSG_IV;
 extern NSString* const LM_MSG_MSG;
 

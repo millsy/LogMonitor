@@ -61,9 +61,13 @@
                     details = self.client.userName;
                 }else if(indexPath.row == 1){
                     //machineName
+                    title = @"Domain Name";
+                    details = self.client.domainName;
+                }else if(indexPath.row == 2){
+                    //machineName
                     title = @"Machine Name";
                     details = self.client.machineName;
-                }else if(indexPath.row == 2){
+                }else if(indexPath.row == 3){
                     //lastHeartbeat
                     title = @"Last Heartbeat";                   
                     details = [MSCommonDate date:self.client.lastSeen ToStringFormat:nil];

@@ -16,6 +16,7 @@ NSString* const HB_MSG_REPLY = @"REPLY";
 NSString* const HB_MSG_BROADCAST = @"BROADCAST";
 NSString* const HB_MSG_KEY = @"KEY";
 NSString* const HB_MSG_TIME = @"TIME";
+NSString* const HB_MSG_DOMAIN = @"DOMAIN";
 
 NSString* const LM_MSG_IV = @"IV";
 NSString* const LM_MSG_MSG = @"MESSAGE";
