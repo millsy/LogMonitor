@@ -51,11 +51,17 @@
         _encryptedKey = [encryptedKey copy];
         
         [self setLastSeen:[NSDate date]];
-        
-        NSLog(@"initWithUserName:%@ machineName:%@ receiverChannel:%@  senderChannel:%@ encrypedKey:%@ key:%@", self.userName, self.machineName, self.receiverChannel, self.senderChannel, self.encryptedKey, self.key);
     }
     
     return self;
+}
+
+-(void)dealloc
+{
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
+    [super dealloc];
 }
 
 -(void)startListening

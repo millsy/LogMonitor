@@ -23,7 +23,6 @@
 
 @implementation MSHeartbeatClient
 
-
 //private properties
 @synthesize availableClients = _availableClients;
 @synthesize pubnub = _pubnub;
@@ -40,7 +39,7 @@ static int period = -60;
         
         [self.pubnub subscribe:OS_HEARTBEAT_CHANNEL delegate:self];
         
-        [self setLoopTimer:[NSTimer scheduledTimerWithTimeInterval:30.0 target:self selector:@selector(checkAvailableClients) userInfo:nil repeats:YES]];
+        [self setLoopTimer:[NSTimer scheduledTimerWithTimeInterval:6.0 target:self selector:@selector(checkAvailableClients) userInfo:nil repeats:YES]];
     }
     return self;
 }
@@ -56,11 +55,18 @@ static int period = -60;
         
         [self.pubnub release];
     }
+    
+    [super dealloc];
+}
+
+-(NSArray*)clients
+{
+    return [self.availableClients allValues];
 }
 
 //timer method to check if clients should be removed from the availableClients dictionary
 -(void)checkAvailableClients
-{
+{ 
     NSArray* keys = [self.availableClients allKeys];
     for (NSString* key in keys) {
         MSLoggerClient* client = [self.availableClients objectForKey:key];
@@ -72,10 +78,14 @@ static int period = -60;
             
             //this is an old one - remove it
             NSLog(@"Old client %@", client.machineName);
+            
             [self.availableClients removeObjectForKey:key];
+            
+            //this has to happen after removing it from the dictionary
+            [[NSNotificationCenter defaultCenter]postNotificationName:NC_CLIENTS_UPDATED object:nil];
         }else
         {
-            NSLog(@"Keeping client %@", client.machineName);
+            //NSLog(@"Keeping client %@", client.machineName);
         }
     }
 }
@@ -93,6 +103,9 @@ static int period = -60;
             [self.availableClients setObject:client forKey:[client receiverChannel]];
             
             //[client startListening];
+            
+            [[NSNotificationCenter defaultCenter]postNotificationName:NC_CLIENTS_UPDATED object:nil];
+            
         }else{
             MSLoggerClient *client = [self.availableClients objectForKey:[response objectForKey:HB_MSG_BROADCAST]];
             [client setLastSeen:[NSDate date]];

@@ -11,6 +11,8 @@
 
 @interface MSHeartbeatClient : NSObject
 
+@property (nonatomic, assign, readonly) NSArray* clients;
+
 -(id)init;
 
 @end

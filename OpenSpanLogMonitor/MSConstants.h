@@ -20,3 +20,6 @@ extern NSString* const LM_MSG_IV;
 extern NSString* const LM_MSG_MSG;
 
 extern NSString* const OS_HEARTBEAT_CHANNEL;
+
+//Notification Center names
+extern NSString* const NC_CLIENTS_UPDATED;

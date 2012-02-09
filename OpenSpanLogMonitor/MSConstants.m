@@ -21,3 +21,6 @@ NSString* const LM_MSG_IV = @"IV";
 NSString* const LM_MSG_MSG = @"MESSAGE";
 
 NSString* const OS_HEARTBEAT_CHANNEL = @"OS-HEARTBEAT";
+
+//Notification Center names
+NSString* const NC_CLIENTS_UPDATED = @"ClientsUpdated";
