@@ -12,7 +12,9 @@
 #import "NSData+Extension.h"
 
 @interface MSLoggerClient()
-
+{
+    SBJsonParser* parser;
+}
 @property (strong, nonatomic) CEPubnub* pubnub;
 @property (strong, nonatomic) NSMutableArray* privateLogEntries;
 @property (strong, nonatomic) NSData* key;
@@ -30,6 +32,7 @@
 @synthesize encryptedKey = _encryptedKey;
 @synthesize lastSeen = _lastSeen;
 @synthesize companyName = _companyName;
+@synthesize statsChannel = _statsChannel;
 
 //private
 @synthesize key = _key;
@@ -41,7 +44,7 @@
     return nil;
 }
 
--(id)initWithUserName:(NSString*)userName machineName:(NSString*)machineName domainName:(NSString*)domainName companyName:(NSString*)companyName receiverChannel:(NSString*) receiverChannel senderChannel:(NSString*)senderChannel encrypedKey:(NSString*) encryptedKey
+-(id)initWithUserName:(NSString*)userName machineName:(NSString*)machineName domainName:(NSString*)domainName companyName:(NSString*)companyName receiverChannel:(NSString*) receiverChannel senderChannel:(NSString*)senderChannel statsChannel:(NSString*)statsChannel encrypedKey:(NSString*) encryptedKey
 {
     self = [super init];
     if(self)
@@ -53,6 +56,15 @@
         if(senderChannel) _senderChannel = [senderChannel copy];
         if(encryptedKey) _encryptedKey = [encryptedKey copy];
         if(companyName) _companyName = [companyName copy];
+        if(statsChannel)
+        {
+            _statsChannel = [statsChannel copy];
+            
+            //start listening for stats
+            [self.pubnub subscribe: self.statsChannel delegate:self];
+        }
+        
+        parser = [[SBJsonParser alloc]init];
         
         [self setLastSeen:[NSDate date]];
     }
@@ -62,7 +74,16 @@
 
 -(void)dealloc
 {
-    
+    if(self.pubnub)
+    {
+        [self.pubnub release];
+        
+        if(self.statsChannel)
+            [self.pubnub unsubscribe:self.statsChannel];
+        
+        if(self.receiverChannel)
+            [self.pubnub unsubscribe:self.receiverChannel];
+    }
     if(self.userName)[self.userName release];
     if(self.machineName)[self.machineName release];
     if(self.domainName)[self.domainName release];
@@ -71,9 +92,9 @@
     if(self.encryptedKey)[self.encryptedKey release];
     if(self.lastSeen)[self.lastSeen release];
     if(self.key)[self.key release];
-    if(self.pubnub)[self.pubnub release];
     if(self.privateLogEntries) [self.privateLogEntries release];
     if(self.companyName) [self.companyName release];
+    if(self.statsChannel) [self.statsChannel release];
     
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     
@@ -95,17 +116,31 @@
 - (void)pubnub:(CEPubnub *)pubnub subscriptionDidReceiveDictionary:(NSDictionary *)response onChannel:(NSString *)channel
 {
     //check valid structure
-    if([response objectForKey:LM_MSG_IV] && [response objectForKey:LM_MSG_MSG])
+    if([response objectForKey:MSG_IV] && [response objectForKey:MSG_CONTENTS] && [response objectForKey:MSG_TYPE])
     {
-        NSData* iv = [MSEncryption base64DecodeStringToData:[response objectForKey:LM_MSG_IV]];
-        NSData* encryptedMsg = [MSEncryption base64DecodeStringToData:[response objectForKey:LM_MSG_MSG]];
+        NSData* iv = [MSEncryption base64DecodeStringToData:[response objectForKey:MSG_IV]];
+        NSData* encryptedMsg = [MSEncryption base64DecodeStringToData:[response objectForKey:MSG_CONTENTS]];
         
         if(iv && encryptedMsg)
         {
             NSString* unencryptedMsg = [MSEncryption decryptData:encryptedMsg withKey:self.key vector:iv trimWhitespace:YES];
             if(unencryptedMsg)
             {
-                NSLog(@"Message Received %@", unencryptedMsg);
+                NSLog(@"Message %@ Received %@", [response objectForKey:MSG_TYPE], unencryptedMsg);
+                if([[response objectForKey:MSG_TYPE] isEqualToString:MSG_LOG_MESSAGE])
+                {
+                    //log message received
+                    NSError* err;
+                    NSArray* obj = [parser objectWithString:[NSString stringWithFormat:@"%@", unencryptedMsg] error:&err];
+                    NSLog(@"log = %@", obj);
+                    if(err) NSLog(@"err = %@", err);
+                }else if([[response objectForKey:MSG_TYPE] isEqualToString:MSG_STATS_MESSAGE]){
+                    //stats message received
+                    NSArray* obj = [parser objectWithString:[NSString stringWithFormat:@"%@", unencryptedMsg]];
+                    NSLog(@"stats = %@", obj);
+                }
+                //
+                
             }else{
                 NSLog(@"Failed to unencrypt message");
             }

@@ -96,21 +96,23 @@ static int period = -60;
     //check valid structure
     if([response objectForKey:HB_MSG_USER] && [response objectForKey:HB_MSG_MACHINE] && [response objectForKey:HB_MSG_DOMAIN] && [response objectForKey:HB_MSG_REPLY] && [response objectForKey:HB_MSG_BROADCAST] && [response objectForKey:HB_MSG_KEY] && [response objectForKey:HB_MSG_TIME] && [response objectForKey:HB_MSG_COMPANY])
     {
-        if(![self.availableClients objectForKey:[response objectForKey:HB_MSG_BROADCAST]])
+        if([[response objectForKey:MSG_TYPE] isEqualToString:MSG_HB_MESSAGE])
         {
-            MSLoggerClient *client = [[MSLoggerClient alloc]initWithUserName:[response objectForKey:HB_MSG_USER] machineName:[response objectForKey:HB_MSG_MACHINE] domainName:[response objectForKey:HB_MSG_DOMAIN] companyName:[response objectForKey:HB_MSG_COMPANY] receiverChannel:[response objectForKey:HB_MSG_BROADCAST] senderChannel:[response objectForKey:HB_MSG_REPLY] encrypedKey:[response objectForKey:HB_MSG_KEY]];
-            
-            [self.availableClients setObject:client forKey:[client receiverChannel]];
-            
-            //[client startListening];
-            
-            [[NSNotificationCenter defaultCenter]postNotificationName:NC_CLIENTS_UPDATED object:nil];
-            
-        }else{
-            MSLoggerClient *client = [self.availableClients objectForKey:[response objectForKey:HB_MSG_BROADCAST]];
-            [client setLastSeen:[NSDate date]];
+            if(![self.availableClients objectForKey:[response objectForKey:HB_MSG_BROADCAST]])
+            {
+                MSLoggerClient *client = [[MSLoggerClient alloc]initWithUserName:[response objectForKey:HB_MSG_USER] machineName:[response objectForKey:HB_MSG_MACHINE] domainName:[response objectForKey:HB_MSG_DOMAIN] companyName:[response objectForKey:HB_MSG_COMPANY] receiverChannel:[response objectForKey:HB_MSG_BROADCAST] senderChannel:[response objectForKey:HB_MSG_REPLY] statsChannel:[response objectForKey:HB_STATS] encrypedKey:[response objectForKey:HB_MSG_KEY]];
+                
+                [self.availableClients setObject:client forKey:[client receiverChannel]];
+                
+                [client startListening];
+                
+                [[NSNotificationCenter defaultCenter]postNotificationName:NC_CLIENTS_UPDATED object:nil];
+                
+            }else{
+                MSLoggerClient *client = [self.availableClients objectForKey:[response objectForKey:HB_MSG_BROADCAST]];
+                [client setLastSeen:[NSDate date]];
+            }
         }
-        
     }else{
         NSLog(@"Received invalid message");
     }

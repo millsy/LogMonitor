@@ -19,14 +19,24 @@ extern NSString* const HB_MSG_TIME;
 extern NSString* const HB_MSG_DOMAIN;
 extern NSString* const HB_MSG_STATS;
 extern NSString* const HB_MSG_COMPANY;
-extern NSString* const HB_STATS_MSG_NETVER;
+extern NSString* const HB_STATS;
 
-//log messages
-extern NSString* const LM_MSG_IV;
-extern NSString* const LM_MSG_MSG;
+//message headers
+extern NSString* const MSG_IV;
+extern NSString* const MSG_CONTENTS;
+extern NSString* const MSG_TYPE;
 
 //channels
 extern NSString* const OS_HEARTBEAT_CHANNEL;
+
+//stats message headers
+extern NSString* const SM_NETVER;
+extern NSString* const SM_WINVER;
+
+//message types
+extern NSString* const MSG_LOG_MESSAGE;
+extern NSString* const MSG_HB_MESSAGE;
+extern NSString* const MSG_STATS_MESSAGE;
 
 //Notification Center names
 extern NSString* const NC_CLIENTS_UPDATED;

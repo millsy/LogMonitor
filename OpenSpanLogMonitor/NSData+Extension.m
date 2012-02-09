@@ -93,8 +93,8 @@
         
 		return nil;
 	}
-    
-	char keyBytes[keyLength+1];
+    /*
+	char keyBytes[keyLength+0];
 	bzero(keyBytes, sizeof(keyBytes));
 	//[key getCString:keyBytes maxLength:sizeof(keyBytes) encoding:NSUTF8StringEncoding];
     
@@ -104,17 +104,17 @@
     bzero(ivBytes, sizeof(ivBytes));
     //[iv getCString:ivBytes maxLength:sizeof(ivBytes) encoding:NSUTF8StringEncoding];
     memcpy(ivBytes, [iv bytes], [iv length]);
-    
+    */
 	size_t numBytesDecrypted = 0;
 	size_t decryptedLength = [self length] + kCCBlockSizeAES128;
 	char* decryptedBytes = malloc(decryptedLength);
 	
 	CCCryptorStatus result = CCCrypt(kCCDecrypt, 
 									 kCCAlgorithmAES128 , 
-									 0x0,
-									 keyBytes, 
-									 keyLength, 
-									 ivBytes,
+									 kCCOptionPKCS7Padding,
+									 [key bytes], 
+									 [key length], 
+									 [iv bytes],
 									 [self bytes], 
 									 [self length],
 									 decryptedBytes, 

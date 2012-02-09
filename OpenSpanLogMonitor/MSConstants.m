@@ -19,14 +19,24 @@ NSString* const HB_MSG_TIME = @"TIME";
 NSString* const HB_MSG_DOMAIN = @"DOMAIN";
 NSString* const HB_MSG_STATS = @"STATS";
 NSString* const HB_MSG_COMPANY = @"COMPANY";
-NSString* const HB_STATS_MSG_NETVER = @"NETVERSIONS";
+NSString* const HB_STATS = @"STATS";
 
-//log messages
-NSString* const LM_MSG_IV = @"IV";
-NSString* const LM_MSG_MSG = @"MESSAGE";
+//message headers
+NSString* const MSG_IV = @"IV";
+NSString* const MSG_CONTENTS = @"MESSAGE";
+NSString* const MSG_TYPE = @"MSGTYPE";
 
 //channels
 NSString* const OS_HEARTBEAT_CHANNEL = @"OS-HEARTBEAT";
+
+//stats message headers
+NSString* const  SM_NETVER = @"NETVERSIONS";
+NSString* const  SM_WINVER = @"OSVERSION";
+
+//message types
+NSString* const MSG_LOG_MESSAGE = @"LOGMESSAGE";
+NSString* const MSG_HB_MESSAGE = @"HEARTBEAT";
+NSString* const MSG_STATS_MESSAGE = @"STATS";
 
 //Notification Center names
 NSString* const NC_CLIENTS_UPDATED = @"ClientsUpdated";
