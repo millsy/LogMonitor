@@ -9,6 +9,7 @@
 extern NSString * const PUBLISHERKEY;
 extern NSString * const SUBSCRIBERKEY;
 
+//heartbeat messages
 extern NSString* const HB_MSG_USER;
 extern NSString* const HB_MSG_MACHINE;
 extern NSString* const HB_MSG_REPLY;
@@ -16,9 +17,15 @@ extern NSString* const HB_MSG_BROADCAST;
 extern NSString* const HB_MSG_KEY;
 extern NSString* const HB_MSG_TIME;
 extern NSString* const HB_MSG_DOMAIN;
+extern NSString* const HB_MSG_STATS;
+extern NSString* const HB_MSG_COMPANY;
+extern NSString* const HB_STATS_MSG_NETVER;
+
+//log messages
 extern NSString* const LM_MSG_IV;
 extern NSString* const LM_MSG_MSG;
 
+//channels
 extern NSString* const OS_HEARTBEAT_CHANNEL;
 
 //Notification Center names
