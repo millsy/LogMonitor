@@ -8,6 +8,7 @@
 
 #import "MSLoggerClientDetailsViewController.h"
 #import "MSLoggerClient.h"
+#import "MSCommonDate.h"
 
 @implementation MSLoggerClientDetailsViewController
 
@@ -64,11 +65,8 @@
                     details = self.client.machineName;
                 }else if(indexPath.row == 2){
                     //lastHeartbeat
-                    title = @"Last Heartbeat";
-                    NSDateFormatter *df = [[NSDateFormatter alloc] init];
-                    [df setDateFormat:@"dd-MM-yy HH:mm:ss"];
-                    
-                    details = [df stringFromDate:self.client.lastSeen];
+                    title = @"Last Heartbeat";                   
+                    details = [MSCommonDate date:self.client.lastSeen ToStringFormat:nil];
                 }
             }else if(indexPath.section == 1){
                 //Client details

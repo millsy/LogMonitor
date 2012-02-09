@@ -29,4 +29,16 @@
     return [gregorian dateByAddingComponents:offsetComponents toDate:date options:0];
 }
 
++(NSString*)date:(NSDate*)date ToStringFormat:(NSString*)format
+{
+    NSDateFormatter *df = [[NSDateFormatter alloc] init];
+    if(format)
+    {
+        [df setDateFormat:format];
+    }else{
+        [df setDateFormat:@"dd-MM-yy HH:mm:ss"];
+    }
+    return [df stringFromDate:date];
+}
+
 @end
