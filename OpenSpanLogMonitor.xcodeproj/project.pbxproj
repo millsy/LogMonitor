@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		830850F314E46C02007A6C1F /* MSRuntimeInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 830850F214E46C02007A6C1F /* MSRuntimeInfo.m */; };
 		831A73CE14E13D0000BDF979 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 831A73CD14E13D0000BDF979 /* Security.framework */; };
 		831A73D214E1640B00BDF979 /* MSLoggerClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 831A73D114E1640B00BDF979 /* MSLoggerClient.m */; };
 		831A73DB14E17ED000BDF979 /* NSData+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 831A73D514E17ED000BDF979 /* NSData+Extension.m */; };
@@ -52,6 +53,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		830850F114E46C02007A6C1F /* MSRuntimeInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSRuntimeInfo.h; sourceTree = "<group>"; };
+		830850F214E46C02007A6C1F /* MSRuntimeInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSRuntimeInfo.m; sourceTree = "<group>"; };
 		831A73CD14E13D0000BDF979 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		831A73D014E1640B00BDF979 /* MSLoggerClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSLoggerClient.h; sourceTree = "<group>"; };
 		831A73D114E1640B00BDF979 /* MSLoggerClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSLoggerClient.m; sourceTree = "<group>"; };
@@ -149,6 +152,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		830850EF14E46BDB007A6C1F /* Statistics */ = {
+			isa = PBXGroup;
+			children = (
+				830850F114E46C02007A6C1F /* MSRuntimeInfo.h */,
+				830850F214E46C02007A6C1F /* MSRuntimeInfo.m */,
+			);
+			name = Statistics;
+			sourceTree = "<group>";
+		};
 		831A73D314E17EBE00BDF979 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -258,6 +270,7 @@
 		83E61CF714D8278100B68046 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				830850EF14E46BDB007A6C1F /* Statistics */,
 				831A73FF14E2752C00BDF979 /* Common */,
 				831A73FE14E2751D00BDF979 /* Logging */,
 				831A73FD14E2750600BDF979 /* Clients */,
@@ -479,6 +492,7 @@
 				831A740214E29BC300BDF979 /* MSCommonDate.m in Sources */,
 				831A741014E3146100BDF979 /* MSLoggerClientViewController.m in Sources */,
 				831A741614E3B1B800BDF979 /* MSLoggerClientDetailsViewController.m in Sources */,
+				830850F314E46C02007A6C1F /* MSRuntimeInfo.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

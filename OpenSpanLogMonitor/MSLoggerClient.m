@@ -33,6 +33,7 @@
 @synthesize lastSeen = _lastSeen;
 @synthesize companyName = _companyName;
 @synthesize statsChannel = _statsChannel;
+@synthesize runtimeInfo = _runtimeInfo;
 
 //private
 @synthesize key = _key;
@@ -60,9 +61,13 @@
         {
             _statsChannel = [statsChannel copy];
             
+            //get history from stats - but only last msg
+            [self.pubnub history:self.statsChannel limit:1 delegate:self];
             //start listening for stats
             [self.pubnub subscribe: self.statsChannel delegate:self];
         }
+        
+        _runtimeInfo = [[MSRuntimeInfo alloc] init];
         
         parser = [[SBJsonParser alloc]init];
         
@@ -76,14 +81,16 @@
 {
     if(self.pubnub)
     {
-        [self.pubnub release];
-        
+        //gracefully shutdown channel subscribers first
         if(self.statsChannel)
             [self.pubnub unsubscribe:self.statsChannel];
         
         if(self.receiverChannel)
             [self.pubnub unsubscribe:self.receiverChannel];
+        
+        [self.pubnub release];
     }
+    
     if(self.userName)[self.userName release];
     if(self.machineName)[self.machineName release];
     if(self.domainName)[self.domainName release];
@@ -95,6 +102,7 @@
     if(self.privateLogEntries) [self.privateLogEntries release];
     if(self.companyName) [self.companyName release];
     if(self.statsChannel) [self.statsChannel release];
+    if(self.runtimeInfo) [self.runtimeInfo release];
     
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     
@@ -126,18 +134,29 @@
             NSString* unencryptedMsg = [MSEncryption decryptData:encryptedMsg withKey:self.key vector:iv trimWhitespace:YES];
             if(unencryptedMsg)
             {
-                NSLog(@"Message %@ Received %@", [response objectForKey:MSG_TYPE], unencryptedMsg);
+                NSError* err;
+                NSDictionary* obj = [parser objectWithString:unencryptedMsg error:&err];
+                
                 if([[response objectForKey:MSG_TYPE] isEqualToString:MSG_LOG_MESSAGE])
                 {
                     //log message received
-                    NSError* err;
-                    NSArray* obj = [parser objectWithString:[NSString stringWithFormat:@"%@", unencryptedMsg] error:&err];
-                    NSLog(@"log = %@", obj);
-                    if(err) NSLog(@"err = %@", err);
+                    
                 }else if([[response objectForKey:MSG_TYPE] isEqualToString:MSG_STATS_MESSAGE]){
                     //stats message received
-                    NSArray* obj = [parser objectWithString:[NSString stringWithFormat:@"%@", unencryptedMsg]];
-                    NSLog(@"stats = %@", obj);
+                    if(self.runtimeInfo){
+                        //got runtime info before - update memory info
+                        if([obj objectForKey:SM_NETVER]) if(!self.runtimeInfo.netVersions) self.runtimeInfo.netVersions = [obj objectForKey:SM_NETVER];
+                        if([obj objectForKey:SM_WINVER])if(!self.runtimeInfo.windowsVersion) self.runtimeInfo.windowsVersion = [obj objectForKey:SM_WINVER];
+                        if([obj objectForKey:SM_START_TIME])if(!self.runtimeInfo.startTime) self.runtimeInfo.startTime = [MSCommonDate string:[obj objectForKey: SM_START_TIME] toDateWithFormat:nil];
+                        
+                        if([obj objectForKey:SM_PHYSICAL_MEM]) self.runtimeInfo.physicalMemorySize = [[obj objectForKey:SM_PHYSICAL_MEM] longValue];
+                        if([obj objectForKey:SM_PRIVATE_MEM]) self.runtimeInfo.privateMemorySize = [[obj objectForKey:SM_PRIVATE_MEM] longValue];
+                        if([obj objectForKey:SM_VIRTUAL_MEM]) self.runtimeInfo.virtualMemorySize = [[obj objectForKey:SM_VIRTUAL_MEM] longValue];
+                        
+                        
+                        
+                        NSLog(@"Stats msg");
+                    }
                 }
                 //
                 
@@ -159,7 +178,11 @@
 
 - (void)pubnub:(CEPubnub *)pubnub subscriptionDidReceiveHistoryArray:(NSArray *)response onChannel:(NSString *)channel
 {
-    //not used now
+    for(id obj in response){
+        if([obj isKindOfClass:[NSDictionary class]]){
+            [self pubnub:pubnub subscriptionDidReceiveDictionary:obj onChannel:channel];
+        }
+    }
 }
 
 //public properties

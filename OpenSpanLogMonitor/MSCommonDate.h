@@ -13,5 +13,6 @@
 + (BOOL)date:(NSDate*)date isBetweenDate:(NSDate*)beginDate andDate:(NSDate*)endDate;
 +(NSDate*)date:(NSDate*)date minusSeconds:(NSInteger)seconds;
 +(NSString*)date:(NSDate*)date ToStringFormat:(NSString*)format;
++(NSDate*)string:(NSString*)str toDateWithFormat:(NSString*)format;
 
 @end

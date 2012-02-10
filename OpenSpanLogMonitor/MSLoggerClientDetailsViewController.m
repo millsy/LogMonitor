@@ -20,6 +20,8 @@
     if(self.client)
     {
         [self.client addObserver:self forKeyPath:@"lastSeen" options:NSKeyValueObservingOptionNew context:nil];
+        [self.client.runtimeInfo addObserver:self forKeyPath:@"netVersions" options:NSKeyValueObservingOptionNew context:nil];
+        [self.client.runtimeInfo addObserver:self forKeyPath:@"virtualMemorySize" options:NSKeyValueObservingOptionNew context:nil];
     }
 }
 
@@ -28,6 +30,8 @@
     if(self.client)
     {
         [self.client removeObserver:self forKeyPath:@"lastSeen"];
+        [self.client.runtimeInfo removeObserver:self forKeyPath:@"netVersions"];
+        [self.client.runtimeInfo removeObserver:self forKeyPath:@"virtualMemorySize"];
     }
 }
 
@@ -40,6 +44,10 @@
     if([keyPath isEqualToString:@"lastSeen"])
     {
         [self.tableViewClientDetails reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:4 inSection:0]] withRowAnimation:NO];   
+    }else if([keyPath isEqualToString:@"netVersions"]){
+        [self.tableViewClientDetails reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:1 inSection:3]] withRowAnimation:NO];
+    }else if([keyPath isEqualToString:@"virtualMemorySize"]){
+        [self.tableViewClientDetails reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:3 inSection:3]] withRowAnimation:NO];
     }
 }
 
@@ -92,6 +100,10 @@
                     //outgoing queue
                     title = @"Outgoing Queue";
                     details = self.client.senderChannel;
+                }else if(indexPath.row == 2){
+                    //outgoing queue
+                    title = @"Stats Queue";
+                    details = self.client.statsChannel;
                 }
             }else if(indexPath.section == 2){
                 //Encryption details
@@ -102,8 +114,44 @@
                     
                     cell.textLabel.lineBreakMode = UILineBreakModeCharacterWrap;
                     cell.detailTextLabel.lineBreakMode = UILineBreakModeCharacterWrap;
-                    cell.textLabel.numberOfLines = 5;
-                    cell.detailTextLabel.numberOfLines = 5; 
+//                    cell.textLabel.numberOfLines = 5;
+                    cell.detailTextLabel.numberOfLines = 0; 
+                }
+            }else if(indexPath.section == 3)
+            {
+                if(self.client.runtimeInfo)
+                {
+                    //Client details
+                    if(indexPath.row == 0){
+                        //username
+                        title = @"Windows Version";
+                        details = self.client.runtimeInfo.windowsVersion;
+                    }else if(indexPath.row == 1){
+                        //machineName
+                        title = @".NET Versions Installed";
+                        details = [self.client.runtimeInfo stringOfNetVersions];
+                        cell.detailTextLabel.lineBreakMode = UILineBreakModeWordWrap;
+                        cell.detailTextLabel.numberOfLines = 0;
+                    }else if(indexPath.row == 2){
+                        //machineName
+                        title = @"Runtime Start Time";
+                        details = [MSCommonDate date:self.client.runtimeInfo.startTime ToStringFormat:nil];
+                    }else if(indexPath.row == 3){
+                        //machineName
+                        title = @"Virtual Memory";
+                        details = [NSString stringWithFormat:@"%d", self.client.runtimeInfo.virtualMemorySize];
+                    }else if(indexPath.row == 4){
+                        //lastHeartbeat
+                        title = @"Physical Memory";                   
+                        details = [NSString stringWithFormat:@"%d", self.client.runtimeInfo.physicalMemorySize];
+                    }else if(indexPath.row == 5){
+                        //lastHeartbeat
+                        title = @"Private Memory";                   
+                        details = [NSString stringWithFormat:@"%d", self.client.runtimeInfo.privateMemorySize];
+                    }
+                }else{
+                    title = @"Please wait...";
+                    details = @"...awaiting runtime data";
                 }
             }
             
@@ -121,7 +169,12 @@
 {
     if(indexPath.section == 2 && indexPath.row == 0)
     {   
-        CGSize size = [self.client.encryptedKey sizeWithFont:[UIFont systemFontOfSize:17.0] constrainedToSize:CGSizeMake(115,140) lineBreakMode:UILineBreakModeCharacterWrap];
+        CGSize size = [self.client.encryptedKey sizeWithFont:[UIFont systemFontOfSize:17.0] constrainedToSize:CGSizeMake(115,9999) lineBreakMode:UILineBreakModeCharacterWrap];
+        
+        return size.height;
+    }else if(indexPath.section == 3 && indexPath.row == 1 && self.client.runtimeInfo)
+    {   
+        CGSize size = [[self.client.runtimeInfo stringOfNetVersions] sizeWithFont:[UIFont systemFontOfSize:17.0] constrainedToSize:CGSizeMake(115,9999) lineBreakMode:UILineBreakModeWordWrap];
         
         return size.height;
     }else{
@@ -136,6 +189,8 @@
     if(self.client)
     {
         [self.client removeObserver:self forKeyPath:@"lastSeen"];
+        [self.client.runtimeInfo removeObserver:self forKeyPath:@"netVersions"];
+        [self.client.runtimeInfo removeObserver:self forKeyPath:@"virtualMemorySize"];
         [self.client release];
     }
     

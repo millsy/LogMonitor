@@ -41,4 +41,16 @@
     return [df stringFromDate:date];
 }
 
++(NSDate*)string:(NSString*)str toDateWithFormat:(NSString*)format
+{
+    NSDateFormatter *df = [[NSDateFormatter alloc] init];
+    if(format){
+        [df setDateFormat:format];
+    }else{
+        [df setDateFormat:@"yyyy-MM-dd HH:mm:ss.SSS"];
+    }
+    
+    return [df dateFromString: str];
+}
+
 @end

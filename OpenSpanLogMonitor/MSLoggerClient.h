@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 #import "CEPubnub.h"
+#import "MSRuntimeInfo.h"
+#import "MSCommonDate.h"
 
 @interface MSLoggerClient : NSObject
 
@@ -19,6 +21,8 @@
 @property (strong, nonatomic, readonly) NSString* encryptedKey;
 @property (strong, nonatomic, readonly) NSString* companyName;
 @property (strong, nonatomic, readonly) NSString* statsChannel;
+
+@property (strong, nonatomic, readonly) MSRuntimeInfo* runtimeInfo;
 
 @property (strong, nonatomic) NSDate* lastSeen;
 

@@ -32,6 +32,10 @@ extern NSString* const OS_HEARTBEAT_CHANNEL;
 //stats message headers
 extern NSString* const SM_NETVER;
 extern NSString* const SM_WINVER;
+extern NSString* const SM_VIRTUAL_MEM;
+extern NSString* const SM_PHYSICAL_MEM;
+extern NSString* const SM_PRIVATE_MEM;
+extern NSString* const SM_START_TIME;
 
 //message types
 extern NSString* const MSG_LOG_MESSAGE;

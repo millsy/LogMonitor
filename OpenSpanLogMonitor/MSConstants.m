@@ -30,8 +30,12 @@ NSString* const MSG_TYPE = @"MSGTYPE";
 NSString* const OS_HEARTBEAT_CHANNEL = @"OS-HEARTBEAT";
 
 //stats message headers
-NSString* const  SM_NETVER = @"NETVERSIONS";
-NSString* const  SM_WINVER = @"OSVERSION";
+NSString* const SM_NETVER = @"NETVERSIONS";
+NSString* const SM_WINVER = @"OSVERSION";
+NSString* const SM_VIRTUAL_MEM = @"VIRTUALMEM";
+NSString* const SM_PHYSICAL_MEM = @"PHYSICALMEM";
+NSString* const SM_PRIVATE_MEM = @"PRIVATEMEM";
+NSString* const SM_START_TIME = @"START_TIME";
 
 //message types
 NSString* const MSG_LOG_MESSAGE = @"LOGMESSAGE";
