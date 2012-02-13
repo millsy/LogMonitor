@@ -16,6 +16,7 @@
 @synthesize virtualMemorySize = _virtualMemorySize;
 @synthesize physicalMemorySize = _physicalMemorySize;
 @synthesize privateMemorySize = _privateMemorySize;
+@synthesize osVersion = _osVersion;
 
 -(id)init
 {

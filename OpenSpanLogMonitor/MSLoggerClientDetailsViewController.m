@@ -32,6 +32,7 @@
 @synthesize physicalMemoryLabel = _physicalMemoryLabel;
 @synthesize netVersionCell = _netVersionCell;
 @synthesize keyCell = _keyCell;
+@synthesize runtimeVersionLabel = _runtimeVersionLabel;
 @synthesize publicKeyLabel = _publicKeyLabel;
 
 -(void)viewWillAppear:(BOOL)animated
@@ -52,6 +53,7 @@
     self.virtualMemoryLabel.text = [NSString stringWithFormat:@"%d bytes", self.client.runtimeInfo.virtualMemorySize];
     self.physicalMemoryLabel.text = [NSString stringWithFormat:@"%d bytes", self.client.runtimeInfo.physicalMemorySize];
     self.privateMemoryLabel.text = [NSString stringWithFormat:@"%d bytes", self.client.runtimeInfo.privateMemorySize];
+    self.runtimeVersionLabel.text = self.client.runtimeInfo.osVersion;
 }
 
 
@@ -113,7 +115,7 @@
             return size.height;
         }
     }
-    else if(indexPath.section == 3 && indexPath.row == 1 && self.client.runtimeInfo)
+    else if(indexPath.section == 3 && indexPath.row == 2 && self.client.runtimeInfo)
     {   
         CGSize size = [[self.client.runtimeInfo stringOfNetVersions] sizeWithFont:[UIFont systemFontOfSize:17.0] constrainedToSize:CGSizeMake(400,9999) lineBreakMode:UILineBreakModeWordWrap];
         if(size.height > 44)
@@ -158,6 +160,7 @@
     [_netVersionCell release];
     [_keyCell release];
     [_publicKeyLabel release];
+    [_runtimeVersionLabel release];
     [super dealloc];
 }
 - (void)viewDidUnload {
@@ -180,6 +183,13 @@
     [self setNetVersionCell:nil];
     [self setKeyCell:nil];
     [self setPublicKeyLabel:nil];
+    [self setRuntimeVersionLabel:nil];
     [super viewDidUnload];
+}
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+    // Return YES for supported orientations
+	return YES;
 }
 @end

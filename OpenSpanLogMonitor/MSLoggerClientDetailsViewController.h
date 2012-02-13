@@ -32,5 +32,6 @@
 @property (retain, nonatomic) IBOutlet UILabel *publicKeyLabel;
 @property (retain, nonatomic) IBOutlet UITableViewCell *netVersionCell;
 @property (retain, nonatomic) IBOutlet UITableViewCell *keyCell;
+@property (retain, nonatomic) IBOutlet UILabel *runtimeVersionLabel;
 
 @end

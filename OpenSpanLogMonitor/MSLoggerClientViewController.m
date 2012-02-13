@@ -9,6 +9,7 @@
 #import "MSLoggerClientViewController.h"
 #import "MSHeartbeatClient.h"
 #import "MSLoggerClientDetailsViewController.h"
+#import "MSLogEntryViewer.h"
 
 @interface MSLoggerClientViewController()
 {
@@ -95,6 +96,10 @@
     if([[segue identifier] isEqualToString:@"loggerClientDetails"]){        
         MSLoggerClientDetailsViewController* newController = [segue destinationViewController];
         [newController setClient:sender];
+    }else if([[segue identifier] isEqualToString:@"loggerEntryViewer"]){
+        MSLogEntryViewer* newController = [segue destinationViewController];
+        MSLoggerClient* client = [[myHBClient clients]objectAtIndex:[[tableViewLoggerClients indexPathForSelectedRow] row]];
+        [newController setClient:client];
     }
 }
 
@@ -111,7 +116,14 @@
 }
 
 - (void)dealloc {
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
     [super dealloc];
+}
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+    // Return YES for supported orientations
+	return YES;
 }
 
 @end

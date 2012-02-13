@@ -37,6 +37,7 @@ extern NSString* const SM_VIRTUAL_MEM;
 extern NSString* const SM_PHYSICAL_MEM;
 extern NSString* const SM_PRIVATE_MEM;
 extern NSString* const SM_START_TIME;
+extern NSString* const SM_OPENSPANVER;
 
 //log message headers
 extern NSString* const LM_TRACE_LEVEL;
@@ -55,3 +56,4 @@ extern NSString* const MSG_STATS_MESSAGE;
 
 //Notification Center names
 extern NSString* const NC_CLIENTS_UPDATED;
+extern NSString* const NC_NEW_LOG_ENTRY;

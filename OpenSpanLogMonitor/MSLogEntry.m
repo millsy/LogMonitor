@@ -50,4 +50,9 @@
     [super dealloc];
 }
 
+-(NSString*)description
+{
+    [NSString stringWithFormat:@"%@ %@ %@", self.logDate, self.category, self.logMessage];
+}
+
 @end

@@ -27,7 +27,7 @@
 
 @property (strong, nonatomic) NSDate* lastSeen;
 
-@property (strong, nonatomic, readonly) NSArray* logEntries;
+@property (strong, nonatomic, readonly) NSMutableArray* logEntries;
 
 -(id)initWithUserName:(NSString*)userName machineName:(NSString*)machineName domainName:(NSString*)domainName companyName:(NSString*)companyName receiverChannel:(NSString*) receiverChannel senderChannel:(NSString*)senderChannel statsChannel:(NSString*)statsChannel encrypedKey:(NSString*) encryptedKey publicKey:(NSString*)publicKey;
 

@@ -16,6 +16,7 @@
 @property (nonatomic, assign) long virtualMemorySize;
 @property (nonatomic, assign) long physicalMemorySize;
 @property (nonatomic, assign) long privateMemorySize;
+@property (nonatomic, retain) NSString* osVersion;
 
 -(id)init;
 -(id)initWithNetVersions:(NSArray*)netVersions windowsVersion:(NSString*)windowsVersion startTime:(NSDate*)startTime virtualMemory:(int)virtualMem physicalMemory:(int)physicalMem privateMemory:(int) privateMem;

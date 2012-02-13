@@ -37,6 +37,7 @@ NSString* const SM_VIRTUAL_MEM = @"VIRTUALMEM";
 NSString* const SM_PHYSICAL_MEM = @"PHYSICALMEM";
 NSString* const SM_PRIVATE_MEM = @"PRIVATEMEM";
 NSString* const SM_START_TIME = @"START_TIME";
+NSString* const SM_OPENSPANVER = @"OPENSPANVER";
 
 //log message headers
 NSString* const LM_TRACE_LEVEL = @"TraceLevel";
@@ -55,3 +56,4 @@ NSString* const MSG_STATS_MESSAGE = @"STATS";
 
 //Notification Center names
 NSString* const NC_CLIENTS_UPDATED = @"ClientsUpdated";
+NSString* const NC_NEW_LOG_ENTRY = @"LogEntryAdd";

@@ -17,7 +17,6 @@
     SBJsonParser* parser;
 }
 @property (strong, nonatomic) CEPubnub* pubnub;
-@property (strong, nonatomic) NSMutableArray* privateLogEntries;
 @property (strong, nonatomic) NSData* key;
 
 @end
@@ -37,10 +36,12 @@
 @synthesize runtimeInfo = _runtimeInfo;
 @synthesize publicKeyURL = _publicKeyURL;
 
+@synthesize logEntries = _logEntries;
+
 //private
 @synthesize key = _key;
 @synthesize pubnub = _pubnub;
-@synthesize privateLogEntries = _privateLogEntries;
+
 
 -(id)init
 {
@@ -68,9 +69,12 @@
             [self.pubnub history:self.statsChannel limit:1 delegate:self];
             //start listening for stats
             [self.pubnub subscribe: self.statsChannel delegate:self];
+            //get the last 100 log entries
+            [self.pubnub history:self.receiverChannel limit:100 delegate:self];
         }
         
         _runtimeInfo = [[MSRuntimeInfo alloc] init];
+        _logEntries = [[NSMutableArray alloc]init];
         
         parser = [[SBJsonParser alloc]init];
         
@@ -102,7 +106,7 @@
     if(self.encryptedKey)[self.encryptedKey release];
     if(self.lastSeen)[self.lastSeen release];
     if(self.key)[self.key release];
-    if(self.privateLogEntries) [self.privateLogEntries release];
+    if(self.logEntries) [self.logEntries release];
     if(self.companyName) [self.companyName release];
     if(self.statsChannel) [self.statsChannel release];
     if(self.runtimeInfo) [self.runtimeInfo release];
@@ -143,9 +147,9 @@
                 if([[response objectForKey:MSG_TYPE] isEqualToString:MSG_LOG_MESSAGE])
                 {
                     //log message received
-                    MSLogEntry* entry = [[MSLogEntry alloc]initWithDate:[response objectForKey:LM_TIME] message:[response objectForKey:LM_MESSAGE] traceLevel:[response objectForKey:LM_TRACE_LEVEL] category:[response objectForKey:LM_CATEGORY] designComponent:[response objectForKey:LM_DESIGNCOMP] component:[response objectForKey:LM_COMP] verboseMsg:[response objectForKey:LM_VERBOSE] tag:[response objectForKey:LM_TAG]];
-                    [self.privateLogEntries addObject:entry];
-                    [entry release];
+                    MSLogEntry* entry = [[MSLogEntry alloc]initWithDate:[obj objectForKey:LM_TIME] message:[obj objectForKey:LM_MESSAGE] traceLevel:[obj objectForKey:LM_TRACE_LEVEL] category:[obj objectForKey:LM_CATEGORY] designComponent:[obj objectForKey:LM_DESIGNCOMP] component:[obj objectForKey:LM_COMP] verboseMsg:[obj objectForKey:LM_VERBOSE] tag:[obj objectForKey:LM_TAG]];
+                    [self.logEntries addObject:entry];  
+                    [[NSNotificationCenter defaultCenter]postNotificationName:NC_NEW_LOG_ENTRY object:nil];
                     NSLog(@"Log msg");
                     
                 }else if([[response objectForKey:MSG_TYPE] isEqualToString:MSG_STATS_MESSAGE]){
@@ -160,7 +164,7 @@
                         if([obj objectForKey:SM_PRIVATE_MEM]) self.runtimeInfo.privateMemorySize = [[obj objectForKey:SM_PRIVATE_MEM] longValue];
                         if([obj objectForKey:SM_VIRTUAL_MEM]) self.runtimeInfo.virtualMemorySize = [[obj objectForKey:SM_VIRTUAL_MEM] longValue];
                         
-                        
+                        if([obj objectForKey:SM_OPENSPANVER]) if(!self.runtimeInfo.osVersion) self.runtimeInfo.osVersion = [obj objectForKey:SM_OPENSPANVER];
                         
                         NSLog(@"Stats msg");
                     }
@@ -195,11 +199,6 @@
 //public properties
 
 
--(NSArray*)logEntries
-{    
-    return [self.privateLogEntries copy];
-}
-
 //private properties
 -(NSData*)key
 {
@@ -215,16 +214,6 @@
         }
     }
     return _key;
-}
-
--(NSMutableArray*)privateLogEntries
-{
-    if(!_privateLogEntries)
-    {
-        _privateLogEntries = [[NSMutableArray alloc]init];
-    }
-    
-    return _privateLogEntries;
 }
 
 -(CEPubnub*)pubnub
