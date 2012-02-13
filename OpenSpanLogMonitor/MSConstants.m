@@ -20,6 +20,7 @@ NSString* const HB_MSG_DOMAIN = @"DOMAIN";
 NSString* const HB_MSG_STATS = @"STATS";
 NSString* const HB_MSG_COMPANY = @"COMPANY";
 NSString* const HB_STATS = @"STATS";
+NSString* const HB_MSG_PUBLIC_KEY = @"PUBLICKEY";
 
 //message headers
 NSString* const MSG_IV = @"IV";

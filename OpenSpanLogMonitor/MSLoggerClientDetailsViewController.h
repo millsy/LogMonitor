@@ -29,8 +29,8 @@
 @property (retain, nonatomic) IBOutlet UILabel *virtualMemoryLabel;
 @property (retain, nonatomic) IBOutlet UILabel *privateMemoryLabel;
 @property (retain, nonatomic) IBOutlet UILabel *physicalMemoryLabel;
+@property (retain, nonatomic) IBOutlet UILabel *publicKeyLabel;
 @property (retain, nonatomic) IBOutlet UITableViewCell *netVersionCell;
 @property (retain, nonatomic) IBOutlet UITableViewCell *keyCell;
-
 
 @end

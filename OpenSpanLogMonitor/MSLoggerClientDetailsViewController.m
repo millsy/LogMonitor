@@ -38,6 +38,7 @@
 @synthesize physicalMemoryLabel = _physicalMemoryLabel;
 @synthesize netVersionCell = _netVersionCell;
 @synthesize keyCell = _keyCell;
+@synthesize publicKeyLabel = _publicKeyLabel;
 
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -49,7 +50,8 @@
     self.incomingLabel.text = self.client.receiverChannel;
     self.outgoingLabel.text = self.client.senderChannel;
     self.statsLabel.text = self.client.statsChannel;
-    self.keyLabel.text = self.client.encryptedKey;    
+    self.keyLabel.text = self.client.encryptedKey;
+    self.publicKeyLabel.text = self.client.publicKeyURL;
     self.windowsVersionLabel.text = self.client.runtimeInfo.windowsVersion;
     self.netVersionLabel.text = [self.client.runtimeInfo stringOfNetVersions];
     self.startTimeLabel.text = [MSCommonDate date:self.client.runtimeInfo.startTime ToStringFormat:nil];
@@ -161,6 +163,7 @@
     
     [_netVersionCell release];
     [_keyCell release];
+    [_publicKeyLabel release];
     [super dealloc];
 }
 - (void)viewDidUnload {
@@ -182,6 +185,7 @@
     [self setPhysicalMemoryLabel:nil];
     [self setNetVersionCell:nil];
     [self setKeyCell:nil];
+    [self setPublicKeyLabel:nil];
     [super viewDidUnload];
 }
 @end

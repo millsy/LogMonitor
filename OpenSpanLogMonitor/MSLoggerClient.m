@@ -34,6 +34,7 @@
 @synthesize companyName = _companyName;
 @synthesize statsChannel = _statsChannel;
 @synthesize runtimeInfo = _runtimeInfo;
+@synthesize publicKeyURL = _publicKeyURL;
 
 //private
 @synthesize key = _key;
@@ -45,7 +46,7 @@
     return nil;
 }
 
--(id)initWithUserName:(NSString*)userName machineName:(NSString*)machineName domainName:(NSString*)domainName companyName:(NSString*)companyName receiverChannel:(NSString*) receiverChannel senderChannel:(NSString*)senderChannel statsChannel:(NSString*)statsChannel encrypedKey:(NSString*) encryptedKey
+-(id)initWithUserName:(NSString*)userName machineName:(NSString*)machineName domainName:(NSString*)domainName companyName:(NSString*)companyName receiverChannel:(NSString*) receiverChannel senderChannel:(NSString*)senderChannel statsChannel:(NSString*)statsChannel encrypedKey:(NSString*) encryptedKey publicKey:(NSString*)publicKey
 {
     self = [super init];
     if(self)
@@ -57,6 +58,7 @@
         if(senderChannel) _senderChannel = [senderChannel copy];
         if(encryptedKey) _encryptedKey = [encryptedKey copy];
         if(companyName) _companyName = [companyName copy];
+        if(publicKey) _publicKeyURL = [publicKey copy];
         if(statsChannel)
         {
             _statsChannel = [statsChannel copy];

@@ -21,6 +21,7 @@
 @property (strong, nonatomic, readonly) NSString* encryptedKey;
 @property (strong, nonatomic, readonly) NSString* companyName;
 @property (strong, nonatomic, readonly) NSString* statsChannel;
+@property (strong, nonatomic, readonly) NSString* publicKeyURL;
 
 @property (strong, nonatomic, readonly) MSRuntimeInfo* runtimeInfo;
 
@@ -28,7 +29,7 @@
 
 @property (strong, nonatomic, readonly) NSArray* logEntries;
 
--(id)initWithUserName:(NSString*)userName machineName:(NSString*)machineName domainName:(NSString*)domainName companyName:(NSString*)companyName receiverChannel:(NSString*) receiverChannel senderChannel:(NSString*)senderChannel statsChannel:(NSString*)statsChannel encrypedKey:(NSString*) encryptedKey;
+-(id)initWithUserName:(NSString*)userName machineName:(NSString*)machineName domainName:(NSString*)domainName companyName:(NSString*)companyName receiverChannel:(NSString*) receiverChannel senderChannel:(NSString*)senderChannel statsChannel:(NSString*)statsChannel encrypedKey:(NSString*) encryptedKey publicKey:(NSString*)publicKey;
 
 -(void)startListening;
 -(void)stopListening;

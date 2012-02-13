@@ -20,6 +20,7 @@ extern NSString* const HB_MSG_DOMAIN;
 extern NSString* const HB_MSG_STATS;
 extern NSString* const HB_MSG_COMPANY;
 extern NSString* const HB_STATS;
+extern NSString* const HB_MSG_PUBLIC_KEY;
 
 //message headers
 extern NSString* const MSG_IV;
