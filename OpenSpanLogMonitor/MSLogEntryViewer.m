@@ -13,7 +13,7 @@
 
 @synthesize client = _client;
 @synthesize logEntriesView = _logEntriesView;
-
+@synthesize logFilter = _logfilter;
 
 -(int)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -36,9 +36,22 @@
     return cell;
 }
 
+-(NSSet*)availableFilters
+{
+    NSMutableSet* logCategories = [[NSMutableSet alloc]init];
+    for (MSLogEntry* logEntry in self.client.logEntries) {
+        if(logEntry.category){
+            [logCategories addObject:logEntry.category];
+        }
+    }
+    
+    return logCategories;
+}
+
 -(void)newLogEntry:(NSNotification*)notification
 {
     [self.logEntriesView reloadData];
+    [self.logEntriesView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:([self.client.logEntries count]-1) inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
 }
 
 -(void)viewDidLoad
@@ -61,6 +74,19 @@
     // e.g. self.myOutlet = nil;
 }
 
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if([[segue identifier] isEqualToString:@"showLogFilter"])
+    {
+        MSLogFilterViewController* vc = [segue destinationViewController];
+        vc.delegate = self;
+    }
+}
+
+-(void)logFilterSaved:(NSArray *)filter
+{
+    self.logFilter = filter;
+}
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {

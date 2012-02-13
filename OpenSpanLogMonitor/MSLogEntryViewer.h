@@ -8,10 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "MSLoggerClient.h"
+#import "MSLogFilterViewController.h"
 
-@interface MSLogEntryViewer : UITableViewController
+@interface MSLogEntryViewer : UITableViewController <MSLogFilterViewControllerDelegate>
 
 @property (nonatomic, retain) MSLoggerClient* client;
 @property (retain, nonatomic) IBOutlet UITableView *logEntriesView;
+
+@property (strong, nonatomic) NSArray* logFilter;
 
 @end

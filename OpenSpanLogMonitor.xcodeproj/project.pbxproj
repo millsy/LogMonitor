@@ -20,6 +20,7 @@
 		831A741014E3146100BDF979 /* MSLoggerClientViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 831A740F14E3146100BDF979 /* MSLoggerClientViewController.m */; };
 		831A741614E3B1B800BDF979 /* MSLoggerClientDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 831A741514E3B1B800BDF979 /* MSLoggerClientDetailsViewController.m */; };
 		838ABA2714E96B2A0006FA9C /* MSLogEntryViewer.m in Sources */ = {isa = PBXBuildFile; fileRef = 838ABA2614E96B2A0006FA9C /* MSLogEntryViewer.m */; };
+		838ABA2A14E999AF0006FA9C /* MSLogFilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 838ABA2914E999AF0006FA9C /* MSLogFilterViewController.m */; };
 		83BAA3DD14DAC36C00E04EF6 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 83BAA3DC14DAC36C00E04EF6 /* logo.png */; };
 		83BAA3ED14DB056B00E04EF6 /* AppLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 83BAA3EC14DB056B00E04EF6 /* AppLogo.png */; };
 		83BAA3F014DB267200E04EF6 /* MSLogEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 83BAA3EF14DB267200E04EF6 /* MSLogEntry.m */; };
@@ -80,6 +81,8 @@
 		831A741514E3B1B800BDF979 /* MSLoggerClientDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSLoggerClientDetailsViewController.m; sourceTree = "<group>"; };
 		838ABA2514E96B2A0006FA9C /* MSLogEntryViewer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSLogEntryViewer.h; sourceTree = "<group>"; };
 		838ABA2614E96B2A0006FA9C /* MSLogEntryViewer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSLogEntryViewer.m; sourceTree = "<group>"; };
+		838ABA2814E999AF0006FA9C /* MSLogFilterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSLogFilterViewController.h; sourceTree = "<group>"; };
+		838ABA2914E999AF0006FA9C /* MSLogFilterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSLogFilterViewController.m; sourceTree = "<group>"; };
 		83BAA3DC14DAC36C00E04EF6 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
 		83BAA3EC14DB056B00E04EF6 /* AppLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AppLogo.png; sourceTree = "<group>"; };
 		83BAA3EE14DB267200E04EF6 /* MSLogEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSLogEntry.h; sourceTree = "<group>"; };
@@ -244,6 +247,8 @@
 			children = (
 				838ABA2514E96B2A0006FA9C /* MSLogEntryViewer.h */,
 				838ABA2614E96B2A0006FA9C /* MSLogEntryViewer.m */,
+				838ABA2814E999AF0006FA9C /* MSLogFilterViewController.h */,
+				838ABA2914E999AF0006FA9C /* MSLogFilterViewController.m */,
 			);
 			name = LogViewer;
 			sourceTree = "<group>";
@@ -507,6 +512,7 @@
 				831A741614E3B1B800BDF979 /* MSLoggerClientDetailsViewController.m in Sources */,
 				830850F314E46C02007A6C1F /* MSRuntimeInfo.m in Sources */,
 				838ABA2714E96B2A0006FA9C /* MSLogEntryViewer.m in Sources */,
+				838ABA2A14E999AF0006FA9C /* MSLogFilterViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
