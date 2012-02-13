@@ -38,6 +38,16 @@ extern NSString* const SM_PHYSICAL_MEM;
 extern NSString* const SM_PRIVATE_MEM;
 extern NSString* const SM_START_TIME;
 
+//log message headers
+extern NSString* const LM_TRACE_LEVEL;
+extern NSString* const LM_TIME;
+extern NSString* const LM_CATEGORY;
+extern NSString* const LM_DESIGNCOMP;
+extern NSString* const LM_COMP;
+extern NSString* const LM_MESSAGE;
+extern NSString* const LM_VERBOSE;
+extern NSString* const LM_TAG;
+
 //message types
 extern NSString* const MSG_LOG_MESSAGE;
 extern NSString* const MSG_HB_MESSAGE;

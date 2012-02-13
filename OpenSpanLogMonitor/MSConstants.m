@@ -38,6 +38,16 @@ NSString* const SM_PHYSICAL_MEM = @"PHYSICALMEM";
 NSString* const SM_PRIVATE_MEM = @"PRIVATEMEM";
 NSString* const SM_START_TIME = @"START_TIME";
 
+//log message headers
+NSString* const LM_TRACE_LEVEL = @"TraceLevel";
+NSString* const LM_TIME = @"DateTime";
+NSString* const LM_CATEGORY = @"Category";
+NSString* const LM_DESIGNCOMP = @"DesignCompName";
+NSString* const LM_COMP = @"CompName";
+NSString* const LM_MESSAGE = @"Message";
+NSString* const LM_VERBOSE = @"VerboseMsg";
+NSString* const LM_TAG = @"Tag";
+
 //message types
 NSString* const MSG_LOG_MESSAGE = @"LOGMESSAGE";
 NSString* const MSG_HB_MESSAGE = @"HEARTBEAT";
