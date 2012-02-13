@@ -10,10 +10,54 @@
 #import "MSLoggerClient.h"
 #import "MSCommonDate.h"
 
+@interface MSLoggerClientDetailsViewController()
+
+-(void)adjustUILabel:(UILabel*)label forText:(NSString*) text;
+
+@end
+
 @implementation MSLoggerClientDetailsViewController
 
 @synthesize client = _client;
+
 @synthesize tableViewClientDetails = _tableViewClientDetails;
+@synthesize userNameLabel = _userNameLabel;
+@synthesize domainNameLabel = _domainNameLabel;
+@synthesize machineNameLabel = _machineNameLabel;
+@synthesize companyNameLabel = _companyNameLabel;
+@synthesize heartbeatLabel = _heartbeatLabel;
+@synthesize incomingLabel = _incomingLabel;
+@synthesize outgoingLabel = _outgoingLabel;
+@synthesize statsLabel = _statsLabel;
+@synthesize keyLabel = _keyLabel;
+@synthesize windowsVersionLabel = _windowsVersionLabel;
+@synthesize netVersionLabel = _netVersionLabel;
+@synthesize startTimeLabel = _startTimeLabel;
+@synthesize virtualMemoryLabel = _virtualMemoryLabel;
+@synthesize privateMemoryLabel = _privateMemoryLabel;
+@synthesize physicalMemoryLabel = _physicalMemoryLabel;
+@synthesize netVersionCell = _netVersionCell;
+@synthesize keyCell = _keyCell;
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    self.userNameLabel.text = self.client.userName;
+    self.domainNameLabel.text = self.client.domainName;
+    self.machineNameLabel.text = self.client.machineName;
+    self.companyNameLabel.text = self.client.companyName;
+    self.heartbeatLabel.text = [MSCommonDate date:self.client.lastSeen ToStringFormat:nil];
+    self.incomingLabel.text = self.client.receiverChannel;
+    self.outgoingLabel.text = self.client.senderChannel;
+    self.statsLabel.text = self.client.statsChannel;
+    self.keyLabel.text = self.client.encryptedKey;    
+    self.windowsVersionLabel.text = self.client.runtimeInfo.windowsVersion;
+    self.netVersionLabel.text = [self.client.runtimeInfo stringOfNetVersions];
+    self.startTimeLabel.text = [MSCommonDate date:self.client.runtimeInfo.startTime ToStringFormat:nil];
+    self.virtualMemoryLabel.text = [NSString stringWithFormat:@"%d bytes", self.client.runtimeInfo.virtualMemorySize];
+    self.physicalMemoryLabel.text = [NSString stringWithFormat:@"%d bytes", self.client.runtimeInfo.physicalMemorySize];
+    self.privateMemoryLabel.text = [NSString stringWithFormat:@"%d bytes", self.client.runtimeInfo.privateMemorySize];
+}
+
 
 -(void)viewDidLoad
 {
@@ -21,7 +65,11 @@
     {
         [self.client addObserver:self forKeyPath:@"lastSeen" options:NSKeyValueObservingOptionNew context:nil];
         [self.client.runtimeInfo addObserver:self forKeyPath:@"netVersions" options:NSKeyValueObservingOptionNew context:nil];
+        [self.client.runtimeInfo addObserver:self forKeyPath:@"windowsVersion" options:NSKeyValueObservingOptionNew context:nil];
         [self.client.runtimeInfo addObserver:self forKeyPath:@"virtualMemorySize" options:NSKeyValueObservingOptionNew context:nil];
+        [self.client.runtimeInfo addObserver:self forKeyPath:@"physicalMemorySize" options:NSKeyValueObservingOptionNew context:nil];
+        [self.client.runtimeInfo addObserver:self forKeyPath:@"privateMemorySize" options:NSKeyValueObservingOptionNew context:nil];
+        
     }
 }
 
@@ -31,173 +79,109 @@
     {
         [self.client removeObserver:self forKeyPath:@"lastSeen"];
         [self.client.runtimeInfo removeObserver:self forKeyPath:@"netVersions"];
+        [self.client.runtimeInfo removeObserver:self forKeyPath:@"windowsVersion"];
         [self.client.runtimeInfo removeObserver:self forKeyPath:@"virtualMemorySize"];
+        [self.client.runtimeInfo removeObserver:self forKeyPath:@"physicalMemorySize"];
+        [self.client.runtimeInfo removeObserver:self forKeyPath:@"privateMemorySize"];//
     }
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-    //NSLog(@"Value changed");
-    //[self.tableViewClientDetails reloadData];
-    
-    //if it's the last seen data only update that row/section in the table
     if([keyPath isEqualToString:@"lastSeen"])
     {
-        [self.tableViewClientDetails reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:4 inSection:0]] withRowAnimation:NO];   
+        self.heartbeatLabel.text = [MSCommonDate date:self.client.lastSeen ToStringFormat:nil];
     }else if([keyPath isEqualToString:@"netVersions"]){
-        [self.tableViewClientDetails reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:1 inSection:3]] withRowAnimation:NO];
+        self.netVersionLabel.text = [self.client.runtimeInfo stringOfNetVersions];
+        //[self.tableViewClientDetails reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:1 inSection:3]] withRowAnimation:NO];
+    }else if([keyPath isEqualToString:@"windowsVersion"]){
+        self.windowsVersionLabel.text = self.client.runtimeInfo.windowsVersion;
     }else if([keyPath isEqualToString:@"virtualMemorySize"]){
-        [self.tableViewClientDetails reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:3 inSection:3]] withRowAnimation:NO];
+        self.virtualMemoryLabel.text = [NSString stringWithFormat:@"%d bytes", self.client.runtimeInfo.virtualMemorySize];
+    }else if([keyPath isEqualToString:@"physicalMemorySize"]){
+        self.physicalMemoryLabel.text = [NSString stringWithFormat:@"%d bytes", self.client.runtimeInfo.physicalMemorySize];
+    }else if([keyPath isEqualToString:@"privateMemorySize"]){
+        self.privateMemoryLabel.text = [NSString stringWithFormat:@"%d bytes", self.client.runtimeInfo.privateMemorySize];
     }
 }
 
--(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if(self.client){
-    
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"loggerClientDetailsCell"];
-        
-        if(!cell){
-            cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"loggerClientDetailsCell"] autorelease];
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        }
-        
-        if (cell) {
-            NSString* details = nil;
-            NSString* title = nil;
-            
-            if(indexPath.section == 0)
-            {
-                //Client details
-                if(indexPath.row == 0){
-                    //username
-                    title = @"User Name";
-                    details = self.client.userName;
-                }else if(indexPath.row == 1){
-                    //machineName
-                    title = @"Domain Name";
-                    details = self.client.domainName;
-                }else if(indexPath.row == 2){
-                    //machineName
-                    title = @"Machine Name";
-                    details = self.client.machineName;
-                }else if(indexPath.row == 3){
-                    //machineName
-                    title = @"Company Name";
-                    details = self.client.companyName;
-                }else if(indexPath.row == 4){
-                    //lastHeartbeat
-                    title = @"Last Heartbeat";                   
-                    details = [MSCommonDate date:self.client.lastSeen ToStringFormat:nil];
-                }
-            }else if(indexPath.section == 1){
-                //Client details
-                if(indexPath.row == 0){
-                    //incoming queue
-                    title = @"Incoming Queue";
-                    details = self.client.receiverChannel;
-                }else if(indexPath.row == 1){
-                    //outgoing queue
-                    title = @"Outgoing Queue";
-                    details = self.client.senderChannel;
-                }else if(indexPath.row == 2){
-                    //outgoing queue
-                    title = @"Stats Queue";
-                    details = self.client.statsChannel;
-                }
-            }else if(indexPath.section == 2){
-                //Encryption details
-                if(indexPath.row == 0){
-                    //encrypted key
-                    title = @"Encrypted Key";
-                    details = self.client.encryptedKey;
-                    
-                    cell.textLabel.lineBreakMode = UILineBreakModeCharacterWrap;
-                    cell.detailTextLabel.lineBreakMode = UILineBreakModeCharacterWrap;
-//                    cell.textLabel.numberOfLines = 5;
-                    cell.detailTextLabel.numberOfLines = 0; 
-                }
-            }else if(indexPath.section == 3)
-            {
-                if(self.client.runtimeInfo)
-                {
-                    //Client details
-                    if(indexPath.row == 0){
-                        //username
-                        title = @"Windows Version";
-                        details = self.client.runtimeInfo.windowsVersion;
-                    }else if(indexPath.row == 1){
-                        //machineName
-                        title = @".NET Versions Installed";
-                        details = [self.client.runtimeInfo stringOfNetVersions];
-                        cell.detailTextLabel.lineBreakMode = UILineBreakModeWordWrap;
-                        cell.detailTextLabel.numberOfLines = 0;
-                    }else if(indexPath.row == 2){
-                        //machineName
-                        title = @"Runtime Start Time";
-                        details = [MSCommonDate date:self.client.runtimeInfo.startTime ToStringFormat:nil];
-                    }else if(indexPath.row == 3){
-                        //machineName
-                        title = @"Virtual Memory";
-                        details = [NSString stringWithFormat:@"%d", self.client.runtimeInfo.virtualMemorySize];
-                    }else if(indexPath.row == 4){
-                        //lastHeartbeat
-                        title = @"Physical Memory";                   
-                        details = [NSString stringWithFormat:@"%d", self.client.runtimeInfo.physicalMemorySize];
-                    }else if(indexPath.row == 5){
-                        //lastHeartbeat
-                        title = @"Private Memory";                   
-                        details = [NSString stringWithFormat:@"%d", self.client.runtimeInfo.privateMemorySize];
-                    }
-                }else{
-                    title = @"Please wait...";
-                    details = @"...awaiting runtime data";
-                }
-            }
-            
-            cell.textLabel.text = title;
-            cell.detailTextLabel.text = details;
-            
-            return cell;
-        }
-    }
-    
-    return nil;
-}
-
+ 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
     if(indexPath.section == 2 && indexPath.row == 0)
     {   
-        CGSize size = [self.client.encryptedKey sizeWithFont:[UIFont systemFontOfSize:17.0] constrainedToSize:CGSizeMake(115,9999) lineBreakMode:UILineBreakModeCharacterWrap];
-        
-        return size.height;
-    }else if(indexPath.section == 3 && indexPath.row == 1 && self.client.runtimeInfo)
-    {   
-        CGSize size = [[self.client.runtimeInfo stringOfNetVersions] sizeWithFont:[UIFont systemFontOfSize:17.0] constrainedToSize:CGSizeMake(115,9999) lineBreakMode:UILineBreakModeWordWrap];
-        
-        return size.height;
-    }else{
-        return 45;
+        CGSize size = [self.client.encryptedKey sizeWithFont:[UIFont systemFontOfSize:17.0] constrainedToSize:CGSizeMake(400,9999) lineBreakMode:UILineBreakModeCharacterWrap];
+        if(size.height > 44)
+        {      
+            return size.height;
+        }
     }
-}
-
-- (void)dealloc {
+    else if(indexPath.section == 3 && indexPath.row == 1 && self.client.runtimeInfo)
+    {   
+        CGSize size = [[self.client.runtimeInfo stringOfNetVersions] sizeWithFont:[UIFont systemFontOfSize:17.0] constrainedToSize:CGSizeMake(400,9999) lineBreakMode:UILineBreakModeWordWrap];
+        if(size.height > 44)
+        {
+            return size.height;
+        }
+    }
     
-    if(_tableViewClientDetails)[_tableViewClientDetails release];
+    return 44;
+}
+ 
+- (void)dealloc {
     
     if(self.client)
     {
         [self.client removeObserver:self forKeyPath:@"lastSeen"];
         [self.client.runtimeInfo removeObserver:self forKeyPath:@"netVersions"];
+        [self.client.runtimeInfo removeObserver:self forKeyPath:@"windowsVersion"];
         [self.client.runtimeInfo removeObserver:self forKeyPath:@"virtualMemorySize"];
+        [self.client.runtimeInfo removeObserver:self forKeyPath:@"physicalMemorySize"];
+        [self.client.runtimeInfo removeObserver:self forKeyPath:@"privateMemorySize"];
         [self.client release];
     }
     
+    [_userNameLabel release];
+    [_domainNameLabel release];
+    [_machineNameLabel release];
+    [_companyNameLabel release];
+    [_heartbeatLabel release];
+    [_incomingLabel release];
+    [_outgoingLabel release];
+    [_statsLabel release];
+    [_keyLabel release];
+    [_windowsVersionLabel release];
+    [_netVersionLabel release];
+    [_startTimeLabel release];
+    [_virtualMemoryLabel release];
+    [_privateMemoryLabel release];
+    [_physicalMemoryLabel release];
+    [_tableViewClientDetails release];
+    
+    [_netVersionCell release];
+    [_keyCell release];
     [super dealloc];
 }
 - (void)viewDidUnload {
     [self setTableViewClientDetails:nil];
+    [self setUserNameLabel:nil];
+    [self setDomainNameLabel:nil];
+    [self setMachineNameLabel:nil];
+    [self setCompanyNameLabel:nil];
+    [self setHeartbeatLabel:nil];
+    [self setIncomingLabel:nil];
+    [self setOutgoingLabel:nil];
+    [self setStatsLabel:nil];
+    [self setKeyLabel:nil];
+    [self setWindowsVersionLabel:nil];
+    [self setNetVersionLabel:nil];
+    [self setStartTimeLabel:nil];
+    [self setVirtualMemoryLabel:nil];
+    [self setPrivateMemoryLabel:nil];
+    [self setPhysicalMemoryLabel:nil];
+    [self setNetVersionCell:nil];
+    [self setKeyCell:nil];
     [super viewDidUnload];
 }
 @end
