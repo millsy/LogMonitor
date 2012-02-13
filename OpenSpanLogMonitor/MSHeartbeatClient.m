@@ -104,7 +104,7 @@ static int period = -60;
                 
                 [self.availableClients setObject:client forKey:[client receiverChannel]];
                 
-                //[client startListening];
+                [client startListening];
                 
                 [[NSNotificationCenter defaultCenter]postNotificationName:NC_CLIENTS_UPDATED object:nil];
                 

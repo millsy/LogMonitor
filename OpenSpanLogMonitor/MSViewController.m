@@ -125,8 +125,8 @@ BOOL viewPushed = NO;
     NSString* message = [response objectForKey:@"Message"];
     
     MSLogEntry* logEntry = [[[MSLogEntry alloc]init]autorelease];
-    logEntry.logMessage = message;
-    logEntry.logDate = myDate;
+    //logEntry.logMessage = message;
+    //logEntry.logDate = myDate;
     
     [self.logEntries addObject:logEntry];
     

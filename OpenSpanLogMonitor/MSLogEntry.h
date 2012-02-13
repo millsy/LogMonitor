@@ -10,7 +10,15 @@
 
 @interface MSLogEntry : NSObject
 
-@property (nonatomic, copy) NSDate* logDate;
-@property (nonatomic, copy) NSString* logMessage;
+@property (nonatomic, strong, readonly) NSDate* logDate;
+@property (nonatomic, strong, readonly) NSString* logMessage;
+@property (nonatomic, strong, readonly) NSString* traceLevel;
+@property (nonatomic, strong, readonly) NSString* category;
+@property (nonatomic, strong, readonly) NSString* designComp;
+@property (nonatomic, strong, readonly) NSString* component;
+@property (nonatomic, strong, readonly) NSString* verboseMsg;
+@property (nonatomic, strong, readonly) NSString* tag;
+
+-(id)initWithDate:(NSString*)date message:(NSString*)msg traceLevel:(NSString*)traceLevel category:(NSString*)category designComponent:(NSString*)designComp component:(NSString*)component verboseMsg:(NSString*)verboseMsg tag:(NSString*)tag;
 
 @end

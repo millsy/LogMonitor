@@ -10,6 +10,7 @@
 #import "MSEncryption.h"
 #import "MSConstants.h"
 #import "NSData+Extension.h"
+#import "MSLogEntry.h"
 
 @interface MSLoggerClient()
 {
@@ -142,6 +143,10 @@
                 if([[response objectForKey:MSG_TYPE] isEqualToString:MSG_LOG_MESSAGE])
                 {
                     //log message received
+                    MSLogEntry* entry = [[MSLogEntry alloc]initWithDate:[response objectForKey:LM_TIME] message:[response objectForKey:LM_MESSAGE] traceLevel:[response objectForKey:LM_TRACE_LEVEL] category:[response objectForKey:LM_CATEGORY] designComponent:[response objectForKey:LM_DESIGNCOMP] component:[response objectForKey:LM_COMP] verboseMsg:[response objectForKey:LM_VERBOSE] tag:[response objectForKey:LM_TAG]];
+                    [self.privateLogEntries addObject:entry];
+                    [entry release];
+                    NSLog(@"Log msg");
                     
                 }else if([[response objectForKey:MSG_TYPE] isEqualToString:MSG_STATS_MESSAGE]){
                     //stats message received

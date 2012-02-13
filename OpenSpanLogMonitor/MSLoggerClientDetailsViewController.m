@@ -10,12 +10,6 @@
 #import "MSLoggerClient.h"
 #import "MSCommonDate.h"
 
-@interface MSLoggerClientDetailsViewController()
-
--(void)adjustUILabel:(UILabel*)label forText:(NSString*) text;
-
-@end
-
 @implementation MSLoggerClientDetailsViewController
 
 @synthesize client = _client;
