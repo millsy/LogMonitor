@@ -33,6 +33,15 @@
     _filters = [filters mutableCopy];
 }
 
+-(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if([self.filters containsObject:cell.textLabel.text]){
+        cell.accessoryType = UITableViewCellAccessoryCheckmark;
+    }else{
+        cell.accessoryType = UITableViewCellAccessoryNone;
+    }
+}
+/*
 -(void)viewDidAppear:(BOOL)animated
 {
     int count = [self.logCategoriesView numberOfRowsInSection:0];
@@ -48,7 +57,7 @@
         }
     }
 }
-
+*/
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {

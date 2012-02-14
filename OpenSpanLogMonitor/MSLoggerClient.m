@@ -150,7 +150,7 @@
                     MSLogEntry* entry = [[MSLogEntry alloc]initWithDate:[obj objectForKey:LM_TIME] message:[obj objectForKey:LM_MESSAGE] traceLevel:[obj objectForKey:LM_TRACE_LEVEL] category:[obj objectForKey:LM_CATEGORY] designComponent:[obj objectForKey:LM_DESIGNCOMP] component:[obj objectForKey:LM_COMP] verboseMsg:[obj objectForKey:LM_VERBOSE] tag:[obj objectForKey:LM_TAG]];
                     [self.logEntries addObject:entry];  
                     [[NSNotificationCenter defaultCenter]postNotificationName:NC_NEW_LOG_ENTRY object:nil];
-                    NSLog(@"Log msg");
+                    //NSLog(@"Log msg");
                     
                 }else if([[response objectForKey:MSG_TYPE] isEqualToString:MSG_STATS_MESSAGE]){
                     //stats message received
@@ -166,7 +166,7 @@
                         
                         if([obj objectForKey:SM_OPENSPANVER]) if(!self.runtimeInfo.osVersion) self.runtimeInfo.osVersion = [obj objectForKey:SM_OPENSPANVER];
                         
-                        NSLog(@"Stats msg");
+                        //NSLog(@"Stats msg");
                     }
                 }
                 //

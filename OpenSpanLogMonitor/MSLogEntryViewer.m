@@ -9,15 +9,40 @@
 #import "MSLogEntryViewer.h"
 #import "MSLogEntry.h"
 
+@interface MSLogEntryViewer()
+
+@property (nonatomic, strong) NSArray* records;
+
+@end
+
 @implementation MSLogEntryViewer
 
 @synthesize client = _client;
 @synthesize logEntriesView = _logEntriesView;
 @synthesize logFilter = _logFilter;
 
+@synthesize records = _records;
+
 -(int)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [self.client.logEntries count];
+    return [self.records count];
+}
+
+-(void)setClient:(MSLoggerClient *)client
+{
+    if(_client)
+        [_client release];
+    
+    _client = client;
+}
+
+-(NSArray *)records
+{
+    if(!_records)
+    {
+        self.records = self.client.logEntries;
+    }
+    return _records;
 }
 
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -29,7 +54,7 @@
     if(!cell)
         return nil;
     
-    MSLogEntry* entry = [self.client.logEntries objectAtIndex:indexPath.row];
+    MSLogEntry* entry = [self.records objectAtIndex:indexPath.row];
     cell.textLabel.text = entry.category;    
     cell.detailTextLabel.text = entry.logMessage;
     
@@ -38,8 +63,16 @@
 
 -(void)newLogEntry:(NSNotification*)notification
 {
+    if([self.logFilter count] > 0){
+        //we have a filter set
+        NSPredicate* filterPred = [NSPredicate predicateWithFormat:@"category IN %@", self.logFilter];
+        self.records = [self.client.logEntries filteredArrayUsingPredicate:filterPred];
+    }else{
+        self.records = self.client.logEntries;
+    }
+    
     [self.logEntriesView reloadData];
-    [self.logEntriesView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:([self.client.logEntries count]-1) inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+    [self.logEntriesView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:([self.records count]-1) inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
 }
 
 -(NSMutableSet*)logFilter
@@ -83,6 +116,13 @@
 -(void)logFilterSaved:(NSMutableSet *)filter
 {
     self.logFilter = filter;
+    
+    if([self.logFilter count] > 0){
+        NSPredicate* filterPred = [NSPredicate predicateWithFormat:@"category IN %@", self.logFilter];
+        self.records = [self.client.logEntries filteredArrayUsingPredicate:filterPred];
+    }
+    
+    [self.logEntriesView reloadData];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
