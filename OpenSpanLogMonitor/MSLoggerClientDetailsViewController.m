@@ -124,7 +124,7 @@
         }
     }
     
-    return 44;
+    return 44.0f;
 }
  
 - (void)dealloc {

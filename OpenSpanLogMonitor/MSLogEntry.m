@@ -25,7 +25,7 @@
     self = [super init];
     if(self)
     {
-        _logDate = [MSCommonDate string:date toDateWithFormat:nil];
+        _logDate = [[MSCommonDate string:date toDateWithFormat:nil] retain];
         _logMessage = [msg copy];
         _traceLevel = [traceLevel copy];
         _category = [category copy];

@@ -24,9 +24,6 @@
 		83BAA3DD14DAC36C00E04EF6 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 83BAA3DC14DAC36C00E04EF6 /* logo.png */; };
 		83BAA3ED14DB056B00E04EF6 /* AppLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 83BAA3EC14DB056B00E04EF6 /* AppLogo.png */; };
 		83BAA3F014DB267200E04EF6 /* MSLogEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 83BAA3EF14DB267200E04EF6 /* MSLogEntry.m */; };
-		83E2AD4414D87BA900829924 /* MSStartupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E2AD4314D87BA900829924 /* MSStartupViewController.m */; };
-		83E2AD4C14D9D22B00829924 /* MSScreenShotViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E2AD4B14D9D22B00829924 /* MSScreenShotViewController.m */; };
-		83E61CFA14D827A400B68046 /* MSLogViewer.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E61CF914D827A400B68046 /* MSLogViewer.m */; };
 		83F74BD114DABA9F0096CC47 /* Default-Landscape~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 83F74BD014DABA9F0096CC47 /* Default-Landscape~ipad.png */; };
 		83F74BD314DABAB00096CC47 /* Default-Portrait~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 83F74BD214DABAB00096CC47 /* Default-Portrait~ipad.png */; };
 		83F79A8114D6DE9A00C9A985 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83F79A8014D6DE9A00C9A985 /* UIKit.framework */; };
@@ -36,7 +33,6 @@
 		83F79A8D14D6DE9A00C9A985 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 83F79A8C14D6DE9A00C9A985 /* main.m */; };
 		83F79A9114D6DE9A00C9A985 /* MSAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 83F79A9014D6DE9A00C9A985 /* MSAppDelegate.m */; };
 		83F79A9414D6DE9A00C9A985 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 83F79A9214D6DE9A00C9A985 /* MainStoryboard.storyboard */; };
-		83F79A9714D6DE9A00C9A985 /* MSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83F79A9614D6DE9A00C9A985 /* MSViewController.m */; };
 		83F79AB814D6DED900C9A985 /* NSObject+SBJson.m in Sources */ = {isa = PBXBuildFile; fileRef = 83F79AA014D6DED900C9A985 /* NSObject+SBJson.m */; };
 		83F79AB914D6DED900C9A985 /* SBJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 83F79AA314D6DED900C9A985 /* SBJsonParser.m */; };
 		83F79ABA14D6DED900C9A985 /* SBJsonStreamParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 83F79AA514D6DED900C9A985 /* SBJsonStreamParser.m */; };
@@ -51,7 +47,6 @@
 		83F79AC314D6DED900C9A985 /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 83F79AB714D6DED900C9A985 /* SBJsonWriter.m */; };
 		83F79ACA14D6DEF800C9A985 /* CEPubnub.m in Sources */ = {isa = PBXBuildFile; fileRef = 83F79AC614D6DEF800C9A985 /* CEPubnub.m */; };
 		83F79ACB14D6DEF800C9A985 /* CEPubnubRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 83F79AC914D6DEF800C9A985 /* CEPubnubRequest.m */; };
-		83F79AD114D72DD900C9A985 /* MSLogLevelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83F79AD014D72DD900C9A985 /* MSLogLevelViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -87,12 +82,6 @@
 		83BAA3EC14DB056B00E04EF6 /* AppLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AppLogo.png; sourceTree = "<group>"; };
 		83BAA3EE14DB267200E04EF6 /* MSLogEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSLogEntry.h; sourceTree = "<group>"; };
 		83BAA3EF14DB267200E04EF6 /* MSLogEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSLogEntry.m; sourceTree = "<group>"; };
-		83E2AD4214D87BA900829924 /* MSStartupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSStartupViewController.h; sourceTree = "<group>"; };
-		83E2AD4314D87BA900829924 /* MSStartupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSStartupViewController.m; sourceTree = "<group>"; };
-		83E2AD4A14D9D22B00829924 /* MSScreenShotViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSScreenShotViewController.h; sourceTree = "<group>"; };
-		83E2AD4B14D9D22B00829924 /* MSScreenShotViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSScreenShotViewController.m; sourceTree = "<group>"; };
-		83E61CF814D827A400B68046 /* MSLogViewer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSLogViewer.h; sourceTree = "<group>"; };
-		83E61CF914D827A400B68046 /* MSLogViewer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSLogViewer.m; sourceTree = "<group>"; };
 		83F74BD014DABA9F0096CC47 /* Default-Landscape~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape~ipad.png"; sourceTree = "<group>"; };
 		83F74BD214DABAB00096CC47 /* Default-Portrait~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Portrait~ipad.png"; sourceTree = "<group>"; };
 		83F79A7C14D6DE9A00C9A985 /* OpenSpanLogMonitor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OpenSpanLogMonitor.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -106,8 +95,6 @@
 		83F79A8F14D6DE9A00C9A985 /* MSAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MSAppDelegate.h; sourceTree = "<group>"; };
 		83F79A9014D6DE9A00C9A985 /* MSAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MSAppDelegate.m; sourceTree = "<group>"; };
 		83F79A9314D6DE9A00C9A985 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
-		83F79A9514D6DE9A00C9A985 /* MSViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MSViewController.h; sourceTree = "<group>"; };
-		83F79A9614D6DE9A00C9A985 /* MSViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MSViewController.m; sourceTree = "<group>"; };
 		83F79A9E14D6DED900C9A985 /* JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSON.h; sourceTree = "<group>"; };
 		83F79A9F14D6DED900C9A985 /* NSObject+SBJson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SBJson.h"; sourceTree = "<group>"; };
 		83F79AA014D6DED900C9A985 /* NSObject+SBJson.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SBJson.m"; sourceTree = "<group>"; };
@@ -139,8 +126,6 @@
 		83F79AC714D6DEF800C9A985 /* CEPubnubDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CEPubnubDelegate.h; sourceTree = "<group>"; };
 		83F79AC814D6DEF800C9A985 /* CEPubnubRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CEPubnubRequest.h; sourceTree = "<group>"; };
 		83F79AC914D6DEF800C9A985 /* CEPubnubRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CEPubnubRequest.m; sourceTree = "<group>"; };
-		83F79ACF14D72DD900C9A985 /* MSLogLevelViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSLogLevelViewController.h; sourceTree = "<group>"; };
-		83F79AD014D72DD900C9A985 /* MSLogLevelViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSLogLevelViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -188,15 +173,6 @@
 				831A73E014E17F1E00BDF979 /* MSEncryption.m */,
 			);
 			name = Encryption;
-			sourceTree = "<group>";
-		};
-		831A73FC14E274F200BDF979 /* To be removed */ = {
-			isa = PBXGroup;
-			children = (
-				83E61CF814D827A400B68046 /* MSLogViewer.h */,
-				83E61CF914D827A400B68046 /* MSLogViewer.m */,
-			);
-			name = "To be removed";
 			sourceTree = "<group>";
 		};
 		831A73FD14E2750600BDF979 /* Clients */ = {
@@ -264,14 +240,6 @@
 			isa = PBXGroup;
 			children = (
 				831A740714E313D600BDF979 /* LoggerClient */,
-				83F79A9514D6DE9A00C9A985 /* MSViewController.h */,
-				83F79A9614D6DE9A00C9A985 /* MSViewController.m */,
-				83F79ACF14D72DD900C9A985 /* MSLogLevelViewController.h */,
-				83F79AD014D72DD900C9A985 /* MSLogLevelViewController.m */,
-				83E2AD4214D87BA900829924 /* MSStartupViewController.h */,
-				83E2AD4314D87BA900829924 /* MSStartupViewController.m */,
-				83E2AD4A14D9D22B00829924 /* MSScreenShotViewController.h */,
-				83E2AD4B14D9D22B00829924 /* MSScreenShotViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -343,7 +311,6 @@
 		83F79A8614D6DE9A00C9A985 /* OpenSpanLogMonitor */ = {
 			isa = PBXGroup;
 			children = (
-				831A73FC14E274F200BDF979 /* To be removed */,
 				83BAA3DF14DAC43700E04EF6 /* Views */,
 				83E61CF714D8278100B68046 /* Models */,
 				83E61CF614D8276300B68046 /* Storyboards */,
@@ -480,7 +447,6 @@
 			files = (
 				83F79A8D14D6DE9A00C9A985 /* main.m in Sources */,
 				83F79A9114D6DE9A00C9A985 /* MSAppDelegate.m in Sources */,
-				83F79A9714D6DE9A00C9A985 /* MSViewController.m in Sources */,
 				83F79AB814D6DED900C9A985 /* NSObject+SBJson.m in Sources */,
 				83F79AB914D6DED900C9A985 /* SBJsonParser.m in Sources */,
 				83F79ABA14D6DED900C9A985 /* SBJsonStreamParser.m in Sources */,
@@ -495,10 +461,6 @@
 				83F79AC314D6DED900C9A985 /* SBJsonWriter.m in Sources */,
 				83F79ACA14D6DEF800C9A985 /* CEPubnub.m in Sources */,
 				83F79ACB14D6DEF800C9A985 /* CEPubnubRequest.m in Sources */,
-				83F79AD114D72DD900C9A985 /* MSLogLevelViewController.m in Sources */,
-				83E61CFA14D827A400B68046 /* MSLogViewer.m in Sources */,
-				83E2AD4414D87BA900829924 /* MSStartupViewController.m in Sources */,
-				83E2AD4C14D9D22B00829924 /* MSScreenShotViewController.m in Sources */,
 				83BAA3F014DB267200E04EF6 /* MSLogEntry.m in Sources */,
 				831A73D214E1640B00BDF979 /* MSLoggerClient.m in Sources */,
 				831A73DB14E17ED000BDF979 /* NSData+Extension.m in Sources */,

@@ -31,7 +31,7 @@
 
 +(NSString*)date:(NSDate*)date ToStringFormat:(NSString*)format
 {
-    NSDateFormatter *df = [[NSDateFormatter alloc] init];
+    NSDateFormatter *df = [[[NSDateFormatter alloc] init]autorelease];
     if(format)
     {
         [df setDateFormat:format];
@@ -43,7 +43,7 @@
 
 +(NSDate*)string:(NSString*)str toDateWithFormat:(NSString*)format
 {
-    NSDateFormatter *df = [[NSDateFormatter alloc] init];
+    NSDateFormatter *df = [[[NSDateFormatter alloc] init]autorelease];
     if(format){
         [df setDateFormat:format];
     }else{

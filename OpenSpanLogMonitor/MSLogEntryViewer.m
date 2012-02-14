@@ -55,7 +55,7 @@
         return nil;
     
     MSLogEntry* entry = [self.records objectAtIndex:indexPath.row];
-    cell.textLabel.text = entry.category;    
+    cell.textLabel.text = [NSString stringWithFormat:@"%@ %@", [MSCommonDate date:entry.logDate ToStringFormat:nil], entry.category];    
     cell.detailTextLabel.text = entry.logMessage;
     
     return cell;
@@ -120,6 +120,8 @@
     if([self.logFilter count] > 0){
         NSPredicate* filterPred = [NSPredicate predicateWithFormat:@"category IN %@", self.logFilter];
         self.records = [self.client.logEntries filteredArrayUsingPredicate:filterPred];
+    }else{
+        self.records = self.client.logEntries;
     }
     
     [self.logEntriesView reloadData];
