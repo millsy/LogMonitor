@@ -8,17 +8,10 @@
 
 #import "MSLogFilterViewController.h"
 
-@interface MSLogFilterViewController()
-
-@property (nonatomic, retain) NSArray* filters;
-
-@end
-
 @implementation MSLogFilterViewController
+@synthesize logCategoriesView = _logCategoriesView;
 
 @synthesize delegate = _delegate;
-
-//private
 @synthesize filters = _filters;
 
 - (IBAction)cancelClicked:(id)sender {
@@ -26,34 +19,36 @@
 }
 
 - (IBAction)saveClicked:(id)sender {
-    [self.delegate logFilterSaved:nil];
+    [self.delegate logFilterSaved:self.filters];
     [self dismissModalViewControllerAnimated:YES];
 }
 
--(void)viewWillAppear:(BOOL)animated
+-(void)setFilters:(NSMutableSet *)filters
 {
-    self.filters = [[self.delegate availableFilters] allObjects];
+    if(_filters)
+    {
+        [_filters release];
+    }
+    
+    _filters = [filters mutableCopy];
 }
 
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+-(void)viewDidAppear:(BOOL)animated
 {
-    return [self.filters count];
+    int count = [self.logCategoriesView numberOfRowsInSection:0];
+    for (int i = 0; i < count; i++) {
+        UITableViewCell *cell = [self.logCategoriesView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
+        if(cell)
+        {
+            if([self.filters containsObject:cell.textLabel.text]){
+                cell.accessoryType = UITableViewCellAccessoryCheckmark;
+            }else{
+                cell.accessoryType = UITableViewCellAccessoryNone;
+            }
+        }
+    }
 }
 
--(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    static NSString *CellIdentifier = @"filterCell"; 
-    
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier]; 
-    
-    if(!cell)
-        return nil;
-    
-    cell.textLabel.text = [self.filters objectAtIndex:indexPath.row];
-    
-    return cell;
-
-}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -64,11 +59,25 @@
         if(cell.accessoryType == UITableViewCellAccessoryNone)
         {
             cell.accessoryType = UITableViewCellAccessoryCheckmark;
+            [self.filters addObject:cell.textLabel.text];
         }else{
             cell.accessoryType = UITableViewCellAccessoryNone;
+            if([self.filters containsObject:cell.textLabel.text]){
+                [self.filters removeObject:cell.textLabel.text];
+            }
         }
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
     }
 }
 
+-(void)dealloc
+{
+    [_logCategoriesView release];
+    [_filters release];
+}
+
+- (void)viewDidUnload {
+    [self setLogCategoriesView:nil];
+    [super viewDidUnload];
+}
 @end

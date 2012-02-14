@@ -15,6 +15,6 @@
 @property (nonatomic, retain) MSLoggerClient* client;
 @property (retain, nonatomic) IBOutlet UITableView *logEntriesView;
 
-@property (strong, nonatomic) NSArray* logFilter;
+@property (strong, nonatomic) NSMutableSet* logFilter;
 
 @end

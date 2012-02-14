@@ -52,7 +52,7 @@
 
 -(NSString*)description
 {
-    [NSString stringWithFormat:@"%@ %@ %@", self.logDate, self.category, self.logMessage];
+    return [NSString stringWithFormat:@"%@ %@ %@", self.logDate, self.category, self.logMessage];
 }
 
 @end

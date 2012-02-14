@@ -10,18 +10,18 @@
 
 @protocol MSLogFilterViewControllerDelegate <NSObject>
 
--(NSSet*)availableFilters;
-
 @optional
--(void)logFilterSaved:(NSArray*)filter;
+-(void)logFilterSaved:(NSMutableSet*)filter;
 
 @end
 
-@interface MSLogFilterViewController : UIViewController 
+@interface MSLogFilterViewController : UITableViewController 
 
+@property (nonatomic, retain) NSMutableSet* filters;
 @property (nonatomic, assign) id<MSLogFilterViewControllerDelegate> delegate;
 
 - (IBAction)cancelClicked:(id)sender;
 - (IBAction)saveClicked:(id)sender;
+@property (retain, nonatomic) IBOutlet UITableView *logCategoriesView;
 
 @end
