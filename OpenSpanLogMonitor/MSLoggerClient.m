@@ -18,6 +18,8 @@
 }
 @property (strong, nonatomic) CEPubnub* pubnub;
 @property (strong, nonatomic) NSData* key;
+@property (strong, nonatomic) NSURL* privateKeyUrl;
+@property (strong, nonatomic) NSString* privateKeyPassword;
 
 @end
 
@@ -41,14 +43,15 @@
 //private
 @synthesize key = _key;
 @synthesize pubnub = _pubnub;
-
+@synthesize privateKeyUrl = _privateKeyUrl;
+@synthesize privateKeyPassword = _privateKeyPassword;
 
 -(id)init
 {
     return nil;
 }
 
--(id)initWithUserName:(NSString*)userName machineName:(NSString*)machineName domainName:(NSString*)domainName companyName:(NSString*)companyName receiverChannel:(NSString*) receiverChannel senderChannel:(NSString*)senderChannel statsChannel:(NSString*)statsChannel encrypedKey:(NSString*) encryptedKey publicKey:(NSString*)publicKey
+-(id)initWithUserName:(NSString*)userName machineName:(NSString*)machineName domainName:(NSString*)domainName companyName:(NSString*)companyName receiverChannel:(NSString*) receiverChannel senderChannel:(NSString*)senderChannel statsChannel:(NSString*)statsChannel encrypedKey:(NSString*) encryptedKey publicKey:(NSString*)publicKey privateKeyURL:(NSURL*)privateKeyUrl privateKeyPassword:(NSString*)privateKeyPassword
 {
     self = [super init];
     if(self)
@@ -61,6 +64,10 @@
         if(companyName) _companyName = [companyName copy];
         if(publicKey) _publicKeyURL = [publicKey copy];
         if(encryptedKey) _encryptedKey = [encryptedKey copy];
+        if(privateKeyUrl) _privateKeyUrl = [privateKeyUrl copy];
+        if(privateKeyPassword) _privateKeyPassword = [privateKeyPassword copy];
+        
+        //don't start any listeners until all properties have been set
         if(statsChannel)
         {
             _statsChannel = [statsChannel copy];
@@ -131,6 +138,10 @@
 //pubsub delegate methods
 - (void)pubnub:(CEPubnub *)pubnub subscriptionDidReceiveDictionary:(NSDictionary *)response onChannel:(NSString *)channel
 {
+    if(!self.key){
+        NSLog(@"No decryption key set - ignoring messages");
+        return;
+    }
     //check valid structure
     if([response objectForKey:MSG_IV] && [response objectForKey:MSG_CONTENTS] && [response objectForKey:MSG_TYPE])
     {
@@ -202,13 +213,12 @@
 {
     if(!_key)
     {
-        if(self.encryptedKey)
+        if(self.encryptedKey && self.privateKeyUrl && self.privateKeyPassword)
         {
-            //we have an encrypted key
+            //we have an encrypted key, password and private key URL
             //decrypt self.encryptedKey
-            [self setKey:[MSEncryption decryptString:self.encryptedKey withCertificate:[NSURL URLWithString:@"http://mymac/logging.p12"] andPassword:@"12345"]]; 
-            
-            //NSLog(@"Secret key hex = %@", [_key hexDump]);
+            NSData* result = [MSEncryption decryptString:self.encryptedKey withCertificate:self.privateKeyUrl andPassword:self.privateKeyPassword];
+            [self setKey:result]; 
         }
     }
     return _key;
@@ -224,7 +234,7 @@
                    secretKey:    @""//@"sec-649a5039-cb8d-40eb-beec-21b9c07aec64" 
                    sslOn:        YES
                    origin:       @"pubsub.pubnub.com"
-                   ]autorelease]; 
+                       ]autorelease]; 
     }
     
     return _pubnub;

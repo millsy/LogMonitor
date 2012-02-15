@@ -7,24 +7,23 @@
 //
 
 #import "MSLoggerClientViewController.h"
-#import "MSHeartbeatClient.h"
+
 #import "MSLoggerClientDetailsViewController.h"
 #import "MSLogEntryViewer.h"
 
 @interface MSLoggerClientViewController()
-{
-    MSHeartbeatClient* myHBClient;
-}
+
 @end
 
 @implementation MSLoggerClientViewController
 @synthesize tableViewLoggerClients;
 @synthesize buttonConnect;
+@synthesize myHBClient = _myHBClient;
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     //return [self.logEntries count];
-    return [myHBClient.clients count];
+    return [self.myHBClient.clients count];
 }
 
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -36,7 +35,7 @@
     if(!cell)
         return nil;
     
-    MSLoggerClient* client = [myHBClient.clients objectAtIndex:indexPath.row];
+    MSLoggerClient* client = [self.myHBClient.clients objectAtIndex:indexPath.row];
     
     cell.textLabel.text = client.machineName;    
     cell.detailTextLabel.text = client.userName;
@@ -51,8 +50,6 @@
 {
     //register for client change notifcations
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(newClientNotification:) name:NC_CLIENTS_UPDATED object:nil];
-    
-    myHBClient = [[MSHeartbeatClient alloc]init];
     
     [super viewDidLoad];
 }
@@ -88,7 +85,7 @@
 - (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
 {
     NSLog(@"AccessoryButton tapped %u", indexPath.row);
-    [self performSegueWithIdentifier:@"loggerClientDetails" sender:[[myHBClient clients]objectAtIndex:indexPath.row]];
+    [self performSegueWithIdentifier:@"loggerClientDetails" sender:[[self.myHBClient clients]objectAtIndex:indexPath.row]];
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -98,7 +95,7 @@
         [newController setClient:sender];
     }else if([[segue identifier] isEqualToString:@"loggerEntryViewer"]){
         MSLogEntryViewer* newController = [segue destinationViewController];
-        MSLoggerClient* client = [[myHBClient clients]objectAtIndex:[[tableViewLoggerClients indexPathForSelectedRow] row]];
+        MSLoggerClient* client = [[self.myHBClient clients]objectAtIndex:[[tableViewLoggerClients indexPathForSelectedRow] row]];
         [newController setClient:client];
     }
 }
@@ -106,7 +103,7 @@
 -(void)viewDidUnload
 {
     [[NSNotificationCenter defaultCenter]removeObserver:self];
-    [myHBClient release];
+    [self.myHBClient release];
     [super viewDidUnload];
 }
 

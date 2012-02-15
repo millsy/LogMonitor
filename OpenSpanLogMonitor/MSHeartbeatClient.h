@@ -13,6 +13,6 @@
 
 @property (nonatomic, assign, readonly) NSArray* clients;
 
--(id)init;
+-(id)initWithURL:(NSURL*)url password:(NSString*)password;
 
 @end

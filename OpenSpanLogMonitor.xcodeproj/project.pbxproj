@@ -21,6 +21,9 @@
 		831A741614E3B1B800BDF979 /* MSLoggerClientDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 831A741514E3B1B800BDF979 /* MSLoggerClientDetailsViewController.m */; };
 		838ABA2714E96B2A0006FA9C /* MSLogEntryViewer.m in Sources */ = {isa = PBXBuildFile; fileRef = 838ABA2614E96B2A0006FA9C /* MSLogEntryViewer.m */; };
 		838ABA2A14E999AF0006FA9C /* MSLogFilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 838ABA2914E999AF0006FA9C /* MSLogFilterViewController.m */; };
+		838ABA2C14EBB8530006FA9C /* AWSiOSSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 838ABA2B14EBB8530006FA9C /* AWSiOSSDK.framework */; };
+		838ABA3014EBD3F00006FA9C /* MSAmazonS3.m in Sources */ = {isa = PBXBuildFile; fileRef = 838ABA2F14EBD3F00006FA9C /* MSAmazonS3.m */; };
+		838ABA3414EBD8760006FA9C /* MSCertificateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 838ABA3314EBD8760006FA9C /* MSCertificateViewController.m */; };
 		83BAA3DD14DAC36C00E04EF6 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 83BAA3DC14DAC36C00E04EF6 /* logo.png */; };
 		83BAA3ED14DB056B00E04EF6 /* AppLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 83BAA3EC14DB056B00E04EF6 /* AppLogo.png */; };
 		83BAA3F014DB267200E04EF6 /* MSLogEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 83BAA3EF14DB267200E04EF6 /* MSLogEntry.m */; };
@@ -78,6 +81,11 @@
 		838ABA2614E96B2A0006FA9C /* MSLogEntryViewer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSLogEntryViewer.m; sourceTree = "<group>"; };
 		838ABA2814E999AF0006FA9C /* MSLogFilterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSLogFilterViewController.h; sourceTree = "<group>"; };
 		838ABA2914E999AF0006FA9C /* MSLogFilterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSLogFilterViewController.m; sourceTree = "<group>"; };
+		838ABA2B14EBB8530006FA9C /* AWSiOSSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AWSiOSSDK.framework; sourceTree = "<group>"; };
+		838ABA2E14EBD3F00006FA9C /* MSAmazonS3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSAmazonS3.h; sourceTree = "<group>"; };
+		838ABA2F14EBD3F00006FA9C /* MSAmazonS3.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSAmazonS3.m; sourceTree = "<group>"; };
+		838ABA3214EBD8760006FA9C /* MSCertificateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSCertificateViewController.h; sourceTree = "<group>"; };
+		838ABA3314EBD8760006FA9C /* MSCertificateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSCertificateViewController.m; sourceTree = "<group>"; };
 		83BAA3DC14DAC36C00E04EF6 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
 		83BAA3EC14DB056B00E04EF6 /* AppLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AppLogo.png; sourceTree = "<group>"; };
 		83BAA3EE14DB267200E04EF6 /* MSLogEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSLogEntry.h; sourceTree = "<group>"; };
@@ -137,6 +145,7 @@
 				83F79A8114D6DE9A00C9A985 /* UIKit.framework in Frameworks */,
 				83F79A8314D6DE9A00C9A985 /* Foundation.framework in Frameworks */,
 				83F79A8514D6DE9A00C9A985 /* CoreGraphics.framework in Frameworks */,
+				838ABA2C14EBB8530006FA9C /* AWSiOSSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -229,6 +238,24 @@
 			name = LogViewer;
 			sourceTree = "<group>";
 		};
+		838ABA2D14EBD3C50006FA9C /* Amazon */ = {
+			isa = PBXGroup;
+			children = (
+				838ABA2E14EBD3F00006FA9C /* MSAmazonS3.h */,
+				838ABA2F14EBD3F00006FA9C /* MSAmazonS3.m */,
+			);
+			name = Amazon;
+			sourceTree = "<group>";
+		};
+		838ABA3114EBD82E0006FA9C /* Certificates */ = {
+			isa = PBXGroup;
+			children = (
+				838ABA3214EBD8760006FA9C /* MSCertificateViewController.h */,
+				838ABA3314EBD8760006FA9C /* MSCertificateViewController.m */,
+			);
+			name = Certificates;
+			sourceTree = "<group>";
+		};
 		83BAA3DF14DAC43700E04EF6 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -239,6 +266,7 @@
 		83E61CF414D8274000B68046 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				838ABA3114EBD82E0006FA9C /* Certificates */,
 				831A740714E313D600BDF979 /* LoggerClient */,
 			);
 			name = Controllers;
@@ -256,6 +284,7 @@
 		83E61CF714D8278100B68046 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				838ABA2D14EBD3C50006FA9C /* Amazon */,
 				830850EF14E46BDB007A6C1F /* Statistics */,
 				831A73FF14E2752C00BDF979 /* Common */,
 				831A73FE14E2751D00BDF979 /* Logging */,
@@ -300,6 +329,7 @@
 		83F79A7F14D6DE9A00C9A985 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				838ABA2B14EBB8530006FA9C /* AWSiOSSDK.framework */,
 				831A73CD14E13D0000BDF979 /* Security.framework */,
 				83F79A8014D6DE9A00C9A985 /* UIKit.framework */,
 				83F79A8214D6DE9A00C9A985 /* Foundation.framework */,
@@ -475,6 +505,8 @@
 				830850F314E46C02007A6C1F /* MSRuntimeInfo.m in Sources */,
 				838ABA2714E96B2A0006FA9C /* MSLogEntryViewer.m in Sources */,
 				838ABA2A14E999AF0006FA9C /* MSLogFilterViewController.m in Sources */,
+				838ABA3014EBD3F00006FA9C /* MSAmazonS3.m in Sources */,
+				838ABA3414EBD8760006FA9C /* MSCertificateViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -549,6 +581,10 @@
 		83F79A9B14D6DE9A00C9A985 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "OpenSpanLogMonitor/OpenSpanLogMonitor-Prefix.pch";
 				INFOPLIST_FILE = "OpenSpanLogMonitor/OpenSpanLogMonitor-Info.plist";
@@ -560,6 +596,10 @@
 		83F79A9C14D6DE9A00C9A985 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "OpenSpanLogMonitor/OpenSpanLogMonitor-Prefix.pch";
 				INFOPLIST_FILE = "OpenSpanLogMonitor/OpenSpanLogMonitor-Info.plist";

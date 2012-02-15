@@ -7,9 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MSHeartbeatClient.h"
 
 @interface MSLoggerClientViewController : UIViewController
 
+@property (retain, nonatomic) MSHeartbeatClient* myHBClient;
 @property (retain, nonatomic) IBOutlet UITableView *tableViewLoggerClients;
 @property (retain, nonatomic) IBOutlet UIBarButtonItem *buttonConnect;
 

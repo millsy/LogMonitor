@@ -503,7 +503,7 @@
                     </connections>
                 </tableViewController>
             </objects>
-            <point key="canvasLocation" x="97" y="551"/>
+            <point key="canvasLocation" x="1833" y="551"/>
         </scene>
         <scene sceneID="e0q-8F-exh">
             <objects>
@@ -516,11 +516,44 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="E06-GW-ct3" kind="relationship" relationship="rootViewController" id="JqL-vb-QWu"/>
+                        <segue destination="HFA-go-5ff" kind="relationship" relationship="rootViewController" id="MkA-KP-B2O"/>
                     </connections>
                 </navigationController>
             </objects>
-            <point key="canvasLocation" x="-1834" y="-344"/>
+            <point key="canvasLocation" x="-1646" y="-344"/>
+        </scene>
+        <scene sceneID="kZm-NL-vB0">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="mw2-aS-YK1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tableViewController id="HFA-go-5ff" customClass="MSCertificateViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="car-RC-asU">
+                        <rect key="frame" x="0.0" y="64" width="768" height="960"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="certificateCell" id="9og-me-4hN">
+                                <rect key="frame" x="0.0" y="22" width="768" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                    <rect key="frame" x="0.0" y="0.0" width="768" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </view>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="HFA-go-5ff" id="RzY-HZ-zef"/>
+                            <outlet property="delegate" destination="HFA-go-5ff" id="1cn-kc-Rb8"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Available Certificates" id="aIC-nz-6mn"/>
+                    <connections>
+                        <outlet property="certificateView" destination="car-RC-asU" id="LX3-Em-fmn"/>
+                        <segue destination="E06-GW-ct3" kind="push" identifier="showClients" id="RzE-6G-As0"/>
+                    </connections>
+                </tableViewController>
+            </objects>
+            <point key="canvasLocation" x="-534" y="-353"/>
         </scene>
         <scene sceneID="mrZ-VO-wOF">
             <objects>
@@ -585,7 +618,7 @@
                     </connections>
                 </viewController>
             </objects>
-            <point key="canvasLocation" x="-972" y="-344"/>
+            <point key="canvasLocation" x="764" y="-344"/>
         </scene>
         <scene sceneID="pm5-66-CjH">
             <objects>
@@ -639,7 +672,7 @@
                     </connections>
                 </tableViewController>
             </objects>
-            <point key="canvasLocation" x="104" y="-840"/>
+            <point key="canvasLocation" x="1840" y="-840"/>
         </scene>
         <scene sceneID="FsK-jJ-B5B">
             <objects>
@@ -1629,7 +1662,7 @@
                     </connections>
                 </tableViewController>
             </objects>
-            <point key="canvasLocation" x="2075" y="-840"/>
+            <point key="canvasLocation" x="3811" y="-840"/>
         </scene>
         <scene sceneID="jh5-k8-okb">
             <objects>
@@ -1646,57 +1679,9 @@
                     </connections>
                 </navigationController>
             </objects>
-            <point key="canvasLocation" x="1101" y="-840"/>
+            <point key="canvasLocation" x="2837" y="-840"/>
         </scene>
     </scenes>
-    <classes>
-        <class className="MSLogEntryViewer" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/MSLogEntryViewer.h"/>
-            <relationships>
-                <relationship kind="outlet" name="logEntriesView" candidateClass="UITableView"/>
-            </relationships>
-        </class>
-        <class className="MSLogFilterViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/MSLogFilterViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="cancelClicked:"/>
-                <relationship kind="action" name="saveClicked:"/>
-                <relationship kind="outlet" name="logCategoriesView" candidateClass="UITableView"/>
-            </relationships>
-        </class>
-        <class className="MSLoggerClientDetailsViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/MSLoggerClientDetailsViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="companyNameLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="domainNameLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="heartbeatLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="incomingLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="keyCell" candidateClass="UITableViewCell"/>
-                <relationship kind="outlet" name="keyLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="machineNameLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="netVersionCell" candidateClass="UITableViewCell"/>
-                <relationship kind="outlet" name="netVersionLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="outgoingLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="physicalMemoryLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="privateMemoryLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="publicKeyLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="runtimeVersionLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="startTimeLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="statsLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="tableViewClientDetails" candidateClass="UITableView"/>
-                <relationship kind="outlet" name="userNameLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="virtualMemoryLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="windowsVersionLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="MSLoggerClientViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/MSLoggerClientViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="buttonConnect" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="tableViewLoggerClients" candidateClass="UITableView"/>
-            </relationships>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackTranslucent"/>
         <simulatedOrientationMetrics key="orientation"/>

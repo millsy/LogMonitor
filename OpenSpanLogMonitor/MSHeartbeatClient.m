@@ -11,11 +11,14 @@
 #import "MSConstants.h"
 #import "MSCommonDate.h"
 
+
 @interface MSHeartbeatClient()
 
 @property (strong, atomic) NSMutableDictionary* availableClients;
 @property (strong, nonatomic) CEPubnub* pubnub;
 @property (strong, atomic) NSTimer* loopTimer;
+@property (strong, nonatomic) NSURL* privateKeyUrl;
+@property (strong, nonatomic) NSString* privateKeyPassword;
 
 -(void)checkAvailableClients;
 
@@ -27,19 +30,25 @@
 @synthesize availableClients = _availableClients;
 @synthesize pubnub = _pubnub;
 @synthesize loopTimer = _loopTimer;
+@synthesize privateKeyUrl = _privateKeyUrl;
+@synthesize privateKeyPassword = _privateKeyPassword;
 
 static int period = -60;
 
--(id)init
+-(id)initWithURL:(NSURL*)url password:(NSString*)password
 {
     self = [super init];
     if(self)
     {
+        self.privateKeyUrl = url;
+        self.privateKeyPassword = password;
+        
         _availableClients = [[NSMutableDictionary alloc]init];
         
         [self.pubnub subscribe:OS_HEARTBEAT_CHANNEL delegate:self];
         
-        [self setLoopTimer:[NSTimer scheduledTimerWithTimeInterval:6.0 target:self selector:@selector(checkAvailableClients) userInfo:nil repeats:YES]];
+        [self setLoopTimer:[NSTimer scheduledTimerWithTimeInterval:6.0 target:self selector:@selector(checkAvailableClients) userInfo:nil repeats:YES]];        
+        
     }
     return self;
 }
@@ -55,6 +64,9 @@ static int period = -60;
         
         [self.pubnub release];
     }
+    
+    [self.privateKeyUrl release];
+    [self.privateKeyPassword release];
     
     [super dealloc];
 }
@@ -77,7 +89,7 @@ static int period = -60;
             //do we need to stop it from listening before removing it?
             
             //this is an old one - remove it
-            NSLog(@"Old client %@", client.machineName);
+            //NSLog(@"Old client %@", client.machineName);
             
             [self.availableClients removeObjectForKey:key];
             
@@ -100,7 +112,7 @@ static int period = -60;
         {
             if(![self.availableClients objectForKey:[response objectForKey:HB_MSG_BROADCAST]])
             {
-                MSLoggerClient *client = [[MSLoggerClient alloc]initWithUserName:[response objectForKey:HB_MSG_USER] machineName:[response objectForKey:HB_MSG_MACHINE] domainName:[response objectForKey:HB_MSG_DOMAIN] companyName:[response objectForKey:HB_MSG_COMPANY] receiverChannel:[response objectForKey:HB_MSG_BROADCAST] senderChannel:[response objectForKey:HB_MSG_REPLY] statsChannel:[response objectForKey:HB_STATS] encrypedKey:[response objectForKey:HB_MSG_KEY] publicKey:[response objectForKey:HB_MSG_PUBLIC_KEY]];
+                MSLoggerClient *client = [[MSLoggerClient alloc]initWithUserName:[response objectForKey:HB_MSG_USER] machineName:[response objectForKey:HB_MSG_MACHINE] domainName:[response objectForKey:HB_MSG_DOMAIN] companyName:[response objectForKey:HB_MSG_COMPANY] receiverChannel:[response objectForKey:HB_MSG_BROADCAST] senderChannel:[response objectForKey:HB_MSG_REPLY] statsChannel:[response objectForKey:HB_STATS] encrypedKey:[response objectForKey:HB_MSG_KEY] publicKey:[response objectForKey:HB_MSG_PUBLIC_KEY] privateKeyURL:self.privateKeyUrl privateKeyPassword:self.privateKeyPassword];
                 
                 [self.availableClients setObject:client forKey:[client receiverChannel]];
                 
