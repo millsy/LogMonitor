@@ -12,5 +12,6 @@
 
 +(NSArray*)getAvailableKeys;
 +(NSURL*)getSignedURLForKey:(NSString*)key;
-
++(void)setCredentialsWithUserName:(NSString*)username password:(NSString*)password;
++(BOOL)hasAmazonCredentials;
 @end
