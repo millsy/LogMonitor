@@ -42,9 +42,17 @@
 
 -(void)requestAmazonCredentials
 {
-    UIAlertView *prompt = [[UIAlertView alloc] initWithTitle:@"Credentials" message:@"Enter your credentials to access the remote private keys"  delegate:self  cancelButtonTitle:@"Cancel"  otherButtonTitles:@"Save", nil];
+    UIAlertView *prompt = [[UIAlertView alloc] initWithTitle:@"Login required" message:@"Enter your credentials"  delegate:self  cancelButtonTitle:@"Cancel"  otherButtonTitles:@"Save", nil];
     prompt.tag = 1; 
     prompt.alertViewStyle = UIAlertViewStyleLoginAndPasswordInput;
+    
+    NSString* user; NSString* pwd;
+    if([MSAmazonS3 getCredentialsWithUserName:&user password:&pwd])
+    {
+        //got some credentials
+        [prompt textFieldAtIndex:0].text = user;
+        [prompt textFieldAtIndex:1].text = pwd;
+    }
     
     [prompt show];    
     [prompt release];
@@ -139,5 +147,8 @@
 - (void)viewDidUnload {
     [self setCertificateView:nil];
     [super viewDidUnload];
+}
+- (IBAction)updateCredentials:(id)sender {
+    [self requestAmazonCredentials];
 }
 @end

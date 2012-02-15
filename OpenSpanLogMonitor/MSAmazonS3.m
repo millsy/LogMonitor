@@ -11,12 +11,16 @@
 #import "KeychainItemWrapper.h"
 
 @interface MSAmazonS3()
-
+{
+    NSString* identifier;    
+}
 +(AmazonS3Client*)getClient;
 
 @end
 
 @implementation MSAmazonS3
+
+static NSString* identifier = @"AmazonS3Credentials";
 
 +(NSArray*)getAvailableKeys
 {
@@ -37,7 +41,6 @@
                 
                 if([[objectSummary key] hasSuffix:@"p12"])
                 {
-                    NSLog(@"Bucket Contents %@ " ,[objectSummary key]); // This returns the contents of the bucket
                     [result addObject:[objectSummary key]];
                 }
             }
@@ -53,14 +56,25 @@
 
 +(void)setCredentialsWithUserName:(NSString*)username password:(NSString*)password
 {
-    KeychainItemWrapper *keychainItem = [[KeychainItemWrapper alloc] initWithIdentifier:@"AmazonS3Credentials" accessGroup:nil];
+    KeychainItemWrapper *keychainItem = [[KeychainItemWrapper alloc] initWithIdentifier:identifier accessGroup:nil];
     [keychainItem setObject:password forKey:kSecValueData];
     [keychainItem setObject:username forKey:kSecAttrAccount];
 }
 
++(BOOL)getCredentialsWithUserName:(NSString**)username password:(NSString**)password
+{
+    if([MSAmazonS3 hasAmazonCredentials]){
+        KeychainItemWrapper *keychainItem = [[KeychainItemWrapper alloc] initWithIdentifier:identifier accessGroup:nil];
+        *username = [keychainItem objectForKey:kSecAttrAccount];
+        *password = [keychainItem objectForKey:kSecValueData];
+        return true;
+    }
+    return false;
+}
+
 +(BOOL)hasAmazonCredentials
 {
-    KeychainItemWrapper *keychainItem = [[KeychainItemWrapper alloc] initWithIdentifier:@"AmazonS3Credentials" accessGroup:nil];
+    KeychainItemWrapper *keychainItem = [[KeychainItemWrapper alloc] initWithIdentifier:identifier accessGroup:nil];
     if([[keychainItem objectForKey:kSecValueData] length] > 0 && [[keychainItem objectForKey:kSecAttrAccount] length] > 0)
     {
         return true;
@@ -87,9 +101,8 @@
 
 +(AmazonS3Client*)getClient
 {
-    KeychainItemWrapper *keychainItem = [[KeychainItemWrapper alloc] initWithIdentifier:@"AmazonS3Credentials" accessGroup:nil];
-    NSString* user = [keychainItem objectForKey:kSecAttrAccount];
-    NSString* pwd = [keychainItem objectForKey:kSecValueData];
+    NSString* user; NSString* pwd;
+    [MSAmazonS3 getCredentialsWithUserName:&user password:&pwd];
     return [[[AmazonS3Client alloc] initWithAccessKey:user withSecretKey:pwd]autorelease];
 }
 //@"AKIAJT345BW42EXBFUSA"

@@ -11,4 +11,6 @@
 @interface MSCertificateViewController : UITableViewController
 @property (retain, nonatomic) IBOutlet UITableView *certificateView;
 
+- (IBAction)updateCredentials:(id)sender;
+
 @end

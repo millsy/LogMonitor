@@ -546,7 +546,13 @@
                             <outlet property="delegate" destination="HFA-go-5ff" id="1cn-kc-Rb8"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Available Certificates" id="aIC-nz-6mn"/>
+                    <navigationItem key="navigationItem" title="Available Certificates" id="aIC-nz-6mn">
+                        <barButtonItem key="leftBarButtonItem" title="Update Credentials" id="8ve-iN-E44">
+                            <connections>
+                                <action selector="updateCredentials:" destination="HFA-go-5ff" id="M3e-iK-m46"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="certificateView" destination="car-RC-asU" id="LX3-Em-fmn"/>
                         <segue destination="E06-GW-ct3" kind="push" identifier="showClients" id="RzE-6G-As0"/>
