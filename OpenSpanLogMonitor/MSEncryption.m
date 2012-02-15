@@ -54,6 +54,24 @@ OSStatus extractIdentityAndTrust(CFDataRef inPKCS12Data, NSString* password, Sec
     return decryptedString;
 }
 
++(BOOL)validatePassword:(NSString*)password withCertificate:(NSURL*)url
+{
+    //errSecAuthFailed
+    NSData *PKCS12Data = [[NSData alloc] initWithContentsOfURL:url];
+    
+    if(PKCS12Data){
+        OSStatus status = noErr;
+        SecIdentityRef myIdentity;
+        SecTrustRef myTrust;
+        
+        status = extractIdentityAndTrust((CFDataRef)PKCS12Data,password,&myIdentity,&myTrust);
+        if(status == noErr)
+            return true;
+    }
+    
+    return false;
+}
+
 +(NSData*)decryptString:(NSString*)data withCertificate:(NSURL*)url andPassword:(NSString*)password
 {
     NSData* result = nil;

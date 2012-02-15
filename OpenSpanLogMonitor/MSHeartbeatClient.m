@@ -113,7 +113,7 @@ static int period = -60;
             if(![self.availableClients objectForKey:[response objectForKey:HB_MSG_BROADCAST]])
             {
                 MSLoggerClient *client = [[MSLoggerClient alloc]initWithUserName:[response objectForKey:HB_MSG_USER] machineName:[response objectForKey:HB_MSG_MACHINE] domainName:[response objectForKey:HB_MSG_DOMAIN] companyName:[response objectForKey:HB_MSG_COMPANY] receiverChannel:[response objectForKey:HB_MSG_BROADCAST] senderChannel:[response objectForKey:HB_MSG_REPLY] statsChannel:[response objectForKey:HB_STATS] encrypedKey:[response objectForKey:HB_MSG_KEY] publicKey:[response objectForKey:HB_MSG_PUBLIC_KEY] privateKeyURL:self.privateKeyUrl privateKeyPassword:self.privateKeyPassword];
-                
+                                
                 [self.availableClients setObject:client forKey:[client receiverChannel]];
                 
                 [client startListening];

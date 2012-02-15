@@ -15,5 +15,6 @@
 +(NSString*)base64DecodeString:(NSString*)data;
 +(NSString*)base64EncodeString:(NSString*)data;
 +(NSData*)base64DecodeStringToData:(NSString*)data;
++(BOOL)validatePassword:(NSString*)password withCertificate:(NSURL*)url;
 
 @end

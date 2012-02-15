@@ -10,6 +10,7 @@
 #import "MSAmazonS3.h"
 #import "MSLoggerClientViewController.h"
 #import "MSHeartbeatClient.h"
+#import "MSEncryption.h"
 
 @interface MSCertificateViewController()
 
@@ -66,10 +67,25 @@
     if(buttonIndex == 1)
     {
         NSString* passwordValue = [[alertView textFieldAtIndex:0]text];
-        [self performSegueWithIdentifier:@"showClients" sender:passwordValue];
-    }else{
-        //deselect row here
+        if([passwordValue length] > 0)
+        {
+            NSString* key = [[[self.certificateView cellForRowAtIndexPath:[self.certificateView indexPathForSelectedRow]] textLabel]text];
+            NSURL* url = [MSAmazonS3 getSignedURLForKey:key];
+            
+            if([MSEncryption validatePassword:passwordValue withCertificate:url])
+            {
+                MSHeartbeatClient* client = [[MSHeartbeatClient alloc]initWithURL:url password:passwordValue];                 
+                [self performSegueWithIdentifier:@"showClients" sender:client];
+                return;
+            }else{
+                UIAlertView *prompt = [[UIAlertView alloc] initWithTitle:@"Invalid password" message:@"The password you provided didn't match the selected certificate" delegate:nil  cancelButtonTitle:@"OK"  otherButtonTitles:nil];
+                [prompt show];
+                [prompt release];
+            }
+        }
     }
+    //deselect row here
+    [self.certificateView deselectRowAtIndexPath:[self.certificateView indexPathForSelectedRow] animated:YES];
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -77,11 +93,8 @@
     if([[segue identifier] isEqualToString:@"showClients"])
     {
         if(sender){
-            
-            NSString* key = [[[self.certificateView cellForRowAtIndexPath:[self.certificateView indexPathForSelectedRow]] textLabel]text];
-            NSURL* url = [MSAmazonS3 getSignedURLForKey:key];
             MSLoggerClientViewController* vc = [segue destinationViewController];
-            vc.myHBClient = [[MSHeartbeatClient alloc]initWithURL:url password:sender];            
+            vc.myHBClient = sender;
         }
     }
 }
