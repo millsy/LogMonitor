@@ -13,12 +13,15 @@
 
 
 @interface MSHeartbeatClient()
+{
+    MSEncryption* encryptionObject;
+}
 
 @property (strong, atomic) NSMutableDictionary* availableClients;
 @property (strong, nonatomic) CEPubnub* pubnub;
 @property (strong, atomic) NSTimer* loopTimer;
-@property (strong, nonatomic) NSURL* privateKeyUrl;
-@property (strong, nonatomic) NSString* privateKeyPassword;
+//@property (strong, nonatomic) NSURL* privateKeyUrl;
+//@property (strong, nonatomic) NSString* privateKeyPassword;
 
 -(void)checkAvailableClients;
 
@@ -30,43 +33,45 @@
 @synthesize availableClients = _availableClients;
 @synthesize pubnub = _pubnub;
 @synthesize loopTimer = _loopTimer;
-@synthesize privateKeyUrl = _privateKeyUrl;
-@synthesize privateKeyPassword = _privateKeyPassword;
+//@synthesize privateKeyUrl = _privateKeyUrl;
+//@synthesize privateKeyPassword = _privateKeyPassword;
 
 static int period = -60;
 
--(id)initWithURL:(NSURL*)url password:(NSString*)password
+-(id)initWithEncryption:(MSEncryption*)encryption
 {
     self = [super init];
-    if(self)
-    {
-        self.privateKeyUrl = url;
-        self.privateKeyPassword = password;
+    if(self && encryption){
+        encryptionObject = [encryption retain];
         
         _availableClients = [[NSMutableDictionary alloc]init];
-        
         [self.pubnub subscribe:OS_HEARTBEAT_CHANNEL delegate:self];
-        
-        [self setLoopTimer:[NSTimer scheduledTimerWithTimeInterval:6.0 target:self selector:@selector(checkAvailableClients) userInfo:nil repeats:YES]];        
-        
+        [self setLoopTimer:[NSTimer scheduledTimerWithTimeInterval:6.0 target:self selector:@selector(checkAvailableClients) userInfo:nil repeats:YES]];
     }
     return self;
+}
+
+-(id)initWithURL:(NSURL*)url password:(NSString*)password
+{
+    return [[MSHeartbeatClient alloc]initWithEncryption:[[[MSEncryption alloc]initWithURL:url password:password]autorelease]];
 }
 
 -(void)dealloc
 {
     if(self.availableClients)
-        [self.availableClients release];
+        [_availableClients release];
     
     if(self.pubnub)
     {
         [self.pubnub unsubscribe:OS_HEARTBEAT_CHANNEL];
         
-        [self.pubnub release];
+        [_pubnub release];
     }
     
-    [self.privateKeyUrl release];
-    [self.privateKeyPassword release];
+    //[self.privateKeyUrl release];
+    //[self.privateKeyPassword release];
+    
+    [encryptionObject release];
     
     [super dealloc];
 }
@@ -112,11 +117,16 @@ static int period = -60;
         {
             if(![self.availableClients objectForKey:[response objectForKey:HB_MSG_BROADCAST]])
             {
-                MSLoggerClient *client = [[MSLoggerClient alloc]initWithUserName:[response objectForKey:HB_MSG_USER] machineName:[response objectForKey:HB_MSG_MACHINE] domainName:[response objectForKey:HB_MSG_DOMAIN] companyName:[response objectForKey:HB_MSG_COMPANY] receiverChannel:[response objectForKey:HB_MSG_BROADCAST] senderChannel:[response objectForKey:HB_MSG_REPLY] statsChannel:[response objectForKey:HB_STATS] encrypedKey:[response objectForKey:HB_MSG_KEY] publicKey:[response objectForKey:HB_MSG_PUBLIC_KEY] privateKeyURL:self.privateKeyUrl privateKeyPassword:self.privateKeyPassword];
+                //decrypt the key for this message and set in to the MSEncryption object
+                [encryptionObject decryptString:[response objectForKey:HB_MSG_KEY]];
+                
+                MSLoggerClient *client = [[MSLoggerClient alloc]initWithUserName:[response objectForKey:HB_MSG_USER] machineName:[response objectForKey:HB_MSG_MACHINE] domainName:[response objectForKey:HB_MSG_DOMAIN] companyName:[response objectForKey:HB_MSG_COMPANY] receiverChannel:[response objectForKey:HB_MSG_BROADCAST] senderChannel:[response objectForKey:HB_MSG_REPLY] statsChannel:[response objectForKey:HB_STATS] encrypedKey:[response objectForKey:HB_MSG_KEY] publicKey:[response objectForKey:HB_MSG_PUBLIC_KEY] key:encryptionObject.privateKey];
                                 
                 [self.availableClients setObject:client forKey:[client receiverChannel]];
                 
                 [client startListening];
+                
+                [client release];
                 
                 [[NSNotificationCenter defaultCenter]postNotificationName:NC_CLIENTS_UPDATED object:nil];
                 
@@ -145,7 +155,7 @@ static int period = -60;
 {
     if(!_pubnub)
     {
-        _pubnub = [[CEPubnub alloc]
+        self.pubnub = [[CEPubnub alloc]
                    publishKey:   PUBLISHERKEY
                    subscribeKey: SUBSCRIBERKEY
                    secretKey:    @""//@"sec-649a5039-cb8d-40eb-beec-21b9c07aec64" 

@@ -137,7 +137,7 @@
         [self.client.runtimeInfo removeObserver:self forKeyPath:@"virtualMemorySize"];
         [self.client.runtimeInfo removeObserver:self forKeyPath:@"physicalMemorySize"];
         [self.client.runtimeInfo removeObserver:self forKeyPath:@"privateMemorySize"];
-        [self.client release];
+        [_client release];
     }
     
     [_userNameLabel release];

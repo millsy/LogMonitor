@@ -17,14 +17,16 @@
     SBJsonParser* parser;
 }
 @property (strong, nonatomic) CEPubnub* pubnub;
-@property (strong, nonatomic) NSData* key;
+//@property (strong, nonatomic) NSData* key;
 @property (strong, nonatomic) NSURL* privateKeyUrl;
 @property (strong, nonatomic) NSString* privateKeyPassword;
 
 @end
 
 @implementation MSLoggerClient
-
+{
+    NSData* privateKey;
+}
 //public
 @synthesize userName = _userName;
 @synthesize machineName = _machineName;
@@ -41,7 +43,7 @@
 @synthesize logEntries = _logEntries;
 
 //private
-@synthesize key = _key;
+//@synthesize key = _key;
 @synthesize pubnub = _pubnub;
 @synthesize privateKeyUrl = _privateKeyUrl;
 @synthesize privateKeyPassword = _privateKeyPassword;
@@ -51,7 +53,7 @@
     return nil;
 }
 
--(id)initWithUserName:(NSString*)userName machineName:(NSString*)machineName domainName:(NSString*)domainName companyName:(NSString*)companyName receiverChannel:(NSString*) receiverChannel senderChannel:(NSString*)senderChannel statsChannel:(NSString*)statsChannel encrypedKey:(NSString*) encryptedKey publicKey:(NSString*)publicKey privateKeyURL:(NSURL*)privateKeyUrl privateKeyPassword:(NSString*)privateKeyPassword
+-(id)initWithUserName:(NSString*)userName machineName:(NSString*)machineName domainName:(NSString*)domainName companyName:(NSString*)companyName receiverChannel:(NSString*) receiverChannel senderChannel:(NSString*)senderChannel statsChannel:(NSString*)statsChannel encrypedKey:(NSString*) encryptedKey publicKey:(NSString*)publicKey key:(NSData*)key
 {
     self = [super init];
     if(self)
@@ -64,8 +66,8 @@
         if(companyName) _companyName = [companyName copy];
         if(publicKey) _publicKeyURL = [publicKey copy];
         if(encryptedKey) _encryptedKey = [encryptedKey copy];
-        if(privateKeyUrl) _privateKeyUrl = [privateKeyUrl copy];
-        if(privateKeyPassword) _privateKeyPassword = [privateKeyPassword copy];
+
+        privateKey = [key retain];
         
         //don't start any listeners until all properties have been set
         if(statsChannel)
@@ -113,7 +115,7 @@
     if(_senderChannel)[_senderChannel release];
     if(_encryptedKey)[_encryptedKey release];
     if(_lastSeen)[_lastSeen release];
-    if(_key)[_key release];
+    if(privateKey)[privateKey release];
     if(_logEntries) [_logEntries release];
     if(_companyName) [_companyName release];
     if(_statsChannel) [_statsChannel release];
@@ -138,7 +140,7 @@
 //pubsub delegate methods
 - (void)pubnub:(CEPubnub *)pubnub subscriptionDidReceiveDictionary:(NSDictionary *)response onChannel:(NSString *)channel
 {
-    if(!self.key){
+    if(!privateKey){
         NSLog(@"No decryption key set - ignoring messages");
         return;
     }
@@ -150,7 +152,7 @@
         
         if(iv && encryptedMsg)
         {
-            NSString* unencryptedMsg = [MSEncryption decryptData:encryptedMsg withKey:self.key vector:iv trimWhitespace:YES];
+            NSString* unencryptedMsg = [MSEncryption decryptData:encryptedMsg withKey:privateKey vector:iv trimWhitespace:YES];
             if(unencryptedMsg)
             {
                 NSError* err;
@@ -209,32 +211,18 @@
 
 
 //private properties
--(NSData*)key
-{
-    if(!_key)
-    {
-        if(self.encryptedKey && self.privateKeyUrl && self.privateKeyPassword)
-        {
-            //we have an encrypted key, password and private key URL
-            //decrypt self.encryptedKey
-            NSData* result = [MSEncryption decryptString:self.encryptedKey withCertificate:self.privateKeyUrl andPassword:self.privateKeyPassword];
-            [self setKey:result]; 
-        }
-    }
-    return _key;
-}
 
 -(CEPubnub*)pubnub
 {
     if(!_pubnub)
     {
-        _pubnub = [[[CEPubnub alloc]
+        self.pubnub = [[CEPubnub alloc]
                    publishKey:   PUBLISHERKEY
                    subscribeKey: SUBSCRIBERKEY
                    secretKey:    @""//@"sec-649a5039-cb8d-40eb-beec-21b9c07aec64" 
                    sslOn:        YES
                    origin:       @"pubsub.pubnub.com"
-                       ]autorelease]; 
+                       ]; 
     }
     
     return _pubnub;

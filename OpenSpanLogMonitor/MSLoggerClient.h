@@ -29,7 +29,7 @@
 
 @property (strong, nonatomic, readonly) NSMutableArray* logEntries;
 
--(id)initWithUserName:(NSString*)userName machineName:(NSString*)machineName domainName:(NSString*)domainName companyName:(NSString*)companyName receiverChannel:(NSString*) receiverChannel senderChannel:(NSString*)senderChannel statsChannel:(NSString*)statsChannel encrypedKey:(NSString*) encryptedKey publicKey:(NSString*)publicKey privateKeyURL:(NSURL*)privateKeyUrl privateKeyPassword:(NSString*)privateKeyPassword;
+-(id)initWithUserName:(NSString*)userName machineName:(NSString*)machineName domainName:(NSString*)domainName companyName:(NSString*)companyName receiverChannel:(NSString*) receiverChannel senderChannel:(NSString*)senderChannel statsChannel:(NSString*)statsChannel encrypedKey:(NSString*) encryptedKey publicKey:(NSString*)publicKey key:(NSData*)key;
 
 -(void)startListening;
 -(void)stopListening;

@@ -103,7 +103,7 @@
 -(void)viewDidUnload
 {
     [[NSNotificationCenter defaultCenter]removeObserver:self];
-    [self.myHBClient release];
+    [_myHBClient release];
     [super viewDidUnload];
 }
 
@@ -114,6 +114,7 @@
 
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter]removeObserver:self];
+    [_myHBClient release];
     [super dealloc];
 }
 

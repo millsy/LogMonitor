@@ -98,9 +98,11 @@
                 NSString* key = [[[self.certificateView cellForRowAtIndexPath:[self.certificateView indexPathForSelectedRow]] textLabel]text];
                 NSURL* url = [MSAmazonS3 getSignedURLForKey:key];
                 
-                if([MSEncryption validatePassword:passwordValue withCertificate:url])
+                MSEncryption* encryption = [[[MSEncryption alloc]initWithURL:url password:passwordValue]autorelease];
+                
+                if(encryption)
                 {
-                    MSHeartbeatClient* client = [[MSHeartbeatClient alloc]initWithURL:url password:passwordValue];                 
+                    MSHeartbeatClient* client = [[[MSHeartbeatClient alloc] initWithEncryption:encryption]autorelease];//initWithURL:url password:passwordValue];                 
                     [self performSegueWithIdentifier:@"showClients" sender:client];
                     return;
                 }else{

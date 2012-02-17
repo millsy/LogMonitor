@@ -9,6 +9,20 @@
 #import <Foundation/Foundation.h>
 
 @interface MSEncryption : NSObject
+{
+@private
+    NSData* pkcis12Data;
+    NSURL* pkcis12URL;
+    SecIdentityRef myIdentity;
+    SecTrustRef myTrust;
+}
+
+@property (nonatomic, strong, readonly) NSData* privateKey;
+
+-(id)init;
+-(id)initWithURL:(NSURL*)url password:(NSString*)password;
+
+-(void)decryptString:(NSString*)data;
 
 +(NSData*)decryptString:(NSString*)data withCertificate:(NSURL*)url andPassword:(NSString*)password;
 +(NSString*)decryptData:(NSData*)data withKey:(NSData*)key vector:(NSData*)vector trimWhitespace:(BOOL)trim;

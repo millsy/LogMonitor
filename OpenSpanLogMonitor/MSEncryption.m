@@ -10,6 +10,7 @@
 #import <Security/Security.h>
 #import "NSData+Extension.h"
 #import "NSString+Extension.h"
+#import "NSData+Extension.h"
 
 @interface MSEncryption()
 
@@ -18,6 +19,97 @@ OSStatus extractIdentityAndTrust(CFDataRef inPKCS12Data, NSString* password, Sec
 @end
 
 @implementation MSEncryption
+
+@synthesize privateKey = _privateKey;
+
+-(void)dealloc
+{
+    [pkcis12Data release];
+    [pkcis12URL release];
+}
+
+-(id)init
+{
+    return nil;
+}
+
+-(id)initWithURL:(NSURL*)url password:(NSString*)password
+{
+    self = [super init];
+    if(self)
+    {
+        if(url && password){
+            pkcis12URL = [url copy];
+            pkcis12Data = [[[NSData alloc] initWithContentsOfURL:url] retain];
+            if(pkcis12Data)
+            {
+                OSStatus status = extractIdentityAndTrust((CFDataRef)pkcis12Data,password,&myIdentity,&myTrust);
+                if(status == noErr)
+                    return self;
+                
+                NSLog(@"Error extracting identity");
+            }
+            [pkcis12Data release];
+            [pkcis12URL release];
+        }
+    }  
+
+    //didn't pass validation - return nil
+    return nil;
+}
+
+-(NSString*)description
+{
+    return [NSString stringWithFormat:@"%@ \n %@", pkcis12URL, [pkcis12Data hexDump]];
+}
+
+-(NSData*)privateKey
+{
+    if(_privateKey)
+        return _privateKey;
+    
+    NSLog(@"call -(void)decryptString:(NSString*)data before accessing privateKey property");
+    return nil;
+}
+
+-(void)decryptString:(NSString*)data
+{
+    NSData* result = nil;
+    
+    //SecCertificateRef myReturnedCertificate = NULL;
+    SecKeyRef privateKeyRef;
+    OSStatus status;// = SecIdentityCopyCertificate (myIdentity, &myReturnedCertificate); 
+    
+    //if(status == 0)
+    //{
+        //get the private key
+    status = SecIdentityCopyPrivateKey(myIdentity, &privateKeyRef);
+    
+    if(status == 0)
+    {
+        //decode the string
+        
+        NSData* decodeData = [data base64DecodedBytes];
+        
+        size_t plainBufferSize = 32;//the data is a fixed length of 16 bytes (256bits)
+        uint8_t *plainBuffer = malloc(plainBufferSize);
+        
+        //decrypt the key
+        status = SecKeyDecrypt(privateKeyRef,kSecPaddingPKCS1,(const uint8_t*)[decodeData bytes],[decodeData length],plainBuffer,&plainBufferSize); 
+        
+        if(status == 0)
+        {            
+            //got the key
+            result = [NSData dataWithBytes:plainBuffer length:32];
+        }
+    }
+    //}
+    
+    //CFRelease(myReturnedCertificate);
+    if(privateKeyRef) CFRelease(privateKeyRef);
+    
+    _privateKey = result;
+}
 
 +(NSData*)base64DecodeStringToData:(NSString*)data
 {
@@ -65,6 +157,9 @@ OSStatus extractIdentityAndTrust(CFDataRef inPKCS12Data, NSString* password, Sec
         SecTrustRef myTrust;
         
         status = extractIdentityAndTrust((CFDataRef)PKCS12Data,password,&myIdentity,&myTrust);
+        
+        [PKCS12Data release];
+        
         if(status == noErr)
             return true;
     }

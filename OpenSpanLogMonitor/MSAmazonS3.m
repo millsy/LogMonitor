@@ -31,6 +31,7 @@ static NSString* identifier = @"AmazonS3Credentials";
         if(aws)
         {
             S3ListObjectsRequest *listObjectRequest = [[[S3ListObjectsRequest alloc] initWithName:@"os-certs"] autorelease];
+            //aws setTimeout:[NSDate timeIntervalSinceReferenceDate]
             listObjectRequest.prefix = @"private/";
             listObjectRequest.delimiter = @"/";
             
@@ -59,6 +60,7 @@ static NSString* identifier = @"AmazonS3Credentials";
     KeychainItemWrapper *keychainItem = [[KeychainItemWrapper alloc] initWithIdentifier:identifier accessGroup:nil];
     [keychainItem setObject:password forKey:kSecValueData];
     [keychainItem setObject:username forKey:kSecAttrAccount];
+    [keychainItem release];
 }
 
 +(BOOL)getCredentialsWithUserName:(NSString**)username password:(NSString**)password
@@ -67,6 +69,7 @@ static NSString* identifier = @"AmazonS3Credentials";
         KeychainItemWrapper *keychainItem = [[KeychainItemWrapper alloc] initWithIdentifier:identifier accessGroup:nil];
         *username = [keychainItem objectForKey:kSecAttrAccount];
         *password = [keychainItem objectForKey:kSecValueData];
+        [keychainItem release];
         return true;
     }
     return false;
@@ -74,18 +77,20 @@ static NSString* identifier = @"AmazonS3Credentials";
 
 +(BOOL)hasAmazonCredentials
 {
+    BOOL result = false;
     KeychainItemWrapper *keychainItem = [[KeychainItemWrapper alloc] initWithIdentifier:identifier accessGroup:nil];
     if([[keychainItem objectForKey:kSecValueData] length] > 0 && [[keychainItem objectForKey:kSecAttrAccount] length] > 0)
     {
-        return true;
+        result = true;
     }
     
-    return false;
+    [keychainItem release];
+    return result;
 }
 
 +(NSURL*)getSignedURLForKey:(NSString*)key
 {
-    NSURL* url;
+    NSURL* url= nil;
     AmazonS3Client* aws = [MSAmazonS3 getClient];
     if(aws)
     {
