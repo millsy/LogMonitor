@@ -248,9 +248,10 @@ OSStatus extractIdentityAndTrust(CFDataRef inPKCS12Data, NSString* password, Sec
         *outTrust = (SecTrustRef)tempTrust;
     }
     
+   
     if (optionsDictionary)
         CFRelease(optionsDictionary);               
-    
+        
     return securityError;
 }
 
