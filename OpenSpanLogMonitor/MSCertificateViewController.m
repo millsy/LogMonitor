@@ -15,6 +15,7 @@
 @interface MSCertificateViewController()
 
 @property (retain, nonatomic) NSArray* certificates;
+@property (retain, nonatomic) IBOutlet UIBarButtonItem *refreshButton;
 
 -(void)requestAmazonCredentials;
 
@@ -24,6 +25,27 @@
 @synthesize certificateView = _certificateView;
 
 @synthesize certificates = _certificates;
+@synthesize refreshButton = _refreshButton;
+
+- (IBAction)refreshCertificates {
+    UIActivityIndicatorView* spinner = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    [spinner startAnimating];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithCustomView:spinner];
+    
+    dispatch_queue_t getKeysQueue = dispatch_queue_create("amazon keys", NULL);
+    dispatch_async(getKeysQueue, ^{
+        //on another thread to download the queues
+        self.certificates = [MSAmazonS3 getAvailableKeys];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            //back on main UI thread
+            self.navigationItem.rightBarButtonItem = self.refreshButton;
+            [self.certificateView reloadData];
+        });
+    });
+    
+    dispatch_release(getKeysQueue);
+}
+
 
 -(void)viewDidAppear:(BOOL)animated
 {
@@ -31,8 +53,7 @@
     {
         if(!self.certificates)
         {
-            self.certificates = [MSAmazonS3 getAvailableKeys];
-            [self.certificateView reloadData];
+            [self refreshCertificates];
         }
     }else
     {
@@ -117,15 +138,12 @@
     }else if(alertView.tag == 1){
         if(buttonIndex == 1) //save button
         {
-            NSString* usernmaeValue = [[alertView textFieldAtIndex:0]text];
+            NSString* usernameValue = [[alertView textFieldAtIndex:0]text];
             NSString* passwordValue = [[alertView textFieldAtIndex:1]text];
-            if([usernmaeValue length] > 0 && [passwordValue length] > 0){
+            if([usernameValue length] > 0 && [passwordValue length] > 0){
                 //save the credentials
-                [MSAmazonS3 setCredentialsWithUserName:usernmaeValue password:passwordValue];
-                self.certificates = [MSAmazonS3 getAvailableKeys];
-                
-                //reload the table
-                [self.certificateView reloadData];
+                [MSAmazonS3 setCredentialsWithUserName:usernameValue password:passwordValue];
+                [self refreshCertificates];
             }
         }
     }
@@ -144,10 +162,12 @@
 
 - (void)dealloc {
     [_certificateView release];
+    [_refreshButton release];
     [super dealloc];
 }
 - (void)viewDidUnload {
     [self setCertificateView:nil];
+    [self setRefreshButton:nil];
     [super viewDidUnload];
 }
 - (IBAction)updateCredentials:(id)sender {
