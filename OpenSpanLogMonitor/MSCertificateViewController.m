@@ -160,6 +160,11 @@
     }
 }
 
+-(BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
+{
+    return YES;
+}
+
 - (void)dealloc {
     [_certificateView release];
     [_refreshButton release];
